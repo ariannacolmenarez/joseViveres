@@ -1,11 +1,19 @@
 <?php
 
-class balanceController {
+class balanceController extends Autoload {
+
+    function __construct()
+    {
+        parent::__construct();
+        $this->model = new balanceModel;
+
+    }
+
     function balance(){
-        require("content/component/header.php");
-        require("view/balance.php");
-        require_once ("content/component/footer.php");
-        include ("view/proveedores.php");
+        $data['page_tag'] = "Cargos | UPTAEB";
+        $data['page_title'] = "Cargos";
+        parent::getView("balance", $data);
+        parent::getView("proveedores","");
         
     }
 }

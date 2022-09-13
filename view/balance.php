@@ -1,5 +1,6 @@
 
-     <!-- partial -->
+    <?php require_once("content/component/header.php"); ?>
+    <!-- partial -->
       <div class="main-panel">
         <div class="content-wrapper">
           <div class="row py-0">
@@ -547,4 +548,6 @@
     $('#example4').DataTable();
 });
         </script>
+
+<?php require_once("content/component/footer.php"); ?>
 

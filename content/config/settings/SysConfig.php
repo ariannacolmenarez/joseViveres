@@ -7,7 +7,7 @@ define("_INDEX_FILE_","http://localhost/Jose%20Ramones%20Viveres/index.php");
 define("_THEME_","http://localhost/Jose%20Ramones%20Viveres/assets/");
 define("_MODEL_","http://localhost/Jose%20Ramones%20Viveres/content/models/");
 define("_DB_SERVER_","http://localhost/");
-define("_DB_WEB_","DB_Practica");
+define("_DB_WEB_","joseviveresbd");
 define("_DB_HOST_","localhost");
 define("_DB_USER_","root");
 define("_DB_PASSWORD_","");

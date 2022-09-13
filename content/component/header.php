@@ -144,7 +144,7 @@
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" type="button"  data-bs-target="#exampleModalToggle10" data-bs-toggle="modal" id="proveedores" id="proveedores">
+            <a class="nav-link" type="button"  id="proveedores">
               <i class="ti-truck menu-icon"></i>
               <span class="menu-title">Proveedores</span>
             </a>
