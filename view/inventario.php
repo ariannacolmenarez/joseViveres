@@ -76,7 +76,7 @@
                         </div>
                     </div>
                     <div class="row row-cols-1 row-cols-lg-8 row-cols-sm-6 g-3 overflow-auto m-0" style="height: 600px;">
-                    <div class="col p-1 ">
+                        <div class="col p-1 ">
                             <div class="card h-100">
                             <img src="../assets/images/MP.png" class="p-3 card-img-top " alt="...">
                             <div class="card-body text-center">

@@ -128,6 +128,64 @@ class proveedoresModel extends Conexion{
         }
     }
 
+    public function registrar(proveedoresModel $p){
+        try {
+            
+            $consulta="INSERT INTO persona(
+                nombre , 
+                nro_doc,
+                tipo_doc,
+                telefono,
+                comentario,
+                estado,
+                id_tipo_persona)
+            VALUES (?,?,?,?,?,?,?)";
+            Conexion::conect()->prepare($consulta)->execute(array(
+                $p->getnombre(),
+                $p->getnroDoc(),
+                $p->gettipoDoc(),
+                $p->gettelefono(),
+                $p->getcomentario(),
+                "1",
+                "1",
+            ));
+
+        } catch (Exception $e) {
+
+            die($e->getMessage());
+        }
+    }
+
+    public function eliminar($id){
+        try {
+            $estado=0;
+            $consulta="UPDATE persona SET estado=? WHERE id=?;";
+            Conexion::conect()->prepare($consulta)->execute(array($estado,$id));
+
+        } catch (Exception $e) {
+
+            die($e->getMessage());
+        }
+    }
+
+    public function buscar($busqueda){
+        try {
+
+            $consulta="SELECT * FROM persona WHERE estado =? AND nombre LIKE '%$busqueda%' 
+            OR telefono LIKE '%$busqueda%'";
+
+            $consulta= Conexion::conect()->prepare($consulta);
+            $consulta->setFetchMode(PDO::FETCH_ASSOC);
+            $consulta->execute(array("1"));
+            return $consulta;
+
+        } catch (Exception $e) {
+
+            die($e->getMessage());
+        }
+    }
+
+
 }
 
 ?>

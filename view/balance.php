@@ -10,11 +10,11 @@
                   <h2 class="font-weight-bold text-dark pt-2 m-0">Balance</h2>
                 </div>
                 <div class="col-lg-2 col-sm-4 col-3 grid-margin mb-0">
-                  <div class="dropdown">
-                    <button class="text-white btn btn-success mt-2 btn-icon-text dropdown-toggle" title="Ventas" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                  <!-- <div class="dropdown"> -->
+                    <a href="<?= _DIRECTORY_ ?>ventas" class="text-white btn btn-success mt-2 btn-icon-text" title="Ventas" type="button" id="ventas">
                       <i class="ti-plus btn-icon-prepend"></i><b class="text">Realizar Venta</b>
-                    </button>
-                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                    </a>
+                    <!-- <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
                       <li>
                         <a class="dropdown-item" href="#">
                           <i class="ti-shopping-cart text-success btn-icon-prepend"></i>
@@ -36,7 +36,7 @@
                         </button>
                       </li>
                     </ul>
-                  </div>
+                  </div> -->
                 </div>
                 <div class="col-lg-2 col-sm-4 col-3 grid-margin mb-0">
                   <button type="button" class="text-white btn btn-danger mt-2 btn-icon-text" data-bs-target="#exampleModalToggle2" data-bs-toggle="modal" title="Compras">
@@ -548,6 +548,5 @@
     $('#example4').DataTable();
 });
         </script>
-
 <?php require_once("content/component/footer.php"); ?>
 

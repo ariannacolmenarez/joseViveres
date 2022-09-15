@@ -1,7 +1,6 @@
 <?php
 
 define("_DIRECTORY_","http://localhost/Jose%20Ramones%20Viveres/");
-define("_ROUTE_","controller.php");
 define("_CONTROLLER_","http://localhost/Jose%20Ramones%20Viveres/content/controllers/");
 define("_INDEX_FILE_","http://localhost/Jose%20Ramones%20Viveres/index.php");
 define("_THEME_","http://localhost/Jose%20Ramones%20Viveres/assets/");
@@ -25,10 +24,6 @@ class SysConfig {
 
     protected function directory(){
         return _DIRECTORY_;
-    }
-
-    protected function route(){
-        return _ROUTE_;
     }
 
     protected function controller(){

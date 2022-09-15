@@ -1,12 +1,12 @@
 <?php
-     require_once "../content/component/header.php"
+     require_once "content/component/header.php"
      ?>
      <!-- partial -->
       <div class="main-panel">
         <div class="content-wrapper">
             <div class="row m-0 align-items-center">
                     <div class="col-1">
-                        <button class="btn btn-warning btn-icon-text"><i class="ti-arrow-left"></i></button>
+                        <a href="<?= _DIRECTORY_ ?>balance" class="btn btn-warning btn-icon-text"><i class="ti-arrow-left"></i></a>
                     </div>
                     <div class="col">
                         <h3 class="font-weight-bold text-dark text py-2">Nueva Venta</h3> 
@@ -30,129 +30,9 @@
                             </form>
                         </div>
                     </div>
-                    <div class="row row-cols-1 row-cols-lg-5 row-cols-sm-4 g-3 overflow-auto m-0" style="height: 600px;">
-                    <div class="col p-1 ">
-                            <div class="card h-100">
-                            <button style="position: absolute;" class="btn btn-warning btn-xs">
-                                        <i class="ti-plus"></i>
-                            </button>
-                            <img src="../assets/images/MP.png" class="p-3 card-img-top " alt="...">
-                            <div class="card-body text-center">
-                                <h6 class="card-title text-success">Nombre</h6>
-                                <p class="card-text">$$$$$$$ </p>
-                                <h6 class="text-muted">stock</h6>                            </div>
-                            </div>
-                        </div>
-                        <div class="col p-1 ">
-                            <div class="card h-100">
-                            <button style="position: absolute;" class="btn btn-warning btn-xs">
-                                        <i class="ti-plus"></i>
-                            </button>
-                            <img src="../assets/images/MP.png" class="p-3 card-img-top " alt="...">
-                            <div class="card-body text-center">
-                                <h6 class="card-title text-success">Nombre</h6>
-                                <p class="card-text">$$$$$$$ </p>
-                                <h6 class="text-muted">stock</h6>                            </div>
-                            </div>
-                        </div>
-                        <div class="col p-1 ">
-                            <div class="card h-100">
-                            <button style="position: absolute;" class="btn btn-warning btn-xs">
-                                        <i class="ti-plus"></i>
-                            </button>
-                            <img src="../assets/images/MP.png" class="p-3 card-img-top " alt="...">
-                            <div class="card-body text-center">
-                                <h6 class="card-title text-success">Nombre</h6>
-                                <p class="card-text">$$$$$$$ </p>
-                                <h6 class="text-muted">stock</h6>                            </div>
-                            </div>
-                        </div>
-                        <div class="col p-1 ">
-                            <div class="card h-100">
-                            <button style="position: absolute;" class="btn btn-warning btn-xs">
-                                        <i class="ti-plus"></i>
-                            </button>
-                            <img src="../assets/images/MP.png" class="p-3 card-img-top " alt="...">
-                            <div class="card-body text-center">
-                                <h6 class="card-title text-success">Nombre</h6>
-                                <p class="card-text">$$$$$$$ </p>
-                                <h6 class="text-muted">stock</h6>                            </div>
-                            </div>
-                        </div>
-                        <div class="col p-1 ">
-                            <div class="card h-100">
-                            <button style="position: absolute;" class="btn btn-warning btn-xs">
-                                        <i class="ti-plus"></i>
-                            </button>
-                            <img src="../assets/images/MP.png" class="p-3 card-img-top " alt="...">
-                            <div class="card-body text-center">
-                                <h6 class="card-title text-success">Nombre</h6>
-                                <p class="card-text">$$$$$$$ </p>
-                                <h6 class="text-muted">stock</h6>                            </div>
-                            </div>
-                        </div>
-                        <div class="col p-1 ">
-                            <div class="card h-100">
-                            <button style="position: absolute;" class="btn btn-warning btn-xs">
-                                        <i class="ti-plus"></i>
-                            </button>
-                            <img src="../assets/images/MP.png" class="p-3 card-img-top " alt="...">
-                            <div class="card-body text-center">
-                                <h6 class="card-title text-success">Nombre</h6>
-                                <p class="card-text">$$$$$$$ </p>
-                                <h6 class="text-muted">stock</h6>                            </div>
-                            </div>
-                        </div>
-                        <div class="col p-1 ">
-                            <div class="card h-100">
-                            <button style="position: absolute;" class="btn btn-warning btn-xs">
-                                        <i class="ti-plus"></i>
-                            </button>
-                            <img src="../assets/images/MP.png" class="p-3 card-img-top " alt="...">
-                            <div class="card-body text-center">
-                                <h6 class="card-title text-success">Nombre</h6>
-                                <p class="card-text">$$$$$$$ </p>
-                                <h6 class="text-muted">stock</h6>                            </div>
-                            </div>
-                        </div>
-                        <div class="col p-1 ">
-                            <div class="card h-100">
-                            <button style="position: absolute;" class="btn btn-warning btn-xs">
-                                        <i class="ti-plus"></i>
-                            </button>
-                            <img src="../assets/images/MP.png" class="p-3 card-img-top " alt="...">
-                            <div class="card-body text-center">
-                                <h6 class="card-title text-success">Nombre</h6>
-                                <p class="card-text">$$$$$$$ </p>
-                                <h6 class="text-muted">stock</h6>                            </div>
-                            </div>
-                        </div>
-                        <div class="col p-1 ">
-                            <div class="card h-100">
-                            <button style="position: absolute;" class="btn btn-warning btn-xs">
-                                        <i class="ti-plus"></i>
-                            </button>
-                            <img src="../assets/images/MP.png" class="p-3 card-img-top " alt="...">
-                            <div class="card-body text-center">
-                                <h6 class="card-title text-success">Nombre</h6>
-                                <p class="card-text">$$$$$$$ </p>
-                                <h6 class="text-muted">stock</h6>                            </div>
-                            </div>
-                        </div>
-                        <div class="col p-1 ">
-                            <div class="card h-100">
-                            <button style="position: absolute;" class="btn btn-warning btn-xs">
-                                        <i class="ti-plus"></i>
-                            </button>
-                            <img src="../assets/images/MP.png" class="p-3 card-img-top " alt="...">
-                            <div class="card-body text-center">
-                                <h6 class="card-title text-success">Nombre</h6>
-                                <p class="card-text">$$$$$$$ </p>
-                                <h6 class="text-muted">stock</h6>                            </div>
-                            </div>
-                        </div>
+                    <div class="overflow-auto" id="lista_prod" style="height: 600px;">
+                        
                     </div>
-
                 </div>
                 <div class="col-12 p-0 col-sm-4">
                     <div class="card text-center "  >
@@ -373,5 +253,6 @@
         <!-- modal ends -->
 </div>
  <?php
- require_once "../content/component/footer.php";
+ require_once "content/component/footer.php";
  ?>
+ <script src="<?= _THEME_?>js/scripts/ventas.js"></script>
