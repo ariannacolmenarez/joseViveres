@@ -28,8 +28,8 @@ class ventasController extends Autoload {
                             <img src="./assets/images/MP.png" class="p-3 card-img-top " alt="...">
                             <div class="card-body text-center">
                                 <h6 class="card-title text-success">'.$regist["nombre"].'</h6>
-                                <p class="card-text">'.$regist["precio_venta"].'</p>
-                                <h6 class="text-muted">'.$regist["cantidad"].'</h6>                            
+                                <p class="card-text">'.$regist["precio_venta"].'BS</p>
+                                <h6 class="text-muted">'.$regist["cantidad"].'<small> disponible</small></h6>                            
                             </div>
                         </div>
                       </div>';
@@ -41,23 +41,20 @@ class ventasController extends Autoload {
 
     }
 
-    // function consultar($id){
-    //   $proveedor = new proveedoresModel();
-    //   $resp = $proveedor->consultar($id);
+    function agg(){
+      $resp = $this->model->consultar($_POST["id"]);
 
-    //   $resultados [] = [
-    //     "nombre"=>$resp->getnombre(),
-    //     "tipo_doc"=>$resp->gettipoDoc(),
-    //     "nro_doc"=>$resp->getnroDoc(),
-    //     "telefono"=>$resp->gettelefono(),
-    //     "comentario"=>$resp->getcomentario(),
-    //     "id"=>$resp->getid(),
-    //   ];
-    //   echo json_encode($resultados);
+      $resultados [] = [
+        "id"=>$resp->getid_prod(),
+        "nombre"=>$resp->getnombre_prod(),
+        "precio_venta"=>$resp->getprecio_venta_prod(),
+        "cantidad"=>$resp->getcantidad_prod()
+      ];
+      echo json_encode($resultados);
 
       
       
-    // }
+    }
 
     // function guardar(){
     //   if (!empty($_POST['id'] && $_POST['nombre'] && $_POST['telefono'] )) {

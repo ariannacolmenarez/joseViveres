@@ -69,11 +69,11 @@ class proveedoresController extends Autoload {
 
 				$p=new proveedoresModel();
 
-        $p->setnombre(strtoupper($_POST['nombre']));
-        $p->setnroDoc(strtoupper($_POST['nro_doc']));
-        $p->settipoDoc(strtoupper($_POST['tipo_doc']));
-        $p->setcomentario(strtoupper($_POST['comentario']));
-        $p->settelefono(strtoupper($_POST['telefono']));
+        $p->setnombre($_POST['nombre']);
+        $p->setnroDoc($_POST['nro_doc']);
+        $p->settipoDoc($_POST['tipo_doc']);
+        $p->setcomentario($_POST['comentario']);
+        $p->settelefono($_POST['telefono']);
 
 				$this->model->registrar($p);
 				

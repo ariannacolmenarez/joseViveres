@@ -103,25 +103,22 @@ class ventasModel extends Conexion{
         }
     }
 
-    // public function consultar($id){
-    //     try {
-    //         $consulta= Conexion::conect()->prepare("SELECT * FROM persona WHERE id=?;");
-    //         $consulta->execute(array($id));
-    //         $r=$consulta->fetch(PDO::FETCH_OBJ);
-    //         $p= new proveedoresModel();
-    //         $p->setid($r->id);
-    //         $p->setnombre($r->nombre);
-    //         $p->settelefono($r->telefono);
-    //         $p->settipoDoc($r->tipo_doc);
-    //         $p->setnroDoc($r->nro_doc);
-    //         $p->setcomentario($r->comentario);
-            
-    //         return $p;
+    public function consultar($id){
+        try {
+            $consulta= Conexion::conect()->prepare("SELECT * FROM productos WHERE id=?;");
+            $consulta->execute(array($id));
+            $r=$consulta->fetch(PDO::FETCH_OBJ);
+            $p= new ventasModel();
+            $p->setid_prod($r->id);
+            $p->setnombre_prod($r->nombre);
+            $p->setcantidad_prod($r->cantidad);
+            $p->setprecio_venta_prod($r->precio_venta);
+            return $p;
 
-    //     } catch (Exception $e) {
-    //         die($e->getMessage());
-    //     }
-    // }
+        } catch (Exception $e) {
+            die($e->getMessage());
+        }
+    }
 
     // public function guardar(proveedoresModel $p){
     //     try {
