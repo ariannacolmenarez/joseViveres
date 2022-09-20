@@ -10,7 +10,9 @@ class ventasController extends Autoload {
     }
 
     public function ventas(){
-        parent::getView("ventas","");
+        $data['page_tag'] = "Ventas | Market MP";
+        $data['page_title'] = "Ventas";
+        parent::getView("ventas", $data);
     }
 
     public function  listar(){
@@ -22,7 +24,7 @@ class ventasController extends Autoload {
     	{
     		$data .= '<div class="col p-1 ">
                         <div class="card h-100">
-                            <a onclick="agg('.$regist["id"].');" style="position: absolute;" class="btn btn-warning btn-xs">
+                            <a onclick="agg('.$regist["id"].',1);" style="position: absolute;" class="btn btn-warning btn-xs">
                             <i class="ti-plus"></i>
                             </a>
                             <img src="./assets/images/MP.png" class="p-3 card-img-top " alt="...">

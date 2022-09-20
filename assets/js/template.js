@@ -63,8 +63,8 @@
     $("#navbar-search-input").focus();
   });
   if ($.cookie('royal-free-banner')!="true") {
-    document.querySelector('#proBanner').classList.add('d-flex');
-    document.querySelector('.navbar').classList.remove('fixed-top');
+    //document.querySelector('#proBanner').classList.add('d-flex');
+    //document.querySelector('.navbar').classList.remove('fixed-top');
   }
   else {
     document.querySelector('#proBanner').classList.add('d-none');
@@ -93,4 +93,4 @@
     $.cookie('royal-free-banner', "true", { expires: date });
   });
   
-})(jQuery);
+});

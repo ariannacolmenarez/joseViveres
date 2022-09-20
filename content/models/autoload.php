@@ -30,7 +30,9 @@
 		{
 			$view = "view/".$view.".php";
 			if (file_exists($view)) {
+				require_once("content/component/header.php");
 				require_once($view);
+				require_once("content/component/footer.php");
 			}
 		}
 	}

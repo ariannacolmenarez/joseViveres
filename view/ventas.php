@@ -1,6 +1,4 @@
-<?php
-     require_once "content/component/header.php"
-     ?>
+
      <!-- partial -->
       <div class="main-panel">
         <div class="content-wrapper">
@@ -42,7 +40,7 @@
                                     <p class="fs-4">CANASTA</p>
                                 </div>
                                 <div class="col text-end">
-                                    <a class="fs-6">Vaciar canasta</a>
+                                    <a href="#" id="vaciarCanasta" class="fs-6">Vaciar canasta</a>
                                 </div>
                             </div>
                         </div>
@@ -55,7 +53,7 @@
                                     <h6>Total</h6>
                                 </div>
                                 <div class="col">
-                                    <h6>monto</h6>
+                                    <h6 id="monto"></h6>
                                 </div>
                             </div>
                             <div class="row">
@@ -123,7 +121,5 @@
         </div>
         <!-- modal ends -->
 </div>
- <?php
- require_once "content/component/footer.php";
- ?>
+
  <script src="<?= _THEME_?>js/scripts/ventas.js"></script>

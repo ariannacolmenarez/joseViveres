@@ -8,7 +8,7 @@
   <!-- Required meta tags -->
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <title>Market MP</title>
+  <title><?= $data['page_tag']; ?></title>
   <!-- plugins:css -->
   <link rel="stylesheet" href="<?= _THEME_ ?>/ti-icons/css/themify-icons.css">
   <link rel="stylesheet" href="<?= _THEME_ ?>/fonts/css/all.css">
@@ -23,6 +23,7 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.4/css/bootstrap-datepicker.min.css">
   <!-- endinject -->
   <link rel="shortcut icon" href="<?= _THEME_ ?>/images/MP.png" />
+  <script src="<?= _THEME_ ?>/js/jquery-3.6.1.min.js"></script>
  
 </head>
 <body>
@@ -31,7 +32,7 @@
     <!-- partial:partials/_navbar.html -->
     <nav class="navbar col-lg-12 col-12 p-0 fixed-top d-flex flex-row">
       <div class="text-center navbar-brand-wrapper d-flex align-items-center justify-content-center">
-        <a class="navbar-brand brand-logo " href="index.html"><h3 class="naranja">Market MP</h3></a>
+        <a class="navbar-brand brand-logo " href="<?=_THEME_?>images/MP.png"><h3 class="naranja">Market MP</h3></a>
       </div>
       <div class="navbar-menu-wrapper d-flex align-items-center justify-content-end">
         <button class="navbar-toggler navbar-toggler align-self-center" type="button" data-toggle="minimize">
@@ -89,7 +90,7 @@
           </li>
           <li class="nav-item nav-profile dropdown">
             <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" id="profileDropdown">
-              <img src="../assets/images/faces/face28.jpg" alt="profile"/>
+              <img src="<?=_THEME_?>images/faces/face28.jpg" alt="profile"/>
             </a>
             <div class="dropdown-menu dropdown-menu-right navbar-dropdown" aria-labelledby="profileDropdown">
               <a class="dropdown-item">
@@ -115,7 +116,7 @@
         <ul class="nav">
           <li class="nav-item">
             <a class="nav-link" href="#">
-              <img src="../assets/images/MP.png"  class="img-fluid" />
+              <img src="<?=_THEME_?>/images/MP.png"  class="img-fluid" />
             </a>
           </li>
           

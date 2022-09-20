@@ -1,5 +1,3 @@
-
-    <?php require_once("content/component/header.php"); ?>
     <!-- partial -->
       <div class="main-panel">
         <div class="content-wrapper">
@@ -7,7 +5,7 @@
             <!-- <div class="col-md-12 grid-margin">
               <div class="d-flex justify-content-between align-items-center"> -->
                 <div class="col-lg-8 col-sm-4 col-6 grid-margin mb-0">
-                  <h2 class="font-weight-bold text-dark pt-2 m-0">Balance</h2>
+                  <h2 class="font-weight-bold text-dark pt-2 m-0"><?= $data['page_title']; ?></h2>
                 </div>
                 <div class="col-lg-2 col-sm-4 col-3 grid-margin mb-0">
                   <!-- <div class="dropdown"> -->
@@ -548,5 +546,5 @@
     $('#example4').DataTable();
 });
         </script>
-<?php require_once("content/component/footer.php"); ?>
+
 

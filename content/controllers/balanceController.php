@@ -10,10 +10,9 @@ class balanceController extends Autoload {
     }
 
     function balance(){
-        $data['page_tag'] = "Cargos | UPTAEB";
-        $data['page_title'] = "Cargos";
+        $data['page_tag'] = "Balance | Market MP";
+        $data['page_title'] = "Balance";
         parent::getView("balance", $data);
-        parent::getView("proveedores","");
         
     }
 }
