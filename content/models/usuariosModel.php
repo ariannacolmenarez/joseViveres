@@ -1,12 +1,10 @@
 <?php
 
-class proveedoresModel extends Conexion{
+class usuariosModel extends Conexion{
     private $id;
     private $nombre;
-    private $telefono;
-    private $tipoDoc;
-    private $nroDoc;
-    private $comentario;
+    private $correo;
+    private $contraseña;
 
     public function __construct(){
         parent::conect();
@@ -28,42 +26,26 @@ class proveedoresModel extends Conexion{
         $this->nombre=$nombre;
     }
 
-    public function gettelefono(){
-        return $this->telefono;
+    public function getcorreo(){
+        return $this->correo;
     }
 
-    public function settelefono( $telefono){
-        $this->telefono=$telefono;
+    public function setcorreo( $correo){
+        $this->correo=$correo;
     }
 
-    public function gettipoDoc(){
-        return $this->tipoDoc;
+    public function getcontraseña(){
+        return $this->contraseña;
     }
 
-    public function settipoDoc( $tipoDoc){
-        $this->tipoDoc=$tipoDoc;
-    }
-
-    public function getnroDoc(){
-        return $this->nroDoc;
-    }
-
-    public function setnroDoc( $nroDoc){
-        $this->nroDoc=$nroDoc;
-    }
-
-    public function getcomentario(){
-        return $this->comentario;
-    }
-
-    public function setcomentario( $comentario){
-        $this->comentario=$comentario;
+    public function setcontraseña( $contraseña){
+        $this->contraseña=$contraseña;
     }
 
     public static function listar(){
         try {
              
-                $sql= "SELECT * FROM persona WHERE estado !=0 AND id_tipo_persona= 1";
+                $sql= "SELECT * FROM usuarios WHERE estado !=0 ";
                 $consulta= Conexion::conect()->prepare($sql);
                 $consulta->setFetchMode(PDO::FETCH_ASSOC);
                 $consulta->execute();
@@ -78,16 +60,14 @@ class proveedoresModel extends Conexion{
 
     public function consultar($id){
         try {
-            $consulta= Conexion::conect()->prepare("SELECT * FROM persona WHERE id=?;");
+            $consulta= Conexion::conect()->prepare("SELECT * FROM usuarios WHERE id=?;");
             $consulta->execute(array($id));
             $r=$consulta->fetch(PDO::FETCH_OBJ);
-            $p= new proveedoresModel();
+            $p= new usuariosModel();
             $p->setid($r->id);
             $p->setnombre($r->nombre);
-            $p->settelefono($r->telefono);
-            $p->settipoDoc($r->tipo_doc);
-            $p->setnroDoc($r->nro_doc);
-            $p->setcomentario($r->comentario);
+            $p->setcorreo($r->correo);
+            $p->setcontraseña($r->contraseña);
             
             return $p;
 
@@ -96,26 +76,22 @@ class proveedoresModel extends Conexion{
         }
     }
 
-    public function guardar(proveedoresModel $p){
+    public function guardar(usuariosModel $p){
         try {
             
-            $consulta="UPDATE persona SET 
+            $consulta="UPDATE usuarios SET 
                 nombre=?,
-                nro_doc=?,
-                tipo_doc=?,
-                telefono=?,
-                comentario=?,
+                correo=?,
+                contraseña=?,
                 estado=?,
-                id_tipo_persona=?
+                id_rol=?
                 WHERE id=?;
             
             ";
             Conexion::conect()->prepare($consulta)->execute(array(
                 $p->getnombre(),
-                $p->getnroDoc(),
-                $p->gettipoDoc(),
-                $p->gettelefono(),
-                $p->getcomentario(),
+                $p->getcorreo(),
+                $p->getcontraseña(),
                 "1",
                 "1",
                 $p->getid(),
@@ -128,24 +104,20 @@ class proveedoresModel extends Conexion{
         }
     }
 
-    public function registrar(proveedoresModel $p){
+    public function registrar(usuariosModel $p){
         try {
             
-            $consulta="INSERT INTO persona(
+            $consulta="INSERT INTO usuarios(
                 nombre , 
-                nro_doc,
-                tipo_doc,
-                telefono,
-                comentario,
+                correo,
+                contraseña,
                 estado,
-                id_tipo_persona)
-            VALUES (?,?,?,?,?,?,?)";
+                id_rol)
+            VALUES (?,?,?,?,?)";
             Conexion::conect()->prepare($consulta)->execute(array(
                 $p->getnombre(),
-                $p->getnroDoc(),
-                $p->gettipoDoc(),
-                $p->gettelefono(),
-                $p->getcomentario(),
+                $p->getcorreo(),
+                $p->getcontraseña(),
                 "1",
                 "1",
             ));
@@ -159,7 +131,7 @@ class proveedoresModel extends Conexion{
     public function eliminar($id){
         try {
             $estado=0;
-            $consulta="UPDATE persona SET estado=? WHERE id=?;";
+            $consulta="UPDATE usuarios SET estado=? WHERE id=?;";
             Conexion::conect()->prepare($consulta)->execute(array($estado,$id));
 
         } catch (Exception $e) {
@@ -176,7 +148,7 @@ class proveedoresModel extends Conexion{
 
             $consulta= Conexion::conect()->prepare($consulta);
             $consulta->setFetchMode(PDO::FETCH_ASSOC);
-            $consulta->execute(array("1","1"));
+            $consulta->execute(array("1","2"));
             return $consulta;
 
         } catch (Exception $e) {
