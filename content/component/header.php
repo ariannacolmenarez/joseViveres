@@ -123,43 +123,43 @@
           <li class="nav-item">
             <a class="nav-link" href="index.html">
               <i class="ti-receipt menu-icon"></i>
-              <span class="menu-title">Balance</span>
+              <span class="menu-title">Gestionar Balance</span>
             </a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="#">
               <i class="ti-view-list-alt menu-icon"></i>
-              <span class="menu-title">Inventario</span>
+              <span class="menu-title">Gestionar Inventario</span>
             </a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="#">
               <i class="ti-agenda menu-icon"></i>
-              <span class="menu-title">Deudas</span>
+              <span class="menu-title">Gestionar Deudas</span>
             </a>
           </li>
           <li class="nav-item">
             <a class="nav-link" type="button" data-bs-target="#exampleModalToggle7" data-bs-toggle="modal">
               <i class="ti-user menu-icon"></i>
-              <span class="menu-title">Clientes</span>
+              <span class="menu-title">Gestionar Clientes</span>
             </a>
           </li>
           <li class="nav-item">
             <a class="nav-link" type="button"  id="proveedores">
               <i class="ti-truck menu-icon"></i>
-              <span class="menu-title">Proveedores</span>
+              <span class="menu-title">Gestionar Proveedores</span>
             </a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="#">
               <i class="ti-bar-chart-alt menu-icon"></i>
-              <span class="menu-title">Estadísticas</span>
+              <span class="menu-title">Gestionar Estadísticas</span>
             </a>
           </li>
           <li class="nav-item">
             <a class="nav-link" data-bs-toggle="collapse" href="#ui-basic" aria-expanded="false" aria-controls="ui-basic">
               <i class="ti-clipboard menu-icon"></i>
-              <span class="menu-title">Reportes</span>
+              <span class="menu-title">Gestionar Reportes</span>
               <i class="menu-arrow"></i>
             </a>
             <div class="collapse" id="ui-basic">
@@ -174,19 +174,19 @@
           <li class="nav-item">
             <a class="nav-link" data-bs-toggle="collapse" href="#auth" aria-expanded="false" aria-controls="auth">
               <i class="ti-server menu-icon"></i>
-              <span class="menu-title">Mantenimiento</span>
+              <span class="menu-title">Gestionar Mantenimiento</span>
             </a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="#">
               <i class="ti-shield menu-icon"></i>
-              <span class="menu-title">Seguridad</span>
+              <span class="menu-title">Gestionar Seguridad</span>
             </a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="#">
               <i class="ti-book menu-icon"></i>
-              <span class="menu-title">Ayuda</span>
+              <span class="menu-title">Gestionar Ayuda</span>
             </a>
           </li>
         </ul>

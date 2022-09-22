@@ -37,7 +37,7 @@
                   </div> -->
                 </div>
                 <div class="col-lg-2 col-sm-4 col-3 grid-margin mb-0">
-                  <button type="button" class="text-white btn btn-danger mt-2 btn-icon-text" data-bs-target="#exampleModalToggle2" data-bs-toggle="modal" title="Compras">
+                  <button type="button" class="text-white btn btn-danger mt-2 btn-icon-text" id="gastos" title="Compras">
                     <i class="ti-minus btn-icon-prepend"></i><b class="text">Realizar Gasto</b>
                   </button>
               </div>
@@ -545,6 +545,9 @@
     $('#example3').DataTable();
     $('#example4').DataTable();
 });
-        </script>
 
+        </script>
+<?php
+require_once("view/gastos.php");
+?>
 

@@ -184,34 +184,38 @@ $("#vaciarCanasta").on("click",function(){
 // }
 
 function registrarVenta(){
-    var nombre = $("#nombreR").val();
-    var telefono = $("#telefonoR").val();
-    var nro_doc = $("#nro_docR").val();
-    var tipo_doc= $("#tipo_docR").val();
-    var comentario = $("#comentarioR").val();
 
-    
+    var estado = $('input[name=btnradio]:checked', '#estado').val();
+    var fecha = $("#fecha").val();
+    var metodo = $('input[name=options]:checked', '#metodo').val();
+    var cliente = $("#clientes").val();
+
     var parametros = {
-        "nombre" : nombre,
-        "telefono" : telefono,
-        "nro_doc" : nro_doc,
-        "tipo_doc" : tipo_doc,
-        "comentario" : comentario,
+        "fecha" : fecha,
+        "estado" : estado,
+        "metodo" : metodo,
+        "cliente" : cliente,
+        "total" : sum
     };
+    const locations = canasta.map(([value]) => ({value}));
+
     $.ajax({
-        data:  parametros, //datos que se envian a traves de ajax
-        url:   'proveedores/registrar', //archivo que recibe la peticion
-        type:  'POST', //método de envio
-        success:  function (response) { //una vez que el archivo recibe el request lo procesa y lo devuelve
-            $('#exampleModalToggle12').modal('hide');
-            limpiar();    
-            listar();
-                
-        },error: (response) => {
-            console.log(response);
-        }
+        contentType: "application/x-www-form-urlencoded; charset=UTF-8", 
+        dataType : "json",
+        method: "POST",
+        url: "ventas/registrar",
+        data: {parametros: parametros, data: locations}
+    })
+    .done(function(data) {  
+        console.log("test: ", data);
+        $("#result").text(data.name);
+    })
+    .fail(function(data) {
+        console.log("error: ", data);
     });
+    
 }
+
 
 // function eliminarProveedor(){
 //     var id = $("#id").val();

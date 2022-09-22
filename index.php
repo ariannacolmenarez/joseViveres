@@ -7,6 +7,6 @@ require_once ("content/models/autoload.php");
 $Config = new SysConfig();
 $Config->_init();
 
-$index = new frontController($_REQUEST);
+$index = new frontController($_GET);
 
 ?>

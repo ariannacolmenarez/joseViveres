@@ -13,6 +13,7 @@ class ventasController extends Autoload {
         $data['page_tag'] = "Ventas | Market MP";
         $data['page_title'] = "Ventas";
         parent::getView("ventas", $data);
+        
     }
 
     public function  listar(){
@@ -58,6 +59,29 @@ class ventasController extends Autoload {
       
     }
 
+    function registrar(){
+        
+      if (!empty( $_POST['parametros']["total"] && $_POST['parametros']["fecha"] && $_POST['parametros']['estado'])) {
+
+          $p=new ventasModel();
+
+          $p->settotal($_POST['parametros']['total']);
+          $p->setfecha(strtoupper($_POST['parametros']['fecha']));
+          $p->setestado_movimiento(strtoupper($_POST['parametros']['estado']));
+          $p->setid_metodo_pago(strtoupper($_POST['parametros']['metodo']));
+          if($_POST['parametros']['cliente'] == ""){
+              $cliente=NULL;
+          }else{
+              $cliente=$_POST['parametros']['cliente'];
+          }
+          $p->setid_persona($cliente);
+          $p->setproductos($_POST['data']);
+
+          $this->model->registrar($p);
+      
+      }
+    }
+
     // function guardar(){
     //   if (!empty($_POST['id'] && $_POST['nombre'] && $_POST['telefono'] )) {
 
@@ -75,21 +99,7 @@ class ventasController extends Autoload {
 	// 		}
     // }
 
-    // function registrar(){
-    //   if (!empty( $_POST['nombre'] && $_POST['telefono'])) {
-
-	// 			$p=new proveedoresModel();
-
-    //     $p->setnombre(strtoupper($_POST['nombre']));
-    //     $p->setnroDoc(strtoupper($_POST['nro_doc']));
-    //     $p->settipoDoc(strtoupper($_POST['tipo_doc']));
-    //     $p->setcomentario(strtoupper($_POST['comentario']));
-    //     $p->settelefono(strtoupper($_POST['telefono']));
-
-	// 			$this->model->registrar($p);
-				
-	// 		}
-    // }
+    
 
     // public function eliminar(){
 	// 		$this->model->eliminar($_POST['id']);
