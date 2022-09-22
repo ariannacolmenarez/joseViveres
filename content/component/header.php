@@ -93,7 +93,7 @@
               <img src="<?=_THEME_?>images/faces/face28.jpg" alt="profile"/>
             </a>
             <div class="dropdown-menu dropdown-menu-right navbar-dropdown" aria-labelledby="profileDropdown">
-              <a class="dropdown-item">
+              <a class="dropdown-item" type="button">
                 <i class="ti-user text-primary"></i>
                 Perfil
               </a>
@@ -139,7 +139,7 @@
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" type="button" data-bs-target="#exampleModalToggle7" data-bs-toggle="modal">
+            <a class="nav-link" type="button" id="clientes">
               <i class="ti-user menu-icon"></i>
               <span class="menu-title">Gestionar Clientes</span>
             </a>
@@ -148,6 +148,12 @@
             <a class="nav-link" type="button"  id="proveedores">
               <i class="ti-truck menu-icon"></i>
               <span class="menu-title">Gestionar Proveedores</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" type="button"  id="usuarios">
+              <i class="ti-user menu-icon"></i>
+              <span class="menu-title">Usuarios</span>
             </a>
           </li>
           <li class="nav-item">

@@ -36,4 +36,6 @@
 </html>
 <?php
 require_once("view/proveedores.php");
+require_once("view/clientes.php");
+require_once("view/usuarios.php");
 ?>

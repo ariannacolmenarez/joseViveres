@@ -16,7 +16,7 @@ class proveedoresController extends Autoload {
 
     	foreach ($respuesta as $regist) 
     	{
-    		$data .= '<a onclick="consultar('.$regist["id"].');" type="button" class="list-group-item text-dark list-group-item-action py-3">
+    		$data .= '<a onclick="consultarproveedores('.$regist["id"].');" type="button" class="list-group-item text-dark list-group-item-action py-3">
         <div class="row align-items-center">
           <div class="col-1 text-secondary"><i class="ti-user fa-2x"></i></div>
           <div class="col px-4">'.$regist['nombre'].' <small class="text-muted">'.$regist['telefono'].'</small></div>
@@ -89,7 +89,7 @@ class proveedoresController extends Autoload {
       $respuesta = $this->model->buscar($_POST["busqueda"]);
       if ($respuesta->rowCount() > 0) {
         foreach ($respuesta as $regist) {
-            $data .= '<a onclick="consultar('.$regist["id"].');" type="button" class="list-group-item text-dark list-group-item-action py-3">
+            $data .= '<a onclick="consultarproveedores('.$regist["id"].');" type="button" class="list-group-item text-dark list-group-item-action py-3">
                         <div class="row align-items-center">
                           <div class="col-1 text-secondary"><i class="ti-user fa-2x"></i></div>
                           <div class="col px-4">'.$regist['nombre'].' <small class="text-muted">'.$regist['telefono'].'</small></div>

@@ -10,9 +10,8 @@ $("#close").on("click", function() {
     limpiar();
 });
 
-$("#proveedores").on("click", function(e) {
-    e.preventDefault();
-    listar();
+$("#proveedores").on("click", function() {
+    listarproveedores();
 });
 
 function limpiar(){
@@ -24,7 +23,7 @@ function limpiar(){
 
 
 
-function listar(){
+function listarproveedores(){
     
     $.get("proveedores/listar", {}, function (data, status) {
         $("#proveedor").html(data);
@@ -33,7 +32,7 @@ function listar(){
 };
 
 
-function consultar (id) {
+function consultarproveedores (id) {
     $.ajax({
         type: "POST",
         url: "proveedores/consultar/"+id,
@@ -78,7 +77,7 @@ function guardarProveedor(){
         type:  'POST', //método de envio
         success:  function (response) {
             $('#exampleModalToggle11').modal('hide');    
-            listar();
+            listarproveedores();
                 
         },
         error: (response) => {
@@ -109,7 +108,7 @@ function registrarProveedor(){
         success:  function (response) { //una vez que el archivo recibe el request lo procesa y lo devuelve
             $('#exampleModalToggle12').modal('hide');
             limpiar();    
-            listar();
+            listarproveedores();
                 
         },error: (response) => {
             console.log(response);
@@ -127,7 +126,7 @@ function eliminarProveedor(){
         type:  'POST', //método de envio
         success:  function (response) { //una vez que el archivo recibe el request lo procesa y lo devuelve
             $('#exampleModalToggle11').modal('hide');    
-            listar();
+            listarproveedores();
                 
         },
         error: (response) => {
@@ -155,7 +154,7 @@ $("#buscador").on("keyup",function(e) {
             }
         });  
     }else{
-        listar();
+        listarproveedores();
     }
 
     

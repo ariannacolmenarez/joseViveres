@@ -1,6 +1,6 @@
 <?php
 
-class proveedoresModel extends Conexion{
+class clientesModel extends Conexion{
     private $id;
     private $nombre;
     private $telefono;
@@ -63,7 +63,7 @@ class proveedoresModel extends Conexion{
     public static function listar(){
         try {
              
-                $sql= "SELECT * FROM persona WHERE estado !=0 AND id_tipo_persona= 1";
+                $sql= "SELECT * FROM persona WHERE estado !=0 AND id_tipo_persona= 2";
                 $consulta= Conexion::conect()->prepare($sql);
                 $consulta->setFetchMode(PDO::FETCH_ASSOC);
                 $consulta->execute();
@@ -81,7 +81,7 @@ class proveedoresModel extends Conexion{
             $consulta= Conexion::conect()->prepare("SELECT * FROM persona WHERE id=?;");
             $consulta->execute(array($id));
             $r=$consulta->fetch(PDO::FETCH_OBJ);
-            $p= new proveedoresModel();
+            $p= new clientesModel();
             $p->setid($r->id);
             $p->setnombre($r->nombre);
             $p->settelefono($r->telefono);
@@ -96,7 +96,7 @@ class proveedoresModel extends Conexion{
         }
     }
 
-    public function guardar(proveedoresModel $p){
+    public function guardar(clientesModel $p){
         try {
             
             $consulta="UPDATE persona SET 
@@ -117,7 +117,7 @@ class proveedoresModel extends Conexion{
                 $p->gettelefono(),
                 $p->getcomentario(),
                 "1",
-                "1",
+                "2",
                 $p->getid(),
 
             ));
@@ -128,7 +128,7 @@ class proveedoresModel extends Conexion{
         }
     }
 
-    public function registrar(proveedoresModel $p){
+    public function registrar(clientesModel $p){
         try {
             
             $consulta="INSERT INTO persona(
@@ -147,7 +147,7 @@ class proveedoresModel extends Conexion{
                 $p->gettelefono(),
                 $p->getcomentario(),
                 "1",
-                "1",
+                "2 ",
             ));
 
         } catch (Exception $e) {
@@ -176,7 +176,7 @@ class proveedoresModel extends Conexion{
 
             $consulta= Conexion::conect()->prepare($consulta);
             $consulta->setFetchMode(PDO::FETCH_ASSOC);
-            $consulta->execute(array("1","1"));
+            $consulta->execute(array("1","2"));
             return $consulta;
 
         } catch (Exception $e) {
