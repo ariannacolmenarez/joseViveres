@@ -15,11 +15,9 @@
                 <div class="col-12 p-0 col-sm-8">
                     <div class="row ">
                         <div class="col-md-5 grid-margin">
-                            <select class="form-select form-select-lg  rounded-0" aria-label=".form-select-lg">
-                            <option selected>Categorías</option>
-                            <option value="1">viveres</option>
-                            <option value="2">charcuteria</option>
-                            <option value="3">carnes</option>
+                            <select class="form-select form-select-lg  rounded-0" aria-label=".form-select-lg" id="cat">
+                            <option value="" selected>Categorías</option>
+                            
                             </select>
                         </div>
                         <div class="col-md-7 grid-margin">
@@ -40,7 +38,7 @@
                                     <p class="fs-4">CANASTA</p>
                                 </div>
                                 <div class="col text-end">
-                                    <a href="#" id="vaciarCanasta" class="fs-6">Vaciar canasta</a>
+                                    <a href="#" onclick="vaciarCanasta();" class="fs-6">Vaciar canasta</a>
                                 </div>
                             </div>
                         </div>
@@ -58,7 +56,7 @@
                             </div>
                             <div class="row">
                                 <div class="col d-grid gap-2">
-                                    <button class="btn btn-success" type="button" data-bs-toggle="modal" data-bs-target="#exampleModal">Confirmar Productos</button>
+                                    <button class="btn btn-success" type="button" id="confirmar" >Confirmar Productos</button>
                                 </div>
                             </div>
                         </div>
@@ -103,9 +101,9 @@
                     </div>
                     <div class="mt-5 form-group ">
                         <h5>Agregar un cliente <small>(opcional)</small></h5>
-                        <select class="form-select  mb-3 shadow-none" aria-label=".form-select example" id="clientes">
-                            <option selected value="">Selecciona un cliente</option>
-                            <option >One</option>
+                        <select class="form-select  mb-3 shadow-none" aria-label=".form-select example" id="clien">
+                            <option value="" selected>clientes</option>
+                        
                         </select>
                     </div>
 

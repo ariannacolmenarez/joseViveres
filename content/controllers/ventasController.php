@@ -17,34 +17,35 @@ class ventasController extends Autoload {
     }
 
     public function  listar(){
+
       $data = '<div class="row row-cols-1 row-cols-lg-5 row-cols-sm-4 g-3 m-0">';
 
-            $respuesta = $this->model->listar();
+      $respuesta = $this->model->listar($_POST['opcion']);
 
-    	foreach ($respuesta as $regist) 
-    	{
+    	foreach ($respuesta as $regist) {
+
     		$data .= '<div class="col p-1 ">
-                        <div class="card h-100">
-                            <a onclick="agg('.$regist["id"].',1);" style="position: absolute;" class="btn btn-warning btn-xs">
-                            <i class="ti-plus"></i>
-                            </a>
-                            <img src="./assets/images/MP.png" class="p-3 card-img-top " alt="...">
-                            <div class="card-body text-center">
-                                <h6 class="card-title text-success">'.$regist["nombre"].'</h6>
-                                <p class="card-text">'.$regist["precio_venta"].'BS</p>
-                                <h6 class="text-muted">'.$regist["cantidad"].'<small> disponible</small></h6>                            
-                            </div>
-                        </div>
-                      </div>';
+          <div class="card h-100">
+              <a onclick="agg('.$regist["id"].',1);" style="position: absolute;" class="btn btn-warning btn-xs">
+              <i class="ti-plus"></i>
+              </a>
+              <img src="./assets/images/MP.png" class="p-3 card-img-top " alt="...">
+              <div class="card-body text-center">
+                  <h6 class="card-title text-success">'.$regist["nombre"].'</h6>
+                  <p class="card-text">'.$regist["precio_venta"].'BS</p>
+                  <h6 class="text-muted">'.$regist["cantidad"].'<small> disponible</small></h6>                            
+              </div>
+          </div>
+        </div>';
     	};
 
-    $data .= '</div>';
+      $data .= '</div>';
 
-    echo json_encode($data);
-
+      echo json_encode($data);
     }
 
     function agg(){
+
       $resp = $this->model->consultar($_POST["id"]);
 
       $resultados [] = [
@@ -53,14 +54,13 @@ class ventasController extends Autoload {
         "precio_venta"=>$resp->getprecio_venta_prod(),
         "cantidad"=>$resp->getcantidad_prod()
       ];
+
       echo json_encode($resultados);
 
-      
-      
     }
 
     function registrar(){
-        
+        var_dump($_POST['parametros']['cliente']);
       if (!empty( $_POST['parametros']["total"] && $_POST['parametros']["fecha"] && $_POST['parametros']['estado'])) {
 
           $p=new ventasModel();
@@ -80,6 +80,30 @@ class ventasController extends Autoload {
           $this->model->registrar($p);
       
       }
+    }
+
+    public function  listarClientes(){
+
+      $respuesta = $this->model->listarClientes();
+
+      foreach ($respuesta as $r){
+        echo'  
+        <option value="'.$r->id.'">'.$r->nombre.'</option>';
+      };
+      var_dump($respuesta);
+
+    }
+
+    public function  listarCategorias(){
+
+      $respuesta = $this->model->listarCategorias();
+
+      foreach ($respuesta as $r){
+        echo'  
+        <option value="'.$r->id.'">'.$r->categoria.'</option>';
+      };
+      var_dump($respuesta);
+
     }
 
     // function guardar(){

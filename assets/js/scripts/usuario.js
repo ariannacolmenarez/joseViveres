@@ -45,7 +45,6 @@ function consultarusuarios (id) {
         success: function (response) {
             
             response.map( function (elem) {
-                console.log(elem);
                 $("#id").val(elem.id);
                 $("#nombre1").val(elem.nombre);
                 $("#correo").val(elem.correo);
@@ -59,7 +58,7 @@ function consultarusuarios (id) {
     
 }
 
-function guardarusuarios(){
+function guardarUsuarios(){
     var id = $("#id").val();
     var nombre = $("#nombre1").val();
     var correo = $("#correo").val();
@@ -86,13 +85,13 @@ function guardarusuarios(){
     });
 }
 
-function registrarusuarios(){
+function registrarUsuarios(){
     var nombre = $("#nombre3").val();
     var correo = $("#correo2").val();
     var contraseña = $("#contraseña1").val();
    
     var parametros = {
-        "nombre1" : nombre,
+        "nombre" : nombre,
         "correo" : correo,
         "contraseña" : contraseña
     };

@@ -1,18 +1,29 @@
-listar(); 
+$(document).ready(function () {
+   listar($("#cat").val()); 
+   listarCategorias();    
+});
+ 
 // function limpiar(){
 //     $('input').val("");
 //     $('select').val("");
 //     $('textarea').val("");
 // };
 
+$("#confirmar").on("click",function(){
+  if (canasta.length !== 0) {
+    listarClientes();
+    $('#exampleModal').modal('show');
+  }else{
+    alert("elige algun producto");
+  }
+});
 
-
-
-function listar(){
+function listar(opcion){
     
     $.ajax({
         type: "POST",
         url: "ventas/listar",
+        data: {opcion: opcion},
         dataType: "json",
         success: function (response) {
             $("#lista_prod").html(response);
@@ -24,7 +35,6 @@ function listar(){
 };
 
 var canasta=[];
-var sum=0;
 
 function agg (id,operacion) {
     var parametro = {"id" : id};
@@ -71,11 +81,11 @@ function agg (id,operacion) {
                 if(producto[0].agregado == undefined){producto[0].agregado=1};
 
                 var disponible = producto[0].cantidad-producto[0].agregado;
-                var total= producto[0].precio_venta * producto[0].agregado;
+                producto[0].total = (producto[0].precio_venta * producto[0].agregado).toFixed(2);
 
                 html= `<div class="row pt-1 align-items-center border-secondary border-bottom" id="listaCanasta">
                             <div class="col-1 m-0 p-0">
-                                <button class="btn btn-icon text-danger">
+                                <button onclick="eliminarProdCanasta(`+producto[0].id+`);" class="btn btn-icon text-danger">
                                     <i class="ti-trash"></i>
                                 </button>
                             </div>
@@ -85,7 +95,7 @@ function agg (id,operacion) {
                                 <p class="card-text">`+producto[0].precio_venta+` BS</p>
                             </div>
                             <div class="col-lg-4 col-12 text-center">
-                                <h6 class="mt-2 text-muted">= `+total+` BS</h6>
+                                <h6 class="mt-2 text-muted">= `+producto[0].total+` BS</h6>
                             </div>
                             <div class="col-12 mb-1">
                                 <div class="btn-group" role="group" aria-label="Basic Example">
@@ -107,34 +117,21 @@ function agg (id,operacion) {
                 $(nombre).on("change",function(){
 
                     if($("#cant").val() != ""){
-
                         var cant = parseFloat($(nombre).val());
-
                         if (cant < producto[0].cantidad && cant > 0) {
-
                             producto[0].agregado = cant+1;
                             agg(producto[0].id);
-
                         }
                     }else{
-
                         producto[0].agregado = 1;
                         agg(producto[0].id);
-
                     }
-
                 });
-
             });
 
-            canasta.forEach(item => {
-
-                const precio_venta = item[0].precio_venta;
-                sum = sum + precio_venta*item[0].agregado;
-                
-            });
-
-            $("#monto").html(sum+" BS");
+            const suma = canasta.map(item => parseFloat(item[0].total)).reduce((prev, curr) => prev + curr);
+            
+            $("#monto").html(suma+" BS");
         },
         error: (response) => {
             console.log("response");
@@ -144,13 +141,93 @@ function agg (id,operacion) {
     
 }
 
-$("#vaciarCanasta").on("click",function(){
-    console.log("vacia");
+function vaciarCanasta(){
     canasta = [];
-    sum = 0;
     $("#monto").html("");
     $("#canasta").html("");
-});
+};
+
+function eliminarProdCanasta(id){
+
+    const res = canasta.reduce((p, c) => {
+        (c[0].id == id) ? p[0].push(c): p[1].push(c);
+        return p;
+    }, [ [], [] ]);
+    canasta = res[1];
+    listarCanasta();
+}
+
+function listarCanasta(){
+    $("#canasta").html("");
+    canasta.map(function(producto) {
+        
+        var disponible = producto[0].cantidad-producto[0].agregado;
+
+        html= `<div class="row pt-1 align-items-center border-secondary border-bottom" id="listaCanasta">
+                    <div class="col-1 m-0 p-0">
+                        <button onclick="eliminarProdCanasta(`+producto[0].id+`);" class="btn btn-icon text-danger">
+                            <i class="ti-trash"></i>
+                        </button>
+                    </div>
+                    <div class="col-10 col-lg-7 col-md-10 text-center ">
+                        <h6 class="card-title text-success">`+producto[0].nombre+`</h6>
+                        <h6 class="text-muted"><small>`+disponible+`disponible</small></h6>
+                        <p class="card-text">`+producto[0].precio_venta+` BS</p>
+                    </div>
+                    <div class="col-lg-4 col-12 text-center">
+                        <h6 class="mt-2 text-muted">= `+producto[0].total+` BS</h6>
+                    </div>
+                    <div class="col-12 mb-1">
+                        <div class="btn-group" role="group" aria-label="Basic Example">
+                            <button class="btn btn-outline-secondary btn-rounded btn-xs " onclick="agg(`+producto[0].id+`,0)">
+                            <i class="fa-solid fa-circle-minus"></i>
+                            </button>
+                            <div class="btn btn-secondary btn-rounded btn-xs ">
+                            <b><input type="text" class="border-0 bg-transparent text-center" id="cant`+producto[0].id+`" value="`+producto[0].agregado+`"></b> 
+                            </div>
+                            <button class="btn btn-outline-secondary btn-rounded btn-xs" onclick="agg(`+producto[0].id+`,1)">
+                            <i class="fa-solid fa-circle-plus"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>`;
+        $("#canasta").append(html);
+    });
+    if (canasta.length !== 0) {
+       const suma = canasta.map(item => parseFloat(item[0].total)).reduce((prev, curr) => prev + curr);     
+        $("#monto").html(suma+" BS"); 
+    }else{
+        $("#monto").html("");
+    }   
+}
+
+function listarClientes(){
+    $.ajax({
+        type: "POST",
+        url: "ventas/listarClientes",
+        dataType: "html",
+        success: function (response) {
+            $('#clien').prepend(response);
+        },
+        error: (response) => {
+            console.log(response);
+        }
+    });
+}
+
+function listarCategorias(){
+    $.ajax({
+        type: "POST",
+        url: "ventas/listarCategorias",
+        dataType: "html",
+        success: function (response) {
+            $('#cat').prepend(response);
+        },
+        error: (response) => {
+            console.log(response);
+        }
+    });
+}
 
 // function guardarProveedor(){
 //     var id = $("#id").val();
@@ -188,32 +265,32 @@ function registrarVenta(){
     var estado = $('input[name=btnradio]:checked', '#estado').val();
     var fecha = $("#fecha").val();
     var metodo = $('input[name=options]:checked', '#metodo').val();
-    var cliente = $("#clientes").val();
-
+    var cliente = $("#clien").val();
+    var suma = canasta.map(item => parseFloat(item[0].total)).reduce((prev, curr) => prev + curr);     
     var parametros = {
         "fecha" : fecha,
         "estado" : estado,
         "metodo" : metodo,
         "cliente" : cliente,
-        "total" : sum
+        "total" : suma
     };
     const locations = canasta.map(([value]) => ({value}));
 
     $.ajax({
         contentType: "application/x-www-form-urlencoded; charset=UTF-8", 
-        dataType : "json",
         method: "POST",
         url: "ventas/registrar",
-        data: {parametros: parametros, data: locations}
-    })
-    .done(function(data) {  
-        console.log("test: ", data);
-        $("#result").text(data.name);
-    })
-    .fail(function(data) {
-        console.log("error: ", data);
+        data: {parametros: parametros, data: locations},
+        success:  function (response) {
+            alert("guardado");
+            listar();
+            vaciarCanasta();
+            $('#exampleModal').modal('hide');         
+        },
+        error: (response) => {
+            console.log(response);
+        }  
     });
-    
 }
 
 

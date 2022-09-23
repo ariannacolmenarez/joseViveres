@@ -169,16 +169,43 @@ class ventasModel extends Conexion{
         $this->id_persona=$id_persona;
     }
 
-    public function listar(){
+    public function listar($opcion){
         try {
-             
-                $sql= "SELECT * FROM productos WHERE estado !=0";
+                if (opcion != "") {
+                    $sql= "SELECT * FROM productos WHERE estado !=0 AND id_categoria = $opcion";
+                }else{
+                    $sql= "SELECT * FROM productos WHERE estado !=0";
+                }
                 $consulta= Conexion::conect()->prepare($sql);
                 $consulta->setFetchMode(PDO::FETCH_ASSOC);
                 $consulta->execute();
                 return $consulta;
                 
 
+
+        } catch (Exception $e) {
+            die($e->getMessage());
+        }
+    }
+
+    public function listarClientes(){
+        try {
+
+            $consulta= Conexion::conect()->prepare("SELECT * FROM persona WHERE estado !=0 AND id_tipo_persona=2");
+            $consulta->execute();
+            return $consulta->fetchALL(PDO::FETCH_OBJ);
+
+        } catch (Exception $e) {
+            die($e->getMessage());
+        }
+    }
+
+    public function listarCategorias(){
+        try {
+            
+            $consulta= Conexion::conect()->prepare("SELECT * FROM cat_producto WHERE estado !=0");
+            $consulta->execute();
+            return $consulta->fetchALL(PDO::FETCH_OBJ);
 
         } catch (Exception $e) {
             die($e->getMessage());
@@ -236,17 +263,18 @@ class ventasModel extends Conexion{
 
     public function registrar(ventasModel $p){
         try {
-            
-            $consulta="INSERT INTO operacion(
+            $pdo=Conexion::conect();
+            $consulta="INSERT INTO movimientos(
                 total , 
                 fecha_hora,
                 estado_movimiento,
                 estado,
-                id_cat_operacion,
+                id_concepto_movimiento,
                 id_metodo_pago,
                 id_persona)
             VALUES (?,?,?,?,?,?,?)";
-            $consulta =Conexion::conect()->prepare($consulta)->execute(array(
+            $consulta =$pdo->prepare($consulta);
+            $execute = $consulta->execute(array(
                 $p->gettotal(),
                 $p->getfecha(),
                 $p->getestado_movimiento(),
@@ -255,33 +283,46 @@ class ventasModel extends Conexion{
                 $p->getid_metodo_pago(),
                 $p->getid_persona()
             ));
-            $id_operacion = Conexion::conect()->lastInsertId();
-            var_dump($id_operacion);
+            if ($execute) {
+                $lastInsertId = $pdo->lastInsertId();
+            }else{
+                 $lastInsertId = 0;
+                 echo $consulta->errorInfo()[2];
+            }
+            var_dump($lastInsertId);
             var_dump($p->getproductos());
             
             foreach ($p->getproductos() as $row) {
-
+            
                 $precio = $row['value']['precio_venta'];
                 $cantidad = $row['value']['agregado'];
                 $estado = 1;
-                $id_op = $id_operacion;
+                $id_mov = $lastInsertId;
                 $id_producto = $row['value']['id'];
+                $cantidadProd = $row['value']['cantidad'];
+                $totalDesc = $cantidadProd - $cantidad;
               
-                $stmt = Conexion::conect()->prepare('INSERT INTO detalles(precio, cantidad, estado,      
-                                        id_operacion, id_producto)
-                                        VALUES(:precio, :cantidad, :estado, :id_operacion, :id_producto);
+                $stmt = Conexion::conect()->prepare('INSERT INTO detalles_movimientos(precio, cantidad, estado,      
+                                        id_movimientos, id_producto)
+                                        VALUES(:precio, :cantidad, :estado, :id_movimiento, :id_producto);
                                        ');
               
                 $stmt->execute([':precio' => $precio,
                                 ':cantidad' => $cantidad,
                                 ':estado' => $estado,
-                                ':id_operacion' => 5,
+                                ':id_movimiento' => $id_mov,
                                 ':id_producto' => $id_producto
                                 ]);
-           }
+                $consulta="UPDATE productos SET 
+                cantidad=?
+                WHERE id=?;";
 
+                Conexion::conect()->prepare($consulta)->execute(array(
+                    $totalDesc,
+                    $id_producto
+                ));
+            }
         } catch (Exception $e) {
-
             die($e->getMessage());
         }
     }

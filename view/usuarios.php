@@ -62,7 +62,7 @@
                     <input type="password" value="" class="form-control" id="contraseña">
                   </div>
                   <div class="d-grid gap-2 d-md-block w-100 mt-5">
-                  <button onclick="guardarCliente();" class="btn btn-success w-100" type="button">Guardar Cambios</button>
+                  <button onclick="guardarUsuarios();" class="btn btn-success w-100" type="button">Guardar Cambios</button>
                     </div>
                     <div class="d-grid gap-2 d-md-block w-100 mt-3">
                       <button onclick="eliminarCliente();" class="btn btn-danger w-100" type="button">Eliminar Cliente</button>

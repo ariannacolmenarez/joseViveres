@@ -35,7 +35,7 @@ class usuariosController extends Autoload {
         $resp = $this->model->consultar($id);
 
         $resultados [] = [
-            "nombre1"=>$resp->getnombre(),
+            "nombre"=>$resp->getnombre(),
             "correo"=>$resp->getcorreo(),
             "contraseña"=>$resp->getcontraseña(),
             "id"=>$resp->getid(),
@@ -60,13 +60,13 @@ class usuariosController extends Autoload {
     }
 
     public function registrar(){
-        if (!empty( $_POST['nombre3'] && $_POST['correo2'])) {
+        if (!empty( $_POST['nombre'] && $_POST['correo'])) {
 
 		    $p=new usuariosModel();
 
-            $p->setnombre($_POST['nombre3']);
-            $p->setcorreo($_POST['correo2']);
-            $p->setcontraseña($_POST['contraseña1']);
+            $p->setnombre($_POST['nombre']);
+            $p->setcorreo($_POST['correo']);
+            $p->setcontraseña($_POST['contraseña']);
 
 			$this->model->registrar($p);
 				
