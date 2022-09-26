@@ -46,23 +46,18 @@
           </div>
           <hr>
           <div class="row my-3">
-            <div class="col-md-3 grid-margin">
-              <select class="form-select form-select-lg  rounded-0" aria-label=".form-select-lg">
-                <option selected>Diariamente</option>
-                <option value="1">Semanalmente</option>
-                <option value="2">Mensualmente</option>
-                <option value="3">Anualmente</option>
+            <div class="col-md-4 grid-margin">
+              <select class="form-select form-select-lg  rounded-0" aria-label=".form-select-lg" id="fechas">
+                <option selected="selected" value="d">Diariamente</option>
+                <option value="s">Semanalmente</option>
+                <option value="m">Mensualmente</option>
+                <option value="a">Anualmente</option>
               </select>
             </div>
-            <div class="col-md-3 grid-margin">
-              <input class="form-control " type="date" placeholder=".form-control" aria-label=".form-control ">
+            <div class="col-md-4 grid-margin">
+              <input class="form-control " type="date" placeholder=".form-control" aria-label=".form-control " id="date">
             </div>
-            <div class="col-md-3 grid-margin">
-              <form class="d-flex" role="search">
-                <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-              </form>
-            </div>
-            <div class="col-md-3 grid-margin text-end">
+            <div class="col-md-4 grid-margin text-end">
               <button type="button" class="text-white btn btn-warning btn-icon-text ">
                 <i class="ti-download btn-icon-prepend"></i><b>Descargar reporte</b>
               </button>
@@ -74,7 +69,7 @@
                 <div class="card-body">
                   <p class="card-title text-md-center text-primary text-xl-left">Utilidad</p>
                   <div class="d-flex flex-wrap justify-content-between justify-content-md-center justify-content-xl-between align-items-center">
-                    <h3 class="mb-0 mb-md-2 mb-xl-0 order-md-1 order-xl-0">34040</h3>
+                    <h3 class="mb-0 mb-md-2 mb-xl-0 order-md-1 order-xl-0" id="utility"></h3>
                     <i class="ti-stats-up icon-md text-primary mb-0 mb-md-3 mb-xl-0"></i>
                   </div>  
                 </div>
@@ -85,7 +80,7 @@
                 <div class="card-body">
                   <p class="card-title text-md-center text-success text-xl-left">Ventas totales</p>
                   <div class="d-flex flex-wrap justify-content-between justify-content-md-center justify-content-xl-between align-items-center">
-                    <h3 class="mb-0 mb-md-2 mb-xl-0 order-md-1 order-xl-0">47033</h3>
+                    <h3 class="mb-0 mb-md-2 mb-xl-0 order-md-1 order-xl-0" id="sell"></h3>
                     <i class="ti-money icon-md text-success mb-0 mb-md-3 mb-xl-0"></i>
                   </div>  
                 </div>
@@ -96,7 +91,7 @@
                 <div class="card-body">
                   <p class="card-title text-md-center text-danger text-xl-left">Gastos totales</p>
                   <div class="d-flex flex-wrap justify-content-between justify-content-md-center justify-content-xl-between align-items-center">
-                    <h3 class="mb-0 mb-md-2 mb-xl-0 order-md-1 order-xl-0">40016</h3>
+                    <h3 class="mb-0 mb-md-2 mb-xl-0 order-md-1 order-xl-0 "id="bills"></h3>
                     <i class="ti-money icon-md text-danger mb-0 mb-md-3 mb-xl-0"></i>
                   </div>  
                 </div>
@@ -122,334 +117,13 @@
                 </ul>
                 <div class="tab-content" id="myTabContent">
                   <div class="tab-pane fade show active p-2 overflow-auto" id="home-tab-pane" role="tabpanel" aria-labelledby="home-tab" tabindex="0">
-                    <table class="table" id="example">
-                      <thead>
-                        <tr>
-                          <th>Fecha - Hora</th>
-                          <th>Concepto</th>
-                          <th>Medio de pago</th>
-                          <th>Valor</th>
-                          <th>Acciones</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        <tr>
-                          <td>25/02/22 8:30pm</td>
-                          <td>1 diablito</td>
-                          <td>tarjeta</td>
-                          <td>25,00 bs</td>
-                          <td>
-                            <div class="row">
-                              <div class="col">
-                                <button class="btn btn-outline-danger btn-rounded btn-icon">
-                                  <i class="ti-trash"></i>
-                                </button>
-                              </div>
-                              <div class="col">
-                                <button class="btn btn-outline-secondary btn-rounded btn-icon">
-                                  <i class="ti-receipt"></i>
-                                </button>
-                              </div>
-                              <div class="col">
-                                <button class="btn btn-outline-primary btn-rounded btn-icon">
-                                  <i class="ti-marker-alt"></i>
-                                </button>
-                              </div>
-                            </div>
-                          </td>
-                        </tr>
-                        <tr>
-                          <td>25/02/22 8:30pm</td>
-                          <td>1 diablito</td>
-                          <td>tarjeta</td>
-                          <td>25,00 bs</td>
-                          <td>
-                            <div class="row">
-                              <div class="col">
-                                <button class="btn btn-outline-danger btn-rounded btn-icon">
-                                  <i class="ti-trash"></i>
-                                </button>
-                              </div>
-                              <div class="col">
-                                <button class="btn btn-outline-secondary btn-rounded btn-icon">
-                                  <i class="ti-receipt"></i>
-                                </button>
-                              </div>
-                              <div class="col">
-                                <button class="btn btn-outline-primary btn-rounded btn-icon">
-                                  <i class="ti-marker-alt"></i>
-                                </button>
-                              </div>
-                            </div>
-                          </td>
-                        </tr>
-                        <tr>
-                          <td>25/02/22 8:30pm</td>
-                          <td>1 diablito</td>
-                          <td>tarjeta</td>
-                          <td>25,00 bs</td>
-                          <td>
-                            <div class="row">
-                              <div class="col">
-                                <button class="btn btn-outline-danger btn-rounded btn-icon">
-                                  <i class="ti-trash"></i>
-                                </button>
-                              </div>
-                              <div class="col">
-                                <button class="btn btn-outline-secondary btn-rounded btn-icon">
-                                  <i class="ti-receipt"></i>
-                                </button>
-                              </div>
-                              <div class="col">
-                                <button class="btn btn-outline-primary btn-rounded btn-icon">
-                                  <i class="ti-marker-alt"></i>
-                                </button>
-                              </div>
-                            </div>
-                          </td>
-                        </tr>
-                        <tr>
-                          <td>25/02/22 8:30pm</td>
-                          <td>1 diablito</td>
-                          <td>tarjeta</td>
-                          <td>25,00 bs</td>
-                          <td>
-                            <div class="row">
-                              <div class="col">
-                                <button class="btn btn-outline-danger btn-rounded btn-icon">
-                                  <i class="ti-trash"></i>
-                                </button>
-                              </div>
-                              <div class="col">
-                                <button class="btn btn-outline-secondary btn-rounded btn-icon">
-                                  <i class="ti-receipt"></i>
-                                </button>
-                              </div>
-                              <div class="col">
-                                <button class="btn btn-outline-primary btn-rounded btn-icon">
-                                  <i class="ti-marker-alt"></i>
-                                </button>
-                              </div>
-                            </div>
-                          </td>
-                        </tr>
-                        <tr>
-                          <td>25/02/22 8:30pm</td>
-                          <td>1 diablito</td>
-                          <td>tarjeta</td>
-                          <td>25,00 bs</td>
-                          <td>
-                            <div class="row">
-                              <div class="col">
-                                <button class="btn btn-outline-danger btn-rounded btn-icon">
-                                  <i class="ti-trash"></i>
-                                </button>
-                              </div>
-                              <div class="col">
-                                <button class="btn btn-outline-secondary btn-rounded btn-icon">
-                                  <i class="ti-receipt"></i>
-                                </button>
-                              </div>
-                              <div class="col">
-                                <button class="btn btn-outline-primary btn-rounded btn-icon">
-                                  <i class="ti-marker-alt"></i>
-                                </button>
-                              </div>
-                            </div>
-                          </td>
-                        </tr>
-                        <tr>
-                          <td>25/02/22 8:30pm</td>
-                          <td>1 diablito</td>
-                          <td>tarjeta</td>
-                          <td>25,00 bs</td>
-                          <td>
-                            <div class="row">
-                              <div class="col">
-                                <button class="btn btn-outline-danger btn-rounded btn-icon">
-                                  <i class="ti-trash"></i>
-                                </button>
-                              </div>
-                              <div class="col">
-                                <button class="btn btn-outline-secondary btn-rounded btn-icon">
-                                  <i class="ti-receipt"></i>
-                                </button>
-                              </div>
-                              <div class="col">
-                                <button class="btn btn-outline-primary btn-rounded btn-icon">
-                                  <i class="ti-marker-alt"></i>
-                                </button>
-                              </div>
-                            </div>
-                          </td>
-                        </tr>
-                        <tr>
-                          <td>25/02/22 8:30pm</td>
-                          <td>1 diablito</td>
-                          <td>tarjeta</td>
-                          <td>25,00 bs</td>
-                          <td>
-                            <div class="row">
-                              <div class="col">
-                                <button class="btn btn-outline-danger btn-rounded btn-icon">
-                                  <i class="ti-trash"></i>
-                                </button>
-                              </div>
-                              <div class="col">
-                                <button class="btn btn-outline-secondary btn-rounded btn-icon">
-                                  <i class="ti-receipt"></i>
-                                </button>
-                              </div>
-                              <div class="col">
-                                <button class="btn btn-outline-primary btn-rounded btn-icon">
-                                  <i class="ti-marker-alt"></i>
-                                </button>
-                              </div>
-                            </div>
-                          </td>
-                        </tr>
-                        <tr>
-                          <td>25/02/22 8:30pm</td>
-                          <td>1 diablito</td>
-                          <td>tarjeta</td>
-                          <td>25,00 bs</td>
-                          <td>
-                            <div class="row">
-                              <div class="col">
-                                <button class="btn btn-outline-danger btn-rounded btn-icon">
-                                  <i class="ti-trash"></i>
-                                </button>
-                              </div>
-                              <div class="col">
-                                <button class="btn btn-outline-secondary btn-rounded btn-icon">
-                                  <i class="ti-receipt"></i>
-                                </button>
-                              </div>
-                              <div class="col">
-                                <button class="btn btn-outline-primary btn-rounded btn-icon">
-                                  <i class="ti-marker-alt"></i>
-                                </button>
-                              </div>
-                            </div>
-                          </td>
-                        </tr>
-                        <tr>
-                          <td>25/02/22 8:30pm</td>
-                          <td>1 diablito</td>
-                          <td>tarjeta</td>
-                          <td>25,00 bs</td>
-                          <td>
-                            <div class="row">
-                              <div class="col">
-                                <button class="btn btn-outline-danger btn-rounded btn-icon">
-                                  <i class="ti-trash"></i>
-                                </button>
-                              </div>
-                              <div class="col">
-                                <button class="btn btn-outline-secondary btn-rounded btn-icon">
-                                  <i class="ti-receipt"></i>
-                                </button>
-                              </div>
-                              <div class="col">
-                                <button class="btn btn-outline-primary btn-rounded btn-icon">
-                                  <i class="ti-marker-alt"></i>
-                                </button>
-                              </div>
-                            </div>
-                          </td>
-                        </tr>
-                        <tr>
-                          <td>25/02/22 8:30pm</td>
-                          <td>1 diablito</td>
-                          <td>tarjeta</td>
-                          <td>25,00 bs</td>
-                          <td>
-                            <div class="row">
-                              <div class="col">
-                                <button class="btn btn-outline-danger btn-rounded btn-icon">
-                                  <i class="ti-trash"></i>
-                                </button>
-                              </div>
-                              <div class="col">
-                                <button class="btn btn-outline-secondary btn-rounded btn-icon">
-                                  <i class="ti-receipt"></i>
-                                </button>
-                              </div>
-                              <div class="col">
-                                <button class="btn btn-outline-primary btn-rounded btn-icon">
-                                  <i class="ti-marker-alt"></i>
-                                </button>
-                              </div>
-                            </div>
-                          </td>
-                        </tr>
-                        <tr>
-                          <td>25/02/22 8:30pm</td>
-                          <td>1 diablito</td>
-                          <td>tarjeta</td>
-                          <td>25,00 bs</td>
-                          <td>
-                            <div class="row">
-                              <div class="col">
-                                <button class="btn btn-outline-danger btn-rounded btn-icon">
-                                  <i class="ti-trash"></i>
-                                </button>
-                              </div>
-                              <div class="col">
-                                <button class="btn btn-outline-secondary btn-rounded btn-icon">
-                                  <i class="ti-receipt"></i>
-                                </button>
-                              </div>
-                              <div class="col">
-                                <button class="btn btn-outline-primary btn-rounded btn-icon">
-                                  <i class="ti-marker-alt"></i>
-                                </button>
-                              </div>
-                            </div>
-                          </td>
-                        </tr>
-                      </tbody>
-                    </table>
+                    
+                        
+                        
+                      
                   </div>
                   <div class="tab-pane fade p-2" id="profile-tab-pane" role="tabpanel" aria-labelledby="profile-tab" tabindex="0">
-                    <table class="table"id="example2">
-                    <thead>
-                        <tr>
-                          <th>Fecha - Hora</th>
-                          <th>Concepto</th>
-                          <th>Medio de pago</th>
-                          <th>Valor</th>
-                          <th>Acciones</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        <tr>
-                          <td>25/02/22 8:30pm</td>
-                          <td>1 diablito</td>
-                          <td>tarjeta</td>
-                          <td>25,00 bs</td>
-                          <td>
-                            <div class="row">
-                              <div class="col">
-                                <button class="btn btn-outline-danger btn-rounded btn-icon">
-                                  <i class="ti-trash"></i>
-                                </button>
-                              </div>
-                              <div class="col">
-                                <button class="btn btn-outline-secondary btn-rounded btn-icon">
-                                  <i class="ti-receipt"></i>
-                                </button>
-                              </div>
-                              <div class="col">
-                                <button class="btn btn-outline-primary btn-rounded btn-icon">
-                                  <i class="ti-marker-alt"></i>
-                                </button>
-                              </div>
-                            </div>
-                          </td>
-                        </tr>
-                      </tbody>
-                    </table>
+                    
                   </div>
                   <div class="tab-pane fade p-2" id="pagar-tab-pane" role="tabpanel" aria-labelledby="pagar-tab" tabindex="0">
                     <table class="table" id="example3">
@@ -536,7 +210,7 @@
             </div>
           </div>
         </div>
-        <!-- content-wrapper ends -->       
+        <!-- content-wrapper ends -->    
 
  <script>
             $(document).ready(function () {
@@ -547,6 +221,7 @@
 });
 
         </script>
+<script src="<?= _THEME_?>js/scripts/balance.js"></script>
 <?php
 require_once("view/gastos.php");
 ?>

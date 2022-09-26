@@ -14,11 +14,13 @@ class ventasModel extends Conexion{
     private $nombre;
     private $total;
     private $fecha;
+    private $hora;
     private $estado_movimiento;
     private $id_metodo_pago;
     private $id_deuda;
     private $id_persona;
     private $productos;
+    private $clientes;
     
 
     public function __construct(){
@@ -31,6 +33,14 @@ class ventasModel extends Conexion{
 
     public function setid_prod( $id_prod){
         $this->id_prod=$id_prod;
+    }
+
+    public function getclientes(){
+        return $this->clientes;
+    }
+
+    public function setclientes( $clientes){
+        $this->clientes=$clientes;
     }
 
     public function getproductos(){
@@ -137,6 +147,14 @@ class ventasModel extends Conexion{
         $this->fecha=$fecha;
     }
 
+    public function gethora(){
+        return $this->hora;
+    }
+
+    public function sethora( $hora){
+        $this->hora=$hora;
+    }
+
     public function getestado_movimiento(){
         return $this->estado_movimiento;
     }
@@ -171,7 +189,7 @@ class ventasModel extends Conexion{
 
     public function listar($opcion){
         try {
-                if (opcion != "") {
+                if ($opcion != "") {
                     $sql= "SELECT * FROM productos WHERE estado !=0 AND id_categoria = $opcion";
                 }else{
                     $sql= "SELECT * FROM productos WHERE estado !=0";
@@ -212,7 +230,7 @@ class ventasModel extends Conexion{
         }
     }
 
-    public function consultar($id){
+    public function consultarprod($id){
         try {
             $consulta= Conexion::conect()->prepare("SELECT * FROM productos WHERE id=?;");
             $consulta->execute(array($id));
@@ -229,54 +247,48 @@ class ventasModel extends Conexion{
         }
     }
 
-    // public function guardar(proveedoresModel $p){
-    //     try {
-            
-    //         $consulta="UPDATE persona SET 
-    //             nombre=?,
-    //             nro_doc=?,
-    //             tipo_doc=?,
-    //             telefono=?,
-    //             comentario=?,
-    //             estado=?,
-    //             id_tipo_persona=?
-    //             WHERE id=?;
-            
-    //         ";
-    //         Conexion::conect()->prepare($consulta)->execute(array(
-    //             $p->getnombre(),
-    //             $p->getnroDoc(),
-    //             $p->gettipoDoc(),
-    //             $p->gettelefono(),
-    //             $p->getcomentario(),
-    //             "1",
-    //             "1",
-    //             $p->getid(),
+    public function eliminar($id){
+        try {
+            $estado=0;
+            $consulta= Conexion::conect()->prepare("SELECT p.id, p.cantidad as stock, d.cantidad FROM 
+            detalles_movimientos as d, productos as p, movimientos as m WHERE m.id ='$id' AND
+             d.id_movimientos=m.id AND d.id_producto=p.id;");
+            $consulta->execute();
+            $r=$consulta->fetch(PDO::FETCH_OBJ);
+            $producto = $r->id;
+            $stock = $r->stock;
+            $cantidad = $r->cantidad;
+            $cantidadTotal= $stock + $cantidad;
 
-    //         ));
+            $consulta="UPDATE movimientos SET estado=? WHERE id=?;";
+            Conexion::conect()->prepare($consulta)->execute(array($estado,$id));
+            $consulta="UPDATE productos SET cantidad=? WHERE id=?;";
+            Conexion::conect()->prepare($consulta)->execute(array($cantidadTotal,$producto));
 
-    //     } catch (Exception $e) {
+        } catch (Exception $e) {
 
-    //         die($e->getMessage());
-    //     }
-    // }
+            die($e->getMessage());
+        }
+    }
 
     public function registrar(ventasModel $p){
         try {
             $pdo=Conexion::conect();
             $consulta="INSERT INTO movimientos(
                 total , 
-                fecha_hora,
+                fecha,
+                hora,
                 estado_movimiento,
                 estado,
                 id_concepto_movimiento,
                 id_metodo_pago,
                 id_persona)
-            VALUES (?,?,?,?,?,?,?)";
+            VALUES (?,?,?,?,?,?,?,?)";
             $consulta =$pdo->prepare($consulta);
             $execute = $consulta->execute(array(
                 $p->gettotal(),
                 $p->getfecha(),
+                $p->gethora(),
                 $p->getestado_movimiento(),
                 "1",
                 "1",
@@ -302,8 +314,7 @@ class ventasModel extends Conexion{
                 $cantidadProd = $row['value']['cantidad'];
                 $totalDesc = $cantidadProd - $cantidad;
               
-                $stmt = Conexion::conect()->prepare('INSERT INTO detalles_movimientos(precio, cantidad, estado,      
-                                        id_movimientos, id_producto)
+                $stmt = Conexion::conect()->prepare('INSERT INTO detalles_movimientos(precio, cantidad, estado,id_movimientos, id_producto)
                                         VALUES(:precio, :cantidad, :estado, :id_movimiento, :id_producto);
                                        ');
               
@@ -327,34 +338,22 @@ class ventasModel extends Conexion{
         }
     }
 
-    // public function eliminar($id){
-    //     try {
-    //         $estado=0;
-    //         $consulta="UPDATE persona SET estado=? WHERE id=?;";
-    //         Conexion::conect()->prepare($consulta)->execute(array($estado,$id));
+    public function buscar($busqueda){
+        try {
 
-    //     } catch (Exception $e) {
+            $consulta="SELECT * FROM productos WHERE estado =? AND nombre LIKE '%$busqueda%' 
+            OR precio_venta LIKE '%$busqueda%'";
 
-    //         die($e->getMessage());
-    //     }
-    // }
+            $consulta= Conexion::conect()->prepare($consulta);
+            $consulta->setFetchMode(PDO::FETCH_ASSOC);
+            $consulta->execute(array("1"));
+            return $consulta;
 
-    // public function buscar($busqueda){
-    //     try {
+        } catch (Exception $e) {
 
-    //         $consulta="SELECT * FROM persona WHERE estado =? AND nombre LIKE '%$busqueda%' 
-    //         OR telefono LIKE '%$busqueda%'";
-
-    //         $consulta= Conexion::conect()->prepare($consulta);
-    //         $consulta->setFetchMode(PDO::FETCH_ASSOC);
-    //         $consulta->execute(array("1"));
-    //         return $consulta;
-
-    //     } catch (Exception $e) {
-
-    //         die($e->getMessage());
-    //     }
-    // }
+            die($e->getMessage());
+        }
+    }
 
 
 }

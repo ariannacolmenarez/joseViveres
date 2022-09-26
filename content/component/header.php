@@ -127,7 +127,7 @@
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#">
+            <a class="nav-link" href="<?= _DIRECTORY_ ?>inventario">
               <i class="ti-view-list-alt menu-icon"></i>
               <span class="menu-title">Gestionar Inventario</span>
             </a>

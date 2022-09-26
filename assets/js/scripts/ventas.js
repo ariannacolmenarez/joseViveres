@@ -3,11 +3,9 @@ $(document).ready(function () {
    listarCategorias();    
 });
  
-// function limpiar(){
-//     $('input').val("");
-//     $('select').val("");
-//     $('textarea').val("");
-// };
+$("#cat").on("change",function(){
+    listar($("#cat").val());
+});
 
 $("#confirmar").on("click",function(){
   if (canasta.length !== 0) {
@@ -229,46 +227,17 @@ function listarCategorias(){
     });
 }
 
-// function guardarProveedor(){
-//     var id = $("#id").val();
-//     var nombre = $("#nombre").val();
-//     var telefono = $("#telefono").val();
-//     var nro_doc = $("#nro_doc").val();
-//     var tipo_doc= $("#tipo_doc").val();
-//     var comentario = $("#comentario").val();
-
-//     var parametros = {
-//         "nombre" : nombre,
-//         "telefono" : telefono,
-//         "nro_doc" : nro_doc,
-//         "tipo_doc" : tipo_doc,
-//         "comentario" : comentario,
-//         "id" : id
-//     };
-//     $.ajax({
-//         data:  parametros, //datos que se envian a traves de ajax
-//         url:   'proveedores/guardar', //archivo que recibe la peticion
-//         type:  'POST', //método de envio
-//         success:  function (response) {
-//             $('#exampleModalToggle11').modal('hide');    
-//             listar();
-                
-//         },
-//         error: (response) => {
-//             console.log(response);
-//         }
-//     });
-// }
-
 function registrarVenta(){
 
     var estado = $('input[name=btnradio]:checked', '#estado').val();
     var fecha = $("#fecha").val();
+    var hora = $("#hora").val();
     var metodo = $('input[name=options]:checked', '#metodo').val();
     var cliente = $("#clien").val();
     var suma = canasta.map(item => parseFloat(item[0].total)).reduce((prev, curr) => prev + curr);     
     var parametros = {
         "fecha" : fecha,
+        "hora" : hora,
         "estado" : estado,
         "metodo" : metodo,
         "cliente" : cliente,
@@ -283,7 +252,7 @@ function registrarVenta(){
         data: {parametros: parametros, data: locations},
         success:  function (response) {
             alert("guardado");
-            listar();
+            listar("");
             vaciarCanasta();
             $('#exampleModal').modal('hide');         
         },
@@ -293,49 +262,27 @@ function registrarVenta(){
     });
 }
 
-
-// function eliminarProveedor(){
-//     var id = $("#id").val();
-
-//     var parametro = {"id" : id};
-//     $.ajax({
-//         data:  parametro, //datos que se envian a traves de ajax
-//         url:   'proveedores/eliminar', //archivo que recibe la peticion
-//         type:  'POST', //método de envio
-//         success:  function (response) { //una vez que el archivo recibe el request lo procesa y lo devuelve
-//             $('#exampleModalToggle11').modal('hide');    
-//             listar();
-                
-//         },
-//         error: (response) => {
-//             console.log(response);
-//         }
-//     });
-// }
-
-// $("#buscador").on("keyup",function(e) {
-//     e.preventDefault();
-//     var busqueda = $("#buscador").val();
-//     if (busqueda !== "") {
-//         var parametro = {"busqueda" : busqueda};
-//         $.ajax({
-//             data:  parametro, //datos que se envian a traves de ajax
-//             url:   'proveedores/buscar', //archivo que recibe la peticion
-//             type:  'POST', //método de envio
-//             success:  function (response) {
-//                 $("#proveedor").html(response);
-//                 $('#exampleModalToggle10').modal('show');
-
-//             },
-//             error: (response) => {
-//                 console.log(response);
-//             }
-//         });  
-//     }else{
-//         listar();
-//     }
+$("#search").on("keyup",function(e) {
+    e.preventDefault();
+    var busqueda = $("#search").val();
+    if (busqueda !== "") {
+        var parametro = {"busqueda" : busqueda};
+        $.ajax({
+            data:  parametro, 
+            url:   'ventas/buscar', 
+            type:  'POST', 
+            success:  function (response) {
+                $("#lista_prod").html(response);
+            },
+            error: (response) => {
+                console.log(response);
+            }
+        });  
+    }else{
+        listar("");
+    }
 
     
-// })
+})
     
 

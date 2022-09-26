@@ -1,6 +1,4 @@
-<?php
-     require_once "../content/component/header.php"
-     ?>
+
      <!-- partial -->
       <div class="main-panel">
         <div class="content-wrapper">
@@ -16,7 +14,7 @@
                     </button>
                 </div>
                 <div class="col-lg-2 col-sm-4 col-3 grid-margin mb-0">
-                  <button type="button" class="text-white btn btn-warning  mt-2 btn-icon-text" data-bs-target="#exampleModalToggle4" data-bs-toggle="modal">
+                  <button type="button" class="text-white btn btn-warning  mt-2 btn-icon-text" onclick="aggProd();">
                     <i class="ti-plus btn-icon-prepend text-dark"></i><b class="text text-dark">Agregar productos</b>
                   </button>
               </div>
@@ -29,7 +27,7 @@
                     <div class="row ">
                         <div class="col-md-7 grid-margin">
                             <form class="d-flex" role="search">
-                            <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                            <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" id="search">
                             </form>
                         </div>    
                         <div class="col grid-margin text-end">
@@ -48,7 +46,7 @@
                                         </div>
                                         <div class="col-md-9 col-6 col-sm-8">
                                             <h6 class="text-secondary">Total productos</h6>
-                                            <h4><b>44</b></h4>
+                                            <h4 class="text-center"><b id="totalProd"></b></h4>
                                         </div>
                                     </div>                                    
                                 </div> 
@@ -65,122 +63,25 @@
                                     <div style="height: 100%;" class=" text-dark vr"></div>
                                 </div>
                                 <div class="col p-1">
-                                    <select class="form-select btn-outline-dark rounded-0" aria-label=".form-select">
-                                        <option selected>Ver todas las categorías</option>
-                                        <option value="1">Semanalmente</option>
-                                        <option value="2">Mensualmente</option>
-                                        <option value="3">Anualmente</option>
+                                    <select class="form-select btn-outline-dark rounded-0" aria-label=".form-select" id="catProd">
+                                        <option selected="selected" value="">Ver todas las categorías</option>
+                                        >
                                     </select>
                                 </div>
                             </div>                            
                         </div>
                     </div>
-                    <div class="row row-cols-1 row-cols-lg-8 row-cols-sm-6 g-3 overflow-auto m-0" style="height: 600px;">
-                        <div class="col p-1 ">
-                            <div class="card h-100">
-                            <img src="../assets/images/MP.png" class="p-3 card-img-top " alt="...">
-                            <div class="card-body text-center">
-                                <h6 class="card-title text-success">Nombre</h6>
-                                <p class="card-text">$$$$$$$ </p>
-                                <h6 class="text-muted">stock</h6>                            </div>
-                            </div>
-                        </div>
-                        <div class="col p-1 ">
-                            <div class="card h-100">
-                            <img src="../assets/images/MP.png" class="p-3 card-img-top " alt="...">
-                            <div class="card-body text-center">
-                                <h6 class="card-title text-success">Nombre</h6>
-                                <p class="card-text">$$$$$$$ </p>
-                                <h6 class="text-muted">stock</h6>                            </div>
-                            </div>
-                        </div>
-                        <div class="col p-1 ">
-                            <div class="card h-100">
-                            <img src="../assets/images/MP.png" class="p-3 card-img-top " alt="...">
-                            <div class="card-body text-center">
-                                <h6 class="card-title text-success">Nombre</h6>
-                                <p class="card-text">$$$$$$$ </p>
-                                <h6 class="text-muted">stock</h6>                            </div>
-                            </div>
-                        </div>
-                        <div class="col p-1 ">
-                            <div class="card h-100">
-                            <img src="../assets/images/MP.png" class="p-3 card-img-top " alt="...">
-                            <div class="card-body text-center">
-                                <h6 class="card-title text-success">Nombre</h6>
-                                <p class="card-text">$$$$$$$ </p>
-                                <h6 class="text-muted">stock</h6>                            </div>
-                            </div>
-                        </div>
-                        <div class="col p-1 ">
-                            <div class="card h-100">
-                            <img src="../assets/images/MP.png" class="p-3 card-img-top " alt="...">
-                            <div class="card-body text-center">
-                                <h6 class="card-title text-success">Nombre</h6>
-                                <p class="card-text">$$$$$$$ </p>
-                                <h6 class="text-muted">stock</h6>                            </div>
-                            </div>
-                        </div>
-                        <div class="col p-1 ">
-                            <div class="card h-100">
-                            <img src="../assets/images/MP.png" class="p-3 card-img-top " alt="...">
-                            <div class="card-body text-center">
-                                <h6 class="card-title text-success">Nombre</h6>
-                                <p class="card-text">$$$$$$$ </p>
-                                <h6 class="text-muted">stock</h6>                            </div>
-                            </div>
-                        </div>
-                        <div class="col p-1 ">
-                            <div class="card h-100">
-                            <img src="../assets/images/MP.png" class="p-3 card-img-top " alt="...">
-                            <div class="card-body text-center">
-                                <h6 class="card-title text-success">Nombre</h6>
-                                <p class="card-text">$$$$$$$ </p>
-                                <h6 class="text-muted">stock</h6>                            </div>
-                            </div>
-                        </div>
-                        <div class="col p-1 ">
-                            <div class="card h-100">
-                            <img src="../assets/images/MP.png" class="p-3 card-img-top " alt="...">
-                            <div class="card-body text-center">
-                                <h6 class="card-title text-success">Nombre</h6>
-                                <p class="card-text">$$$$$$$ </p>
-                                <h6 class="text-muted">stock</h6>                            </div>
-                            </div>
-                        </div>
-                        <div class="col p-1 ">
-                            <div class="card h-100">
-                            <img src="../assets/images/MP.png" class="p-3 card-img-top " alt="...">
-                            <div class="card-body text-center">
-                                <h6 class="card-title text-success">Nombre</h6>
-                                <p class="card-text">$$$$$$$ </p>
-                                <h6 class="text-muted">stock</h6>                            </div>
-                            </div>
-                        </div>
-                        <div class="col p-1 ">
-                            <div class="card h-100">
-                            <img src="../assets/images/MP.png" class="p-3 card-img-top " alt="...">
-                            <div class="card-body text-center">
-                                <h6 class="card-title text-success">Nombre</h6>
-                                <p class="card-text">$$$$$$$ </p>
-                                <h6 class="text-muted">stock</h6>                            </div>
-                            </div>
-                        </div>
+                    <div class="row row-cols-1 row-cols-lg-8 row-cols-sm-6 g-3 overflow-auto m-0" style="height: 600px;" id="lista_producto">
+                        
                     </div>
 
                 </div>
             </div>
         </div>
         <!-- content-wrapper ends -->
-
-
-
-
 </div>
- <?php
- require_once "../content/component/footer.php";
- require_once "./editarCategorias.php";
- require_once "./categoria.php";
- require_once "./aggProductos.php";
+<script src="<?= _THEME_?>js/scripts/inventario.js"></script>
+<?php
+require_once("view/aggProductos.php");
 
- ?>
+?>

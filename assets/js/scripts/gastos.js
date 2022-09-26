@@ -1,35 +1,22 @@
-$("#volver11").on("click", function() {
-    $('#exampleModalToggle11').modal('hide');
-});
-
-$("#volver12").on("click", function() {
-    limpiar();
-});
-
 $("#close").on("click", function() {
-    limpiar();
+    window.location.reload();
 });
 
 $("#gastos").on("click", function(e) {
     listarCategorias();
+    listarProveedores();
 });
-
-function limpiar(){
-    $('input').val("");
-    $('select').val("");
-    $('textarea').val("");
-};
-
-
 
 
 function listarCategorias(){
 
     $.ajax({
         type: "POST",
-        url: "gastos/consultarCategorias",
-        success: function (data) {
-            $("#categorias").html(data);
+        url: "gastos/listarCategorias",
+        dataType: "html",
+        success: function (response) {
+            console.log(response);
+            $('#cat').prepend(response);
             $('#exampleModalToggle2').modal('show');
         },
         error: (response) => {
@@ -38,7 +25,22 @@ function listarCategorias(){
     });
 
 };
+function listarProveedores(){
 
+    $.ajax({
+        type: "POST",
+        url: "gastos/listarProveedores",
+        dataType: "html",
+        success: function (response) {
+            console.log(response);
+            $('#proveedorv').prepend(response);
+        },
+        error: (response) => {
+            console.log(response);
+        }
+    });
+
+};
 
 // function consultar (id) {
 //     $.ajax({
@@ -94,35 +96,41 @@ function listarCategorias(){
 //     });
 // }
 
-// function registrarProveedor(){
-//     var nombre = $("#nombreR").val();
-//     var telefono = $("#telefonoR").val();
-//     var nro_doc = $("#nro_docR").val();
-//     var tipo_doc= $("#tipo_docR").val();
-//     var comentario = $("#comentarioR").val();
+function registrarGasto(){
+    var nombre = $("#nombrev").val();
+    var estado = $('input[name=estado]:checked', '#estadov').val();
+    var categoria = $("#cat").val();
+    var fecha= $("#fechav").val();
+    var hora= $("#horav").val();
+    var monto = $("#montov").val();
+    var proveedor = $("#proveedorv").val();
+    var metodo = $('input[name=metodo]:checked', '#metodov').val();
 
-    
-//     var parametros = {
-//         "nombre" : nombre,
-//         "telefono" : telefono,
-//         "nro_doc" : nro_doc,
-//         "tipo_doc" : tipo_doc,
-//         "comentario" : comentario,
-//     };
-//     $.ajax({
-//         data:  parametros, //datos que se envian a traves de ajax
-//         url:   'proveedores/registrar', //archivo que recibe la peticion
-//         type:  'POST', //método de envio
-//         success:  function (response) { //una vez que el archivo recibe el request lo procesa y lo devuelve
-//             $('#exampleModalToggle12').modal('hide');
-//             limpiar();    
-//             listar();
-                
-//         },error: (response) => {
-//             console.log(response);
-//         }
-//     });
-// }
+    console.log(parametros)
+    var parametros = {
+        "nombre" : nombre,
+        "estado" : estado,
+        "categoria" : categoria,
+        "fecha" : fecha,
+        "hora" : hora,
+        "proveedor" : proveedor,
+        "monto" : monto,
+        "metodo" : metodo,
+    };
+    console.log(parametros);
+    $.ajax({
+        data:  parametros, 
+        url:   'gastos/registrar', //archivo que recibe la peticion
+        type:  'POST', //método de envio
+        success:  function (response) { //una vez que el archivo recibe el request lo procesa y lo devuelve
+            alert("registrado correctamente")
+            $('#exampleModalToggle2').modal('hide');  
+            window.location.reload();  
+        },error: (response) => {
+            console.log(response);
+        }
+    });
+}
 
 // function eliminarProveedor(){
 //     var id = $("#id").val();

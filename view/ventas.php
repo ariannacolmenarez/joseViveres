@@ -16,13 +16,13 @@
                     <div class="row ">
                         <div class="col-md-5 grid-margin">
                             <select class="form-select form-select-lg  rounded-0" aria-label=".form-select-lg" id="cat">
-                            <option value="" selected>Categorías</option>
+                            <option value="" selected="selected">Categorías</option>
                             
                             </select>
                         </div>
                         <div class="col-md-7 grid-margin">
                             <form class="d-flex" role="search">
-                            <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                            <input class="form-control me-2" type="search" id="search" placeholder="Search" aria-label="Search">
                             </form>
                         </div>
                     </div>
@@ -75,14 +75,18 @@
                 </div>
                 <div class="modal-body">
                     <div class="btn-group-lg text-center" role="group" aria-label="Basic radio toggle button group" id="estado">
-                        <input type="radio" class="btn-check " name="btnradio" id="btnradio1" autocomplete="off" value="pagada" checked>
+                        <input type="radio" class="btn-check " name="btnradio" id="btnradio1" autocomplete="off" value="PAGADA" checked>
                         <label class="btn btn-outline-success" for="btnradio1">Pagada</label>
-                        <input type="radio" class="btn-check " name="btnradio" id="btnradio2" autocomplete="off" value="a credito">
+                        <input type="radio" class="btn-check " name="btnradio" id="btnradio2" autocomplete="off" value="A CREDITO">
                         <label class="btn btn-outline-danger" for="btnradio2">A crédito</label>
                     </div>
                     <div class="form-group mt-5">
                         <h5>Fecha de la venta *</h5>
-                        <input type="date" class="form-control form-control-lg" id="fecha" placeholder="Fecha de la Venta" id="fecha">
+                        <input type="date" class="form-control form-control-lg" id="fecha" placeholder="Fecha de la Venta" id="fecha" value="<?php echo date("Y-m-d");?>">
+                    </div>
+                    <div class="form-group mt-5">
+                        <h5>Hora de la venta *</h5>
+                        <input type="time" class="form-control form-control-lg" id="hora" placeholder="Hora de la Venta" id="hora"value="<?php ini_set('date.timezone','America/Caracas'); echo date("H:i");?>">
                     </div>
                     <h5 class="mt-5">Método de pago*</h5>
                     <div class="btn-group-md text-center" role="group" id="metodo">
@@ -102,7 +106,7 @@
                     <div class="mt-5 form-group ">
                         <h5>Agregar un cliente <small>(opcional)</small></h5>
                         <select class="form-select  mb-3 shadow-none" aria-label=".form-select example" id="clien">
-                            <option value="" selected>clientes</option>
+                            <option value="" selected="selected">clientes</option>
                         
                         </select>
                     </div>
@@ -116,6 +120,8 @@
             </div>
         </div>
         <!-- modal ends -->
+
+        
 </div>
 
  <script src="<?= _THEME_?>js/scripts/ventas.js"></script>
