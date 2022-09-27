@@ -10,8 +10,8 @@ class inventarioController extends Autoload {
     }
 
     function inventario(){
-        $data['page_tag'] = "Balance | Market MP";
-        $data['page_title'] = "Balance";
+        $data['page_tag'] = "Inventario | Market MP";
+        $data['page_title'] = "Inventario";
         parent::getView("inventario", $data);
     }
 

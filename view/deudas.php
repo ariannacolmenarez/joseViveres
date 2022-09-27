@@ -1,7 +1,4 @@
-<?php
-     require_once "../content/component/header.php"
-     ?>
-     <!-- partial -->
+<!-- partial -->
       <div class="main-panel">
         <div class="content-wrapper">
           <div class="row py-0">
@@ -161,11 +158,5 @@
           </div>
         </div>
         <!-- content-wrapper ends -->       
- <?php
- require_once "../content/component/footer.php";
- require_once "./ventaLibre.php";
- require_once "./gastos.php";
- require_once "./deudasPagar.php";
- require_once "./deudasCobrar.php";
- ?>
+
 

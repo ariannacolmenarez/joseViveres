@@ -115,13 +115,13 @@
       <nav class="sidebar sidebar-offcanvas" id="sidebar">
         <ul class="nav">
           <li class="nav-item">
-            <a class="nav-link" href="#">
+            <a class="nav-link" href="<?= _DIRECTORY_ ?>">
               <img src="<?=_THEME_?>/images/MP.png"  class="img-fluid" />
             </a>
           </li>
           
           <li class="nav-item">
-            <a class="nav-link" href="index.html">
+            <a class="nav-link" href="<?= _DIRECTORY_ ?>">
               <i class="ti-receipt menu-icon"></i>
               <span class="menu-title">Gestionar Balance</span>
             </a>
@@ -133,7 +133,7 @@
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#">
+            <a class="nav-link" href="<?= _DIRECTORY_ ?>deudas">
               <i class="ti-agenda menu-icon"></i>
               <span class="menu-title">Gestionar Deudas</span>
             </a>
