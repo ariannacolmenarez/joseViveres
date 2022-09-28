@@ -160,3 +160,40 @@ function aggAbonoPago(id,tipo){
     })
 }
 
+function eliminarDC(){
+    var id = $("#id").val();
+
+    var parametro = {"id" : id};
+    $.ajax({
+        data:  parametro, //datos que se envian a traves de ajax
+        url:   'deudas/eliminar', //archivo que recibe la peticion
+        type:  'POST', //método de envio
+        success:  function (response) { //una vez que el archivo recibe el request lo procesa y lo devuelve
+            $('#exampleModalToggle14').modal('hide');    
+            Window.location.reload();
+                
+        },
+        error: (response) => {
+            console.log(response);
+        }
+    });
+}
+function eliminarDP(){
+    var id = $("#id").val();
+
+    var parametro = {"id" : id};
+    $.ajax({
+        data:  parametro, //datos que se envian a traves de ajax
+        url:   'deudas/eliminar', //archivo que recibe la peticion
+        type:  'POST', //método de envio
+        success:  function (response) { //una vez que el archivo recibe el request lo procesa y lo devuelve
+            $('#exampleModalToggle18').modal('hide');    
+            Window.location.reload();
+                
+        },
+        error: (response) => {
+            console.log(response);
+        }
+    });
+}
+

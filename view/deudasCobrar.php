@@ -59,9 +59,9 @@
                 <div class="d-grid gap-2 d-md-block w-100">
                   <div class="row text-center">
                     <div class="col">
-                      <button class="btn btn-danger btn-rounded btn-icon">
+                      <button onclick="eliminarDC();" class="btn btn-danger btn-rounded btn-icon">
                       <i class="ti-trash"></i> 
-                      </button><br><small class="text-danger">Eliminar</small>
+                      </button><br><small class="text-danger" >Eliminar</small>
                     </div>
                     <div class="col">
                       <button class="btn btn-secondary btn-rounded btn-icon">

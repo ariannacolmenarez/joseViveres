@@ -23,7 +23,7 @@
           </div>
           <hr>
             <div class="row m-0" >
-                <div class="col-12">
+                <div class="col-12" id="contend">
                     <div class="row ">
                         <div class="col-md-7 grid-margin">
                             <form class="d-flex" role="search">
@@ -52,7 +52,7 @@
                                 </div> 
                             </div>
                         </div>
-                        <div class="col-8 text-end">
+                        <div class="col-8 text-end" >
                             <div class="row  text-end">
                                 <div class="col p-1">
                                     <button type="button" class=" btn btn-outline-dark " id="editarCat">

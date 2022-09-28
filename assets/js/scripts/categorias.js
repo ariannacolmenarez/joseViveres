@@ -16,7 +16,7 @@ function limpiar(){
     $('input').val("");
     $('select').val("");
     $('textarea').val("");
-};
+}
 
 function listarCatProd(){
     
@@ -24,10 +24,7 @@ function listarCatProd(){
         $("#list_cat").html(data);
         $('#exampleModalToggle5').modal('show');
     });
-};
-
-
-
+}
 
 // function listarproveedores(){
     
@@ -46,7 +43,7 @@ function editarCat (id) {
         success: function (response) {
             $("#idcatE").val(response[0].id);
             $("#nombrecatE").val(response[0].nombre);
-            listarProdCat(response[0].id);
+            listarProdCat(id);
             $('#exampleModalToggle6').modal('show');
         },
         error: (response) => {
@@ -64,44 +61,43 @@ function listarProdCat(id){
         success: function (response) {
             console.log(response)
             $("#list_prod").html(response);
-            
         },
         error: (response) => {
-            console.log(response);
+            console.log("response");
         }
     });
 }
 
-function guardarProveedor(){
-    var id = $("#id").val();
-    var nombre = $("#nombre").val();
-    var telefono = $("#telefono").val();
-    var nro_doc = $("#nro_doc").val();
-    var tipo_doc= $("#tipo_doc").val();
-    var comentario = $("#comentario").val();
+// function guardarProveedor(){
+//     var id = $("#id").val();
+//     var nombre = $("#nombre").val();
+//     var telefono = $("#telefono").val();
+//     var nro_doc = $("#nro_doc").val();
+//     var tipo_doc= $("#tipo_doc").val();
+//     var comentario = $("#comentario").val();
 
-    var parametros = {
-        "nombre" : nombre,
-        "telefono" : telefono,
-        "nro_doc" : nro_doc,
-        "tipo_doc" : tipo_doc,
-        "comentario" : comentario,
-        "id" : id
-    };
-    $.ajax({
-        data:  parametros, //datos que se envian a traves de ajax
-        url:   'proveedores/guardar', //archivo que recibe la peticion
-        type:  'POST', //método de envio
-        success:  function (response) {
-            $('#exampleModalToggle11').modal('hide');    
-            listarproveedores();
+//     var parametros = {
+//         "nombre" : nombre,
+//         "telefono" : telefono,
+//         "nro_doc" : nro_doc,
+//         "tipo_doc" : tipo_doc,
+//         "comentario" : comentario,
+//         "id" : id
+//     };
+//     $.ajax({
+//         data:  parametros, //datos que se envian a traves de ajax
+//         url:   'proveedores/guardar', //archivo que recibe la peticion
+//         type:  'POST', //método de envio
+//         success:  function (response) {
+//             $('#exampleModalToggle11').modal('hide');    
+//             listarproveedores();
                 
-        },
-        error: (response) => {
-            console.log(response);
-        }
-    });
-}
+//         },
+//         error: (response) => {
+//             console.log(response);
+//         }
+//     });
+// }
 
 function registrarCategorias(){
     var nombre = $("#nombreC").val();
@@ -113,7 +109,7 @@ function registrarCategorias(){
         success:  function (response) { //una vez que el archivo recibe el request lo procesa y lo devuelve
             $('#exampleModalToggle3').modal('hide');
             limpiar(); 
-            document.location.reload();
+            location.reload();
         },error: (response) => {
             console.log(response);
 
@@ -121,18 +117,14 @@ function registrarCategorias(){
     });
 }
 
-function eliminarProveedor(){
-    var id = $("#id").val();
+function eliminarProd(id){
 
-    var parametro = {"id" : id};
     $.ajax({
-        data:  parametro, //datos que se envian a traves de ajax
-        url:   'proveedores/eliminar', //archivo que recibe la peticion
+        url:   'categorias/eliminarProd/'+id, //archivo que recibe la peticion
         type:  'POST', //método de envio
         success:  function (response) { //una vez que el archivo recibe el request lo procesa y lo devuelve
-            $('#exampleModalToggle11').modal('hide');    
-            listarproveedores();
-                
+            $('#exampleModalToggle6').modal('hide');    
+            //location.reload();
         },
         error: (response) => {
             console.log(response);

@@ -108,14 +108,11 @@ class categoriasModel extends Conexion{
         }
     }
 
-    public function eliminar($id){
+    public function eliminarProd($id){
         try {
-            $estado=0;
-            $consulta="UPDATE persona SET estado=? WHERE id=?;";
-            Conexion::conect()->prepare($consulta)->execute(array($estado,$id));
-
+            $consulta="UPDATE productos SET id_categoria='' WHERE id=?;";
+            Conexion::conect()->prepare($consulta)->execute(array($id));
         } catch (Exception $e) {
-
             die($e->getMessage());
         }
     }

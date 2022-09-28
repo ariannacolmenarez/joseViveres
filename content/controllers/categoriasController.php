@@ -70,15 +70,16 @@ class categoriasController extends Autoload {
               </div>
             </div>
               <div class="col-2 text-end">
-                <button class="btn btn-outline-danger btn-rounded btn-icon" onclick="eliminarProdCat('.$regist['id'].');">
+                <button class="btn btn-outline-danger btn-rounded btn-icon" onclick="eliminarProd('.$regist['id'].');">
                   <i class="ti-trash"></i>
                 </button>
-              </div>';
-            };
+              </div>
+              <hr>';
+        };
 
       $data .= '</div>';
 
-    echo $data;
+      echo json_encode($data);
     }
 
     public function guardar(){
@@ -109,8 +110,8 @@ class categoriasController extends Autoload {
 		    }
     }
 
-    public function eliminar(){
-			$this->model->eliminar($_POST['id']);
+    public function eliminarProd(){
+			$this->model->eliminarProd($_POST['id']);
    	}
 
     public function buscar(){

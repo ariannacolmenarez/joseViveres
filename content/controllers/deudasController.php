@@ -19,13 +19,13 @@ class deudasController extends Autoload {
         $data = '';
   
         $respuesta = $this->model->listarDeudasPagar();
-  
+        $respuesta2=$this->model->totalPagar();
           foreach ($respuesta as $regist) {
                   if ($regist['cant'] > 0) {
-                      $data.= '<a type="button" onclick="editarDeudaPagar('.$regist['id'].','.$regist['total'].','.$regist['cant'].');" class="list-group-item text-dark list-group-item-action py-3">
+                      $data.= '<a type="button" onclick="editarDeudaPagar('.$regist['id'].','.$regist['suma'].','.$regist['cant'].');" class="list-group-item text-dark list-group-item-action py-3">
                                 <div class="row align-items-center"><div class="col-1 text-secondary fs-4"><span class="badge bg-secondary rounded-pill">'.$regist['cant'].'</span></div>
                                     <div class="col px-4 text-dark fs-5">'.$regist['nombre'].'</div>
-                                    <div class="col text-end text-secondary fs-5">'.$regist['total'].'</div>
+                                    <div class="col text-end text-secondary fs-5">'.$regist['suma'].'</div>
                                     <div class="col text-end"><i class="ti-more-alt fa-2x"></i></div>
                                 </div> 
                               </a>';
@@ -36,11 +36,11 @@ class deudasController extends Autoload {
   
         $data .= '';
 
-        $respuesta2=$this->model->totalPagar();
+        
   
         echo json_encode([
             'data' => $data,
-            'total' => $respuesta2["SUM(total)"]
+            'total' => $respuesta2["suma"]
         ]);
     }
 
@@ -52,10 +52,10 @@ class deudasController extends Autoload {
   
           foreach ($respuesta as $regist) {
                   if ($regist['cant'] > 0) {
-                      $data.= '<a type="button" onclick="editarDeudaCobrar('.$regist['id'].','.$regist['total'].','.$regist['cant'].');" class="list-group-item text-dark list-group-item-action py-3">
+                      $data.= '<a type="button" onclick="editarDeudaCobrar('.$regist['id'].','.$regist['suma'].','.$regist['cant'].');" class="list-group-item text-dark list-group-item-action py-3">
                                 <div class="row align-items-center"><div class="col-1 text-secondary fs-4"><span class="badge bg-secondary rounded-pill">'.$regist['cant'].'</span></div>
                                     <div class="col px-4 text-dark fs-5">'.$regist['nombre'].'</div>
-                                    <div class="col text-end text-secondary fs-5">'.$regist['total'].'</div>
+                                    <div class="col text-end text-secondary fs-5">'.$regist['suma'].'</div>
                                     <div class="col text-end"><i class="ti-more-alt fa-2x"></i></div>
                                 </div> 
                               </a>';
@@ -70,7 +70,7 @@ class deudasController extends Autoload {
   
         echo json_encode([
             'data' => $data,
-            'total' => $respuesta2["SUM(total)"]
+            'total' => $respuesta2["suma"]
         ]);
     }
 
@@ -169,5 +169,9 @@ class deudasController extends Autoload {
 
         }
     }
+
+    public function eliminar(){
+        $this->model->eliminar($_POST['id']);
+   }
 }
 ?>
