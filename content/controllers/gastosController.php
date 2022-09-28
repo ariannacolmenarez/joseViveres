@@ -67,7 +67,6 @@ class gastosController extends Autoload {
         $p->setid_persona($proveedor);
         $p->setconcepto($_POST['categoria']);
         $p->setnombre($_POST['nombre']);
-        $p->setid_deuda(NULL);
 
         $this->model->registrar($p);
     

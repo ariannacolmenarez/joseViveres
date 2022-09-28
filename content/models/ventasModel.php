@@ -273,66 +273,66 @@ class ventasModel extends Conexion{
 
     public function registrar(ventasModel $p){
         try {
+            
             $pdo=Conexion::conect();
-            $consulta="INSERT INTO movimientos(
-                total , 
-                fecha,
-                hora,
-                estado_movimiento,
-                estado,
-                id_concepto_movimiento,
-                id_metodo_pago,
-                id_persona)
-            VALUES (?,?,?,?,?,?,?,?)";
-            $consulta =$pdo->prepare($consulta);
-            $execute = $consulta->execute(array(
-                $p->gettotal(),
-                $p->getfecha(),
-                $p->gethora(),
-                $p->getestado_movimiento(),
-                "1",
-                "1",
-                $p->getid_metodo_pago(),
-                $p->getid_persona()
-            ));
-            if ($execute) {
-                $lastInsertId = $pdo->lastInsertId();
-            }else{
-                 $lastInsertId = 0;
-                 echo $consulta->errorInfo()[2];
-            }
-            var_dump($lastInsertId);
-            var_dump($p->getproductos());
-            
-            foreach ($p->getproductos() as $row) {
-            
-                $precio = $row['value']['precio_venta'];
-                $cantidad = $row['value']['agregado'];
-                $estado = 1;
-                $id_mov = $lastInsertId;
-                $id_producto = $row['value']['id'];
-                $cantidadProd = $row['value']['cantidad'];
-                $totalDesc = $cantidadProd - $cantidad;
-              
-                $stmt = Conexion::conect()->prepare('INSERT INTO detalles_movimientos(precio, cantidad, estado,id_movimientos, id_producto)
-                                        VALUES(:precio, :cantidad, :estado, :id_movimiento, :id_producto);
-                                       ');
-              
-                $stmt->execute([':precio' => $precio,
-                                ':cantidad' => $cantidad,
-                                ':estado' => $estado,
-                                ':id_movimiento' => $id_mov,
-                                ':id_producto' => $id_producto
-                                ]);
-                $consulta="UPDATE productos SET 
-                cantidad=?
-                WHERE id=?;";
-
-                Conexion::conect()->prepare($consulta)->execute(array(
-                    $totalDesc,
-                    $id_producto
+                $consulta="INSERT INTO movimientos(
+                    total , 
+                    fecha,
+                    hora,
+                    estado_movimiento,
+                    estado,
+                    id_concepto_movimiento,
+                    id_metodo_pago,
+                    id_persona)
+                VALUES (?,?,?,?,?,?,?,?)";
+                $consulta =$pdo->prepare($consulta);
+                $execute = $consulta->execute(array(
+                    $p->gettotal(),
+                    $p->getfecha(),
+                    $p->gethora(),
+                    $p->getestado_movimiento(),
+                    "1",
+                    "1",
+                    $p->getid_metodo_pago(),
+                    $p->getid_persona(),
                 ));
-            }
+                if ($execute) {
+                    $lastInsertId = $pdo->lastInsertId();
+                }else{
+                    $lastInsertId = 0;
+                    echo $consulta->errorInfo()[2];
+                }
+                
+                foreach ($p->getproductos() as $row) {
+                
+                    $precio = $row['value']['precio_venta'];
+                    $cantidad = $row['value']['agregado'];
+                    $estado = 1;
+                    $id_mov = $lastInsertId;
+                    $id_producto = $row['value']['id'];
+                    $cantidadProd = $row['value']['cantidad'];
+                    $totalDesc = $cantidadProd - $cantidad;
+                
+                    $stmt = Conexion::conect()->prepare('INSERT INTO detalles_movimientos(precio, cantidad, estado,id_movimientos, id_producto)
+                                            VALUES(:precio, :cantidad, :estado, :id_movimiento, :id_producto);
+                                        ');
+                
+                    $stmt->execute([':precio' => $precio,
+                                    ':cantidad' => $cantidad,
+                                    ':estado' => $estado,
+                                    ':id_movimiento' => $id_mov,
+                                    ':id_producto' => $id_producto
+                                    ]);
+                    $consulta="UPDATE productos SET 
+                    cantidad=?
+                    WHERE id=?;";
+
+                    Conexion::conect()->prepare($consulta)->execute(array(
+                        $totalDesc,
+                        $id_producto
+                    ));
+                }
+            
         } catch (Exception $e) {
             die($e->getMessage());
         }

@@ -91,7 +91,7 @@
                     <h5 class="mt-5">Método de pago*</h5>
                     <div class="btn-group-md text-center" role="group" id="metodo">
                         
-                        <input type="radio" class="btn-check" name="options" id="option1" autocomplete="off" checked value="1">
+                        <input type="radio" class="btn-check" name="options" id="option1" autocomplete="off" value="1">
                         <label class="btn btn-outline-dark" for="option1"><i class="ti-wallet "></i><br>Efectivo</label>
 
                         <input type="radio" class="btn-check" name="options" id="option2" autocomplete="off"value="2">

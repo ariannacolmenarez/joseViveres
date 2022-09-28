@@ -9,7 +9,7 @@
                   <h2 class="font-weight-bold text-dark pt-2 m-0">Inventario</h2>
                 </div>
                 <div class="col-lg-2 col-sm-4 col-3 grid-margin mb-0">
-                    <button type="button" class=" btn btn-outline-dark mt-2 " data-bs-target="#exampleModalToggle3" data-bs-toggle="modal">
+                    <button type="button" class=" btn btn-outline-dark mt-2 " id="categorias">
                         <b>Crear Categoría</b>
                     </button>
                 </div>
@@ -55,7 +55,7 @@
                         <div class="col-8 text-end">
                             <div class="row  text-end">
                                 <div class="col p-1">
-                                    <button type="button" class=" btn btn-outline-dark " data-bs-target="#exampleModalToggle5" data-bs-toggle="modal">
+                                    <button type="button" class=" btn btn-outline-dark " id="editarCat">
                                         <b>Editar Categorías</b>
                                     </button>
                                 </div>
@@ -83,5 +83,6 @@
 <script src="<?= _THEME_?>js/scripts/inventario.js"></script>
 <?php
 require_once("view/aggProductos.php");
+require_once("view/categoria.php");
 
 ?>

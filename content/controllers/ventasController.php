@@ -71,7 +71,7 @@ class ventasController extends Autoload {
     }
 
     function registrar(){
-        var_dump($_POST['parametros']['cliente']);
+        
       if (!empty( $_POST['parametros']["total"] && $_POST['parametros']["fecha"] && $_POST['parametros']["hora"] && $_POST['parametros']['estado'])) {
 
           $p=new ventasModel();

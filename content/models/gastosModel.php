@@ -148,9 +148,8 @@ class gastosModel extends Conexion{
                 estado,
                 id_concepto_movimiento,
                 id_metodo_pago,
-                id_deuda,
                 id_persona)
-            VALUES (?,?,?,?,?,?,?,?,?,?)";
+            VALUES (?,?,?,?,?,?,?,?,?)";
             Conexion::conect()->prepare($consulta)->execute(array(
                 $p->getnombre(),
                 $p->getmonto(),
@@ -160,8 +159,7 @@ class gastosModel extends Conexion{
                 "1",
                 $p->getconcepto(),
                 $p->getid_metodo_pago(),
-                $p->getid_deuda(),
-                $p->getid_persona()
+                $p->getid_persona(),
             ));
 
         } catch (Exception $e) {

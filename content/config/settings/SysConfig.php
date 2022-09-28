@@ -1,10 +1,10 @@
 <?php
 
-define("_DIRECTORY_","http://localhost/Jose%20Ramones%20Viveres/");
-define("_CONTROLLER_","http://localhost/Jose%20Ramones%20Viveres/content/controllers/");
-define("_INDEX_FILE_","http://localhost/Jose%20Ramones%20Viveres/index.php");
-define("_THEME_","http://localhost/Jose%20Ramones%20Viveres/assets/");
-define("_MODEL_","http://localhost/Jose%20Ramones%20Viveres/content/models/");
+define("_DIRECTORY_","http://localhost/joseViveres/");
+define("_CONTROLLER_","http://localhost/joseViveres/content/controllers/");
+define("_INDEX_FILE_","http://localhost/joseViveres/index.php");
+define("_THEME_","http://localhost/joseViveres/assets/");
+define("_MODEL_","http://localhost/joseViveres/content/models/");
 define("_DB_SERVER_","http://localhost/");
 define("_DB_WEB_","joseviveresbd");
 define("_DB_HOST_","localhost");
