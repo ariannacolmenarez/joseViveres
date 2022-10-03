@@ -10,6 +10,7 @@ class balanceController extends Autoload {
     }
 
     function balance(){
+        
         $data['page_tag'] = "Balance | Market MP";
         $data['page_title'] = "Balance";
         parent::getView("balance", $data);
@@ -50,18 +51,20 @@ class balanceController extends Autoload {
               $data.='</td><td>'.$regist['nombre'].'</td>
               <td>'.$regist['total'].'</td>
               <td>
-                <div class="row">
+                <div class="row">';
+                if(in_array("Eliminar Balance", $_SESSION['permisos'])){ $data.='
                   <div class="col">
                     <button onclick="eliminarVenta('.$regist['id'].');" class="btn btn-outline-danger btn-rounded btn-icon">
                       <i class="ti-trash"></i>
                     </button>
-                  </div>
+                  </div>';
+                  }
+                  $data.='
                   <div class="col">
                     <button onclick="reciboVenta('.$regist['id'].');" class="btn btn-outline-secondary btn-rounded btn-icon">
                       <i class="ti-receipt"></i>
                     </button>
-                  </div>
-                </div>
+                  </div></div>
               </td>
             </tr>';
           };
@@ -74,7 +77,7 @@ class balanceController extends Autoload {
 
     public function  listarEgresos(){
 
-        $data = '<table class="table" id="example">
+        $data = '<table class="table" id="example2">
               <thead>
                 <tr>
                   <th>Fecha - Hora</th>

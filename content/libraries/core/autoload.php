@@ -28,12 +28,20 @@
 		}
 		function getView($view, $data="")
 		{
-			$view = "view/".$view.".php";
-			if (file_exists($view)) {
-				require_once("content/component/header.php");
-				require_once($view);
-				require_once("content/component/footer.php");
+			if($view == "login"){
+				$view= "view/".$view.".php";
+				if (file_exists($view)) {
+					require_once($view);
+				}
+			}else{
+				$view = "view/".$view.".php";
+				if (file_exists($view)) {
+					require_once("content/component/header.php");
+					require_once($view);
+					require_once("content/component/footer.php");
+				}
 			}
+			
 		}
 	}
 	

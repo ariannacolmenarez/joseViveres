@@ -4,7 +4,8 @@
           <div class="row py-0">
             <div class="col-lg-8 col-sm-4 col-6 grid-margin mb-0">
               <h2 class="font-weight-bold text-dark pt-2 m-0">Deudas</h2>
-            </div>
+            </div> 
+            <?php if(in_array("Crear Deudas", $_SESSION['permisos'])){ ?>
             <div class="col-lg-2 col-sm-4 col-3 grid-margin mb-0">
               <a href="<?= _DIRECTORY_ ?>ventas" class="text-white btn btn-success mt-2 btn-icon-text" title="Ventas" type="button" id="ventas">
                 <i class="ti-plus btn-icon-prepend"></i><b class="text">Realizar Venta</b>
@@ -15,6 +16,7 @@
                 <i class="ti-minus btn-icon-prepend"></i><b class="text">Realizar Gasto</b>
               </button>
             </div>
+            <?php } ?>
           </div>
           <hr>
           <div class="row my-3">
@@ -23,11 +25,13 @@
                 <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
               </form>
             </div>
+            <?php if(in_array("Consultar Reportes Deudas", $_SESSION['permisos'])){ ?>
             <div class="col-md-5 grid-margin text-end">
               <button type="button" class="text-white btn btn-warning btn-icon-text ">
                 <i class="ti-download btn-icon-prepend"></i><b>Descargar reporte</b>
               </button>
             </div>
+            <?php } ?>
           </div>
           <div class="row w-75 m-auto">
             <div class="card">

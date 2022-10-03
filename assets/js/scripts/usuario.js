@@ -1,12 +1,5 @@
-$("#busqueda").on("click",function(){
-    console.log("boton");
-})
 
-$("#volver16").on("click", function() {
-    $('#exampleModalToggle15').modal('hide');
-});
-
-$("#volver15").on("click", function() {
+$("#volver27").on("click", function() {
     limpiar();
 });
 
@@ -16,26 +9,45 @@ $("#close").on("click", function() {
 
 $("#usuarios").on("click", function() {
     listarusuarios();
+    
+    
 });
 
 function limpiar(){
     $('input').val("");
     $('select').val("");
     $('textarea').val("");
-};
-
-
-
+}
 
 function listarusuarios(){
     
     $.get("usuarios/listar", {}, function (data, status) {
-        console.log(data);
-        $("#usuarios2").html(data);
-        $('#exampleModalToggle14').modal('show');
+        $("#list_usuarios").html(data);
+        $('#exampleModalToggle26').modal('show');
     });
-};
+}
 
+function listarRol(direccion){
+
+    $.ajax({
+        type: "POST",
+        url: "usuarios/listarRoles",
+        dataType: "html",
+        success: function (response) {
+            $(direccion).html(response);
+        },
+        error: (response) => {
+            console.log(response);
+        }
+    });
+
+}
+
+function editarUsuarios(id){
+    listarRol('#rol_usuario');
+    consultarusuarios(id);
+    $('#exampleModalToggle16').modal('show');
+}
 
 function consultarusuarios (id) {
     $.ajax({
@@ -43,13 +55,12 @@ function consultarusuarios (id) {
         url: "usuarios/consultar/"+id,
         dataType: "json",
         success: function (response) {
-            
             response.map( function (elem) {
                 $("#id").val(elem.id);
                 $("#nombre1").val(elem.nombre);
                 $("#correo").val(elem.correo);
-            });
-            $('#exampleModalToggle16').modal('show');
+                $("#rol_usuario option[value='"+ elem.rol_usuario +"']").attr("selected",true);
+            }); 
         },
         error: (response) => {
             console.log(response);
@@ -63,12 +74,14 @@ function guardarUsuarios(){
     var nombre = $("#nombre1").val();
     var correo = $("#correo").val();
     var contraseña = $("#contraseña").val();
+    var rol=$("#rol_usuario").val();
 
     var parametros = {
         "nombre1" : nombre,
         "correo" : correo,
         "contraseña" : contraseña,
-        "id" : id
+        "id" : id,
+        "rol": rol
     };
     $.ajax({
         data:  parametros, //datos que se envian a traves de ajax
@@ -85,22 +98,29 @@ function guardarUsuarios(){
     });
 }
 
+function crearUsuario(){
+    listarRol('#rol_usuarioR');
+    $('#exampleModalToggle27').modal('show');
+}
+
 function registrarUsuarios(){
     var nombre = $("#nombre3").val();
     var correo = $("#correo2").val();
     var contraseña = $("#contraseña1").val();
+    var rol = $("#rol_usuario").val();
    
     var parametros = {
         "nombre" : nombre,
         "correo" : correo,
-        "contraseña" : contraseña
+        "contraseña" : contraseña,
+        "rol" : rol
     };
     $.ajax({
         data:  parametros, //datos que se envian a traves de ajax
         url:   'usuarios/registrar', //archivo que recibe la peticion
         type:  'POST', //método de envio
         success:  function (response) { //una vez que el archivo recibe el request lo procesa y lo devuelve
-            $('#exampleModalToggle15').modal('hide');
+            $('#exampleModalToggle27').modal('hide');
             limpiar();    
             listarusuarios();
                 
@@ -129,26 +149,25 @@ function eliminarusuarios(){
     });
 }
 
-$("#buscadorcliente").on("keyup",function(e) {
+$("#buscadorU").on("keyup",function(e) {
     e.preventDefault();
-    var busqueda = $("#buscadorcliente").val();
+    var busqueda = $("#buscadorU").val();
     if (busqueda !== "") {
         var parametro = {"busqueda" : busqueda};
         $.ajax({
             data:  parametro, //datos que se envian a traves de ajax
-            url:   'clientes/buscar', //archivo que recibe la peticion
+            url:   'usuarios/buscar', //archivo que recibe la peticion
             type:  'POST', //método de envio
             success:  function (response) {
-                $("#cliente").html(response);
-                $('#exampleModalToggle7').modal('show');
-
+                $("#list_usuarios").html(response);
+                $('#exampleModalToggle26').modal('show');
             },
             error: (response) => {
                 console.log(response);
             }
         });  
     }else{
-        listarclientes();
+        listarusuarios();
     }
 
     

@@ -1,6 +1,7 @@
 $(document).ready(function() {
     listardeudasCobrar()
     listardeudasPagar()
+    
 })
 
 function listardeudasPagar(){
@@ -12,6 +13,21 @@ function listardeudasPagar(){
         success: function (response) {
             $("#totalP").html(response.total);
             $("#lista_deudasP").html(response.data);
+        },
+        error: (response) => {
+            console.log(response);
+        }
+    });
+}
+
+function listarAbonos(id,tipo,name){
+    $.ajax({
+        type: "POST",
+        data: {'tipo': tipo},
+        url: "deudas/listarAbonos/"+id,
+        dataType: "json",
+        success: function (response) {
+            $(name).html(response.data);
         },
         error: (response) => {
             console.log(response);
@@ -46,6 +62,7 @@ function editarDeudaPagar(id, monto, cant){
             $('#montoD').html(monto);
             $('#nombreD').html(response.nombre);
             $('#lista_pagar').html(response.data);
+            listarAbonos(id,0,"#lista_abonosp");
             $('#exampleModalToggle17').modal('show');
         },
         error: (response) => {
@@ -65,6 +82,7 @@ function editarDeudaCobrar(id, monto, cant){
             $('#montoC').html(monto);
             $('#nombreC').html(response.nombre);
             $('#lista_cobrar').html(response.data);
+            listarAbonos(id,1,"#lista_abonosc");
             $('#exampleModalToggle13').modal('show');
         },
         error: (response) => {
@@ -74,7 +92,7 @@ function editarDeudaCobrar(id, monto, cant){
     
 }
 
-function detallesPagar(id,resto){
+function detallesPagar(id,resto,total,id_p){
     $.ajax({
         type: "POST",
         url: "deudas/detallesPagar/"+id,
@@ -86,6 +104,8 @@ function detallesPagar(id,resto){
             $('#categoria').html(response.categoria);
             $('#fechaP').html(response.fecha);
             $('#id').val(id);
+            $('#total').val(total);
+            $('#id_p').val(id_p);
             $('#exampleModalToggle18').modal('show');
         },
         error: (response) => {
@@ -94,7 +114,7 @@ function detallesPagar(id,resto){
     });
 }
 
-function detallesCobrar(id,resto){
+function detallesCobrar(id,resto,total,id_p){
     $.ajax({
         type: "POST",
         url: "deudas/detallesCobrar/"+id,
@@ -106,6 +126,8 @@ function detallesCobrar(id,resto){
             $('#valueC').html(resto);
             $('#table').html(response.productos);
             $('#id').val(id);
+            $('#id_p').val(id_p);
+            $('#total').val(total);
             $('#exampleModalToggle14').modal('show');
         },
         error: (response) => {
@@ -116,20 +138,26 @@ function detallesCobrar(id,resto){
 
 $('#abonoC').on("click",function(){
     
-    var id = $('#id').val();console.log(id)
+    var id = $('#id').val();
+    var total = $('#total').val();
+    var id_p = $('#id_p').val();
+    $("#valorA").attr("max", total);
+    console.log(total)
     $('#exampleModalToggle15').modal('show');
-    aggAbonoPago(id,"");
+    aggAbonoPago(id,1,id_p);
 }) 
 
 $('#abonoP').on("click",function(){
     
     var id = $('#id').val();
-    
+    var total = $('#total').val();
+    var id_p = $('#id_p').val();
+    $("#valorA").attr("max", total);
     $('#exampleModalToggle15').modal('show');
-    aggAbonoPago(id,1);
+    aggAbonoPago(id,"",id_p);
 }) 
 
-function aggAbonoPago(id,tipo){
+function aggAbonoPago(id,tipo,id_p){
     $('#guardar').on("click", function(){
         var fecha = $("#fechaA").val();
         var valor = $("#valorA").val();
@@ -141,7 +169,8 @@ function aggAbonoPago(id,tipo){
             "valor" : valor,
             "concepto" : concepto,
             "metodo" : metodo,
-            "id" : id
+            "id" : id,
+            "persona": id_p
         };
         console.log(parametros)
         $.ajax({
@@ -150,8 +179,9 @@ function aggAbonoPago(id,tipo){
             type:  'POST', //método de envio
             success:  function (response) {
                 alert("abono realizado correctamente");
-                $('#exampleModalToggle15').modal('hide');    
-                //window.location.reload();   
+                $('.modal').modal('hide');  
+                listardeudasPagar();
+                listardeudasCobrar();   
             },
             error: (response) => {
                 console.log(response);
@@ -170,7 +200,7 @@ function eliminarDC(){
         type:  'POST', //método de envio
         success:  function (response) { //una vez que el archivo recibe el request lo procesa y lo devuelve
             $('#exampleModalToggle14').modal('hide');    
-            Window.location.reload();
+            listardeudasCobrar(); 
                 
         },
         error: (response) => {
@@ -188,7 +218,7 @@ function eliminarDP(){
         type:  'POST', //método de envio
         success:  function (response) { //una vez que el archivo recibe el request lo procesa y lo devuelve
             $('#exampleModalToggle18').modal('hide');    
-            Window.location.reload();
+            listardeudasPagar(); 
                 
         },
         error: (response) => {
@@ -196,4 +226,21 @@ function eliminarDP(){
         }
     });
 }
+
+function eliminarAbono(id){
+
+    $.ajax({
+        url:   'deudas/eliminarAbono/'+id, //archivo que recibe la peticion
+        type:  'POST', //método de envio
+        success:  function (response) { //una vez que el archivo recibe el request lo procesa y lo devuelve
+            $('#exampleModalToggle13').modal('hide');    
+            listardeudasCobrar(); 
+            listardeudasPagar();
+        },
+        error: (response) => {
+            console.log(response);
+        }
+    });
+}
+
 

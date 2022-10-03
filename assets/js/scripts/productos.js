@@ -82,6 +82,8 @@ function registrarProducto(){
             url: "productos/registrar",
             success: function (data) {
                 alert("registrado correctamente");
+                listarInventario("");
+                $("#preview-img").show().attr("src", "");
                 $('#exampleModalToggle4').modal('hide');
                 limpiar();
             },

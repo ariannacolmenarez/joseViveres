@@ -15,9 +15,11 @@
                     
 
                 </div>
+                <?php if(in_array("Crear Proveedores", $_SESSION['permisos'])){ ?>
                 <div class="d-grid gap-2 d-md-block w-100 mt-5">
                   <button class="btn btn-warning w-100" type="button" data-bs-target="#exampleModalToggle12" data-bs-toggle="modal">Crear Proveedor</button>
                 </div>
+                <?php } ?>
               </div>
             </div>
           </div>
@@ -59,9 +61,11 @@
                 <div class="d-grid gap-2 d-md-block w-100 mt-5">
                   <button onclick="guardarProveedor();" class="btn btn-success w-100" type="button">Guardar Cambios</button>
                 </div>
+                <?php if(in_array("Eliminar Proveedores", $_SESSION['permisos'])){ ?>
                 <div class="d-grid gap-2 d-md-block w-100 mt-3">
                   <button onclick="eliminarProveedor();"class="btn btn-danger w-100" type="button">Eliminar Cliente</button>
                 </div>
+                <?php } ?>
               </div>
             </div>
           </div>

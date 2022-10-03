@@ -254,7 +254,8 @@ function registrarVenta(){
             alert("guardado");
             listar("");
             vaciarCanasta();
-            $('#exampleModal').modal('hide');         
+            $('#exampleModal').modal('hide');
+            getNotifications();         
         },
         error: (response) => {
             console.log(response);

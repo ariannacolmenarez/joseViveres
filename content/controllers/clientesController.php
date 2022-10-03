@@ -13,16 +13,21 @@ class clientesController extends Autoload {
         $data = '<div class="list-group list-group-flush mt-2" id="cliente">';
 
         $respuesta = $this->model->listar();
-
-    	foreach ($respuesta as $regist) {
-    		$data .= '<a onclick="consultarclientes('.$regist["id"].');" type="button" class="list-group-item text-dark list-group-item-action py-3">
-                            <div class="row align-items-center">
-                            <div class="col-1 text-secondary"><i class="ti-user fa-2x"></i></div>
-                            <div class="col px-4">'.$regist['nombre'].' <small class="text-muted">'.$regist['telefono'].'</small></div>
-                            <div class="col text-end"><i class="ti-marker-alt "></i></div>
-                            </div> 
-                        </a>';
-    	};
+        if(in_array("Consultar Clientes", $_SESSION['permisos'])){ 
+            foreach ($respuesta as $regist) {
+                $data .= '<a ';
+                if(in_array("Consultar Clientes", $_SESSION['permisos'])){ 
+                    $data .= 'onclick="consultarclientes('.$regist["id"].');"';
+                }
+                $data .=' type="button" class="list-group-item text-dark list-group-item-action py-3">
+                                <div class="row align-items-center">
+                                <div class="col-1 text-secondary"><i class="ti-user fa-2x"></i></div>
+                                <div class="col px-4">'.$regist['nombre'].' <small class="text-muted">'.$regist['telefono'].'</small></div>
+                                <div class="col text-end"><i class="ti-marker-alt "></i></div>
+                                </div> 
+                            </a>';
+            };
+        }
 
         $data .= '</div>';
 

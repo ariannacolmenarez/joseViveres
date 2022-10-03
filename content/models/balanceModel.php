@@ -136,6 +136,74 @@ class balanceModel extends Conexion {
         }
     }
 
+
+
+
+    public function listarDeudasCobrar($fecha){
+        try {
+            if ($fecha == "d") {
+
+                ini_set('date.timezone','America/Caracas');
+                $date = date("Y-m-d"); 
+
+                $sql= "SELECT m.id, m.fecha, m.hora,m.total,mp.nombre, c.categoria FROM movimientos as
+                m, metodo_pago as mp, concepto_movimiento as c WHERE m.estado !=0 AND m.estado_movimiento ='PAGADA'
+                AND m.id_concepto_movimiento != 1 AND m.id_metodo_pago=mp.id AND m.id_concepto_movimiento = c.id AND m.fecha = '$date'";
+
+            }elseif ($fecha == "s") {
+
+                $start_week = strtotime("last monday midnight");
+                $end_week = strtotime("+1 week",$start_week);
+                $start_week = date("Y/m/d",$start_week);
+                $end_week = date("Y/m/d",$end_week);
+
+                $sql= "SELECT m.id, m.fecha, m.hora,m.total,mp.nombre, c.categoria FROM movimientos as
+                m, metodo_pago as mp, concepto_movimiento as c WHERE m.estado !=0 AND m.estado_movimiento ='PAGADA'
+                AND m.id_concepto_movimiento != 1 AND m.id_metodo_pago=mp.id AND m.id_concepto_movimiento = c.id AND m.fecha BETWEEN '$start_week' AND '$end_week'";
+
+            }elseif ($fecha == 'm') {
+
+                $inicio = date("Y-m-01");
+                $fin = date("Y-m-t");
+
+                $sql= "SELECT m.id, m.fecha, m.hora,m.total,mp.nombre, c.categoria FROM movimientos as
+                m, metodo_pago as mp, concepto_movimiento as c WHERE m.estado !=0 AND m.estado_movimiento ='PAGADA'
+                AND m.id_concepto_movimiento != 1 AND m.id_metodo_pago=mp.id AND m.id_concepto_movimiento = c.id  AND m.fecha BETWEEN '$inicio' AND '$fin'";
+
+            }elseif($fecha == 'a'){
+
+                $year_start = strtotime('first day of January', time());
+                $year_start = date('Y-m-d', $year_start);
+
+                $year_end = strtotime('last day of December', time());
+                $year_end = date('Y-m-d', $year_end);
+
+                $sql= "SELECT m.id, m.fecha, m.hora,m.total,mp.nombre, c.categoria FROM movimientos as
+                m, metodo_pago as mp, concepto_movimiento as c WHERE m.estado !=0 AND m.estado_movimiento ='PAGADA'
+                AND m.id_concepto_movimiento != 1 AND m.id_metodo_pago=mp.id AND m.id_concepto_movimiento = c.id AND m.fecha BETWEEN '$year_start' AND '$year_end' ";
+
+            }else{
+
+                $sql= "SELECT m.id, m.fecha, m.hora,m.total,mp.nombre, c.categoria FROM movimientos as
+                m, metodo_pago as mp, concepto_movimiento as c WHERE m.estado !=0 AND m.estado_movimiento ='PAGADA'
+                AND m.id_concepto_movimiento != 1 AND m.id_metodo_pago=mp.id AND m.id_concepto_movimiento = c.id AND m.fecha = '$fecha'";
+
+            }
+
+                $consulta= Conexion::conect()->prepare($sql);
+                $consulta->setFetchMode(PDO::FETCH_ASSOC);
+                $consulta->execute();
+                return $consulta;
+                
+
+
+        } catch (Exception $e) {
+            die($e->getMessage());
+        }
+    }
+
+
+
     public function listarproductos($id){
         try {
             

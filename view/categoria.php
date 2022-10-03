@@ -29,7 +29,7 @@
               </div>
               <div class="modal-body">
                 <form class="d-flex" role="search">
-                    <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                    <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" id="searchCat">
                 </form>
                 <div class="list-group list-group-flush mt-2" id="list_cat">
                     
@@ -47,7 +47,8 @@
           <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content modal-fullscreen w-100">
               <div class="modal-header text-center">
-                <h5 class="modal-title fs-5 display-6 fw-bold" id="exampleModalToggleLabel6"><a type="button" data-bs-target="#exampleModalToggle5" data-bs-toggle="modal"><i class="ti-arrow-left"></i> </a>  Editar Categoría</i></h5>
+                <h5 class="modal-title fs-5 display-6 fw-bold" id="exampleModalToggleLabel6">Editar Categoría <i class="ti-tag"></i></h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
               </div>
               <input type="hidden" id="idcatE">
               <div class="modal-body">
@@ -55,21 +56,21 @@
                 <div class="input-group mt-1">
                   <input type="text" class="form-control" id="nombrecatE">
                 </div>
-                <hr>
-                <form class="d-flex" role="search">
-                    <input class="form-control me-2 mt-1" type="search" placeholder="Buscar producto" aria-label="Search">
-                </form>
+                <hr class="m-3">
                 <div class="list-group list-group-flush mt-3" id="list_prod">
                     
                    
                 </div>
       
                 <div class="d-grid gap-2 d-md-block w-100 mt-5">
-                  <button class="btn btn-success w-100" type="button">Guardar Cambios</button>
+                  <button class="btn btn-success w-100" type="button" onclick="guardarCat();">Guardar Cambios</button>
                 </div>
+                
+                <?php if(in_array("Eliminar Inventario", $_SESSION['permisos'])){ ?>
                 <div class="d-grid gap-2 d-md-block w-100 mt-3">
-                  <button class="btn btn-danger w-100" type="button">Eliminar Categoría</button>
+                  <button class="btn btn-danger w-100" type="button" onclick="eliminarCat();">Eliminar Categoría</button>
                 </div>
+                <?php } ?>
               </div>
             </div>
           </div>

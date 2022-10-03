@@ -47,7 +47,9 @@ $(document).ready(function () {
          url: "inventario/listarCategoriasProd",
          dataType: "html",
          success: function (response) {
-             $('#catProd').prepend(response);
+            $("#catProd").empty();
+            $("#catProd").prepend('<option selected="true" value="">Ver todas las categorias</option>');
+            $('#catProd').prepend(response);
          },
          error: (response) => {
              console.log(response);

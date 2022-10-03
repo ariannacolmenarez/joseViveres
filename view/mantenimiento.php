@@ -1,7 +1,4 @@
-<?php
-     require_once "../content/component/header.php"
-     ?>
-     <!-- partial -->
+
     <div class="main-panel">
         <div class="content-wrapper">
             <div class="row py-0">
@@ -14,27 +11,32 @@
             <div class="card">
                 <div class="card-body">
                     <div class="row align-center">
+                    <?php if(in_array("Crear Respaldo Base Datos", $_SESSION['permisos'])){ ?>
                         <div class="col-lg-6 col-md-6 col-xs-12 text-center py-2 ">
                             <div class="card">
                                 <div class="card-body">
                                     <i class="fas fa-copy fa-9x text-muted"></i>
                                     <h5 class="mt-2 text-dark fs-4">Respaldar Base de Datos</h5>
                                     <small>Crear un archivo de respaldo con la información de la base de datos</small>
-                                    <a><button  class="mt-2 btn btn-outline-warning w-100">Respaldo</button></a>
+                                    <a href="<?= _DIRECTORY_?>mantenimiento/respaldo">
+                                        <button class="mt-2 btn btn-outline-warning w-100">Respaldar</button>
+                                    </a>
                                 </div>
                             </div>
-                            
                         </div>
+                    <?php } ?>
+                    <?php if(in_array("Modificar Base Datos", $_SESSION['permisos'])){ ?>
                         <div class="col-lg-6 col-md-6 col-xs-12 text-center py-2 ">
                             <div class="card">
                                 <div class="card-body">
                                     <i class="fas fa-trash-restore fa-9x text-muted"></i>
                                     <h5 class="mt-2 fs-4 text-dark">Restaurar Base de Datos</h5>
                                     <small>Cargar la base de datos desde una copia de seguridad creada anteriormente</small>
-                                    <button class="mt-2 btn btn-outline-warning w-100" data-bs-target="#exampleModalToggle21" data-bs-toggle="modal">Restaurar</button>
+                                     <button class="mt-2 btn btn-outline-warning w-100" data-bs-target="#exampleModalToggle21" data-bs-toggle="modal">Restaurar</button>
                                 </div>
                             </div>
                         </div>
+                    <?php }?>
                     </div>
                 </div>
             </div>
@@ -52,16 +54,17 @@
               <div class="modal-body">
                 <div class="card">
                     <div class="card-body text-center">
-                        <label class="fs-5 text-muted mb-2 ">Seleccione un archivo</label>
-                        <select class="form-select form-select-lg mb-3" aria-label=".form-select-lg example">
-                            <option selected>seleccione</option>
-                            <option value="1">One</option>
-                            <option value="2">Two</option>
-                            <option value="3">Three</option>
-                        </select>
-                        <div class="d-grid gap-2 d-md-block w-100 mt-3">
-                            <button class="btn btn-warning w-100" type="button" >Restaurar</button>
-                        </div>
+                        <form method="POST" action="<?= _DIRECTORY_?>mantenimiento/restaurar">
+                                <div class="form-group col">
+                                    <label for="cargo" ><b>Seleccione Archivo</b></label>
+                                    <select class="form-control bg-light" name="sql" id="sql">
+                                        <option value="" selected disabled>seleccionar</option>
+                                    </select>
+                                </div>
+                                <button class="btn btn-warning mt-2 mr-2" type="submit">
+                                    Restaurar
+                                </button>
+                            </form>
                     </div>
                 </div>
                 
@@ -69,9 +72,19 @@
             </div>
           </div>
         </div>
-              <!-- modal ends -->
-        
- <?php
- require_once "../content/component/footer.php";
- ?>
 
+        <script>
+            $(document).ready(function(){
+                $.ajax({
+                    type: "POST",
+                    url: "mantenimiento/select",
+                    dataType: "html",
+                    success: function (response) {
+                        $('#sql').prepend(response);
+                    },
+                    error: (response) => {
+                        console.log(response);
+                    }
+                });
+            })
+        </script>

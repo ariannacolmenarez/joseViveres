@@ -9,7 +9,7 @@
 			try{
 				$conect = new PDO($connectionString, _DB_USER_, _DB_PASSWORD_);
 				$conect->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-				//$conect->exec("SET @usuario_id = 1;");
+				$conect->exec('SET @usuario_id = '.$_SESSION['id_usuario'].';');
 				return $conect;
 			}catch(PDOException $e){
 				$conect = 'Error de conexión';

@@ -49,7 +49,7 @@ function consultarclientes (id) {
                 $("#nombrecliente").val(elem.nombre);
                 $("#telefonocliente").val(elem.telefono);
                 $("#nro_doccliente").val(elem.nro_doc);
-                $("#tipo_doccliente option[value='"+ elem.tipo_doc +"']").attr("selected",true);
+                $("#doc_cliente option[value='"+ elem.tipo_doc +"']").attr("selected",true);
                 $("#comentariocliente").val(elem.comentario);
             });
             $('#exampleModalToggle8').modal('show');
@@ -66,7 +66,7 @@ function guardarCliente(){
     var nombre = $("#nombrecliente").val();
     var telefono = $("#telefonocliente").val();
     var nro_doc = $("#nro_doccliente").val();
-    var tipo_doc= $("#tipo_doccliente").val();
+    var tipo_doc= $("#doc_cliente").val();
     var comentario = $("#comentariocliente").val();
 
     var parametros = {
@@ -93,7 +93,7 @@ function guardarCliente(){
 }
 
 function registrarCliente(){
-    var nombre = $("#nombreC").val();
+    var nombre = $("#nombreCliente").val();
     var telefono = $("#telefonoC").val();
     var nro_doc = $("#nro_docC").val();
     var tipo_doc= $("#tipo_docC").val();
@@ -107,6 +107,7 @@ function registrarCliente(){
         "tipo_doccliente" : tipo_doc,
         "comentariocliente" : comentario,
     };
+    console.log(parametros)
     $.ajax({
         data:  parametros, //datos que se envian a traves de ajax
         url:   'clientes/registrar', //archivo que recibe la peticion

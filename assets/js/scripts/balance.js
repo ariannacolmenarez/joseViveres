@@ -34,6 +34,11 @@ function listarIngresos(fecha){
         data: {'fecha': fecha},
         success: function (response) {
             $("#home-tab-pane").html(response);
+            $('#example').DataTable({
+                "language": {
+                  "url": "//cdn.datatables.net/plug-ins/1.10.15/i18n/Spanish.json"
+                }
+              });
         },
         error: (response) => {
             console.log(response);
@@ -50,6 +55,11 @@ function listarEgresos(fecha){
         data: {'fecha': fecha},
         success: function (response) {
             $("#profile-tab-pane").html(response);
+            $('#example2').DataTable({
+                "language": {
+                  "url": "//cdn.datatables.net/plug-ins/1.10.15/i18n/Spanish.json"
+                }
+              });
         },
         error: (response) => {
             console.log(response);

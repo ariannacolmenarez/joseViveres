@@ -17,18 +17,17 @@
             <div class="col-md-4 col-xs-12 ">
                 <div class="text-center mt-5 ">
                     <h1 class="font-italic font-weight-bold text-primary">MANTENIMIENTO</h1>
-                    <div class="spinner-border my-2" style="width: 3rem; height: 3rem;" role="status">
-                        <span class="sr-only">Loading...</span>
+                    <div class="spinner-border" role="status">
+                        <span class="visually-hidden">Loading...</span>
                     </div>
                     <h6>Lo sentimos la plataforma se encuentra en mantenimiento en estos momentos</h6>
-                    <a href="perfil" class="btn btn-primary btn-lg mt-2">&larr; Volver al inicio</a>
+                    <a href="<?= _DIRECTORY_?>balance" class="btn btn-primary btn-lg mt-2">&larr; Volver al inicio</a>
                 </div>
             </div>
             <div class="col-md-8 col-xs-12">
-                <img src="assets/img/11104.jpg" class="img-fluid">
+                <img src="<?= _THEME_?>images/mantenimiento.jpg" class="img-fluid">
             </div>
         </div>
-        
     </div>
     
     

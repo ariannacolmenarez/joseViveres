@@ -2,21 +2,43 @@
         <div class="modal fade" id="exampleModalToggle17" aria-hidden="true" aria-labelledby="exampleModalToggleLabel17" tabindex="-1">
           <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content modal-fullscreen w-100">
-              <div class="modal-header text-center">
-                  <h5 class="modal-title fs-5 display-6 fw-bold" id="exampleModalToggleLabel17">Deuda Por Pagar </h5>
+            <div class="modal-header text-center">
+                  <h5 class="modal-title fs-5 display-6 fw-bold" id="exampleModalToggleLabel13">Deuda Por Pagar </h5>
                   <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
               </div>
-              <h5 class="m-auto p-2" id="nombreD"></h5>
-              <div class="card m-auto mt-1 p-3" style="width: 18rem;">
-                  <p class="card-title text-md-center text-dark text-xl-left"><span class="badge bg-danger rounded-pill" id="cantD"></span> Deudas</p>
-                  <div class="d-flex flex-wrap justify-content-between justify-content-md-center justify-content-xl-between align-items-center">
-                      <h3 class="mb-0 mb-md-2 mb-xl-0 order-md-1 order-xl-0" id="montoD"></h3>
-                      <i class="ti-money icon-md text-danger mb-0 mb-md-3 mb-xl-0"></i>
-                  </div>
-              </div> 
               <div class="modal-body">
-                <div class="list-group list-group-flush mt-2"id="lista_pagar">
-                  
+                <ul class="nav nav-tabs nav-justified" id="myTab" role="tablist">
+                  <li class="nav-item" role="presentation">
+                    <button class="nav-link active" id="deudasP" data-bs-toggle="tab" data-bs-target="#deudasP-pane" type="button" role="tab" aria-controls="deudasP-pane" aria-selected="true">
+                      <p class="card-title text-md-center text-danger text-xl-left">Deudas</p> 
+                    </button>
+                  </li>
+                  <li class="nav-item" role="presentation">
+                    <button class="nav-link" id="abonosP-tab" data-bs-toggle="tab" data-bs-target="#abonosP-tab-pane" type="button" role="tab" aria-controls="abonosP-tab-pane" aria-selected="false"> 
+                      <p class="card-title text-md-center text-success text-xl-left">Abonos</p>
+                    </button>
+                  </li>
+                </ul>
+                <div class="tab-content" id="myTabContent">
+                  <div class="tab-pane fade show active" id="deudasP-pane" role="tabpanel" aria-labelledby="deudasP" tabindex="0">
+                    <h5 class="m-auto p-2 text-center"id="nombreD"></h5>
+                    <div class="card m-auto mt-1 p-3" style="width: 18rem;">
+                      <p class="card-title text-md-center text-dark text-xl-left"><span class="badge bg-success rounded-pill" id="cantD"></span> Deudas</p>
+                      <div class="d-flex flex-wrap justify-content-between justify-content-md-center justify-content-xl-between align-items-center">
+                        <h3 class="mb-0 mb-md-2 mb-xl-0 order-md-1 order-xl-0"id="montoD"></h3>
+                        <i class="ti-money icon-md text-success mb-0 mb-md-3 mb-xl-0"></i>
+                      </div>
+                    </div> 
+                    <div class="list-group list-group-flush mt-2" id="lista_pagar">
+                      
+                    </div>
+                  </div>
+                  <div class="tab-pane fade" id="abonosP-tab-pane" role="tabpanel" aria-labelledby="abonosP-tab" tabindex="0">
+                    <h4 class="m-auto p-2 text-center">Abonos</h4>
+                    <div class="list-group list-group-flush mt-2" id="lista_abonosp">
+                      
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
@@ -70,27 +92,34 @@
                         </div>
                     </div>
                     <input type="hidden" id="id">
+                    <input type="hidden" id="total">
+                    <input type="hidden" id="id_p">
                   </div>
                 </div>
               </div>
               <div class="modal-footer">
                 <div class="d-grid gap-2 d-md-block w-100">
                   <div class="row text-center">
+                  
+                      <?php if(in_array("Eliminar Deudas", $_SESSION['permisos'])){ ?>
                       <div class="col">
                         <button onclick="eliminarDP();" class="btn btn-danger btn-rounded btn-icon">
                         <i class="ti-trash"></i> 
                         </button><br><small class="text-danger">Eliminar</small>
                       </div>
+                      <?php } ?>
                       <div class="col">
                         <button class="btn btn-secondary btn-rounded btn-icon">
                         <i class="ti-receipt"></i>
                         </button><br><small class="text-secondary">Comprobante</small>
                       </div>
+                      <?php if(in_array("Modificar Deudas", $_SESSION['permisos'])){ ?>
                       <div class="col">
                         <button class="btn btn-success btn-rounded btn-icon"id="abonoP">
                         <i class="ti-money"></i>
                         </button><br><small class="text-success" >Abonar</small>
                       </div>
+                      <?php } ?>
                   </div>
                 </div>
               </div>

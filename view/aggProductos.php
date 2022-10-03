@@ -110,9 +110,12 @@
                     <div class="d-grid gap-2 d-md-block w-100 mt-5">
                       <button class="btn btn-success w-100" type="button" onclick="guardarProducto();">Guardar Cambios</button>
                     </div>
+                    
+                    <?php if(in_array("Eliminar Inventario", $_SESSION['permisos'])){ ?>
                     <div class="d-grid gap-2 d-md-block w-100 mt-2">
                       <button class="btn btn-danger w-100" type="button" onclick="eliminarProducto();">Eliminar Producto</button>
                     </div>
+                    <?php } ?>
                   </div>
                 </form>
               </div>

@@ -76,9 +76,10 @@ class deudasController extends Autoload {
 
     public function movimientosPagar($id){
         $respuesta = $this->model->movimientosPagar($id);
+        $resp=$this->model->totalPagar();
         $data='';
         foreach ($respuesta as $regist) {
-            $data.= '<a onclick="detallesPagar('.$regist['id'].','.$regist['resto'].');" type="button" class="list-group-item text-dark list-group-item-action py-3">
+            $data.= '<a onclick="detallesPagar('.$regist['id'].','.$regist['resto'].','.$resp['suma'].','.$id.');" type="button" class="list-group-item text-dark list-group-item-action py-3">
             <div class="row align-items-center">
               <div class="col-8  text-secondary">'.$regist['categoria'].'</div>
               <div class="col-3 text-end">'.$regist['total'].'<small class="text-muted"> Resta: '.$regist['resto'].'</small></div> 
@@ -101,9 +102,10 @@ class deudasController extends Autoload {
 
     public function movimientosCobrar($id){
         $respuesta = $this->model->movimientosCobrar($id);
+        $resp=$this->model->totalCobrar();
         $data='';
         foreach ($respuesta as $regist) {
-            $data.= '<a type="button" onclick="detallesCobrar('.$regist['id'].','.$regist['resto'].')" class="list-group-item text-dark list-group-item-action py-3">
+            $data.= '<a type="button" onclick="detallesCobrar('.$regist['id'].','.$regist['resto'].','.$resp['suma'].','.$id.')" class="list-group-item text-dark list-group-item-action py-3">
             <div class="row align-items-center">
               <div class="col-6 text-secondary">'.$regist['productos'].'</div>
               <div class="col-5 text-end">'.$regist['total'].'<small class="text-muted"> Resta: '.$regist['resto'].'</small></div>
@@ -163,15 +165,42 @@ class deudasController extends Autoload {
             $p->setvalor_abono($_POST['valor']);
             $p->setconcepto_abono($_POST['concepto']);
             $p->setfecha_abono($_POST['fecha']);
-            $tipo=$tipo;
+           $persona=$_POST['persona'];
 
-            $this->model->registrarAbono($p,$tipo);
+            $this->model->registrarAbono($p,$tipo,$persona);
 
         }
     }
 
     public function eliminar(){
         $this->model->eliminar($_POST['id']);
-   }
+    }
+
+    public function eliminarAbono($id){
+        $this->model->eliminarAbono($id);
+    }
+
+    public function  listarAbonos($id){
+        $data = ''; 
+        $respuesta = $this->model->listarAbonos($id,$_POST['tipo']);
+        foreach ($respuesta as $regist) 
+        {
+            $data .='<a onclick="detallesPagar();" type="button" class="list-group-item text-dark list-group-item-action py-3">
+            <div class="row align-items-center">
+              <div class="col-5  text-secondary">'.$regist['concepto'].'</div>
+              <div class="col-3  text-secondary">'.$regist['fecha'].'</div>
+              <div class="col-2 text-end">'.$regist['valor'].'</div> 
+              <div class="col-2">
+                <button onclick="eliminarAbono('.$regist['id'].');" class="btn btn-danger btn-rounded btn-icon">
+                    <i class="ti-trash"></i> 
+                </button><br><small class="text-danger" >Eliminar</small>
+              </div>
+            </div> 
+          </a>';
+        }
+        echo json_encode([
+            'data' => $data
+        ]);
+    }
 }
 ?>
