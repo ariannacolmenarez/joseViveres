@@ -1,3 +1,25 @@
+var toastMixin = Swal.mixin({
+    toast: true,
+    icon: 'success',
+    title: 'General Title',
+    animation: false,
+    position: 'top-right',
+    showConfirmButton: false,
+    timer: 3000,
+    timerProgressBar: true,
+    didOpen: (toast) => {
+      toast.addEventListener('mouseenter', Swal.stopTimer)
+      toast.addEventListener('mouseleave', Swal.resumeTimer)
+    }
+});
+function validacion(tipo,titulo,texto){
+    Swal.fire({
+        icon: tipo,
+        title: titulo,
+        text: texto,
+      })
+}
+
 $(document).ready(function() {
     listarRoles();
 });
@@ -31,20 +53,28 @@ function registrarRol(){
         "nombre" : nombre,
         "desc" : descripcion
     };
-    console.log(parametros)
-    $.ajax({
-        data:  parametros, //datos que se envian a traves de ajax
-        url:   'seguridad/registrarRol', //archivo que recibe la peticion
-        type:  'POST', //método de envio
-        success:  function (response) { //una vez que el archivo recibe el request lo procesa y lo devuelve
-            $('#exampleModalToggle19').modal('hide');
-            limpiar();    
-            listarRoles();
-                
-        },error: (response) => {
-            console.log(response);
-        }
-    });
+    if(nombre !="" && descripcion !=""){
+        $.ajax({
+            data:  parametros, //datos que se envian a traves de ajax
+            url:   'seguridad/registrarRol', //archivo que recibe la peticion
+            type:  'POST', //método de envio
+            success:  function (response) { //una vez que el archivo recibe el request lo procesa y lo devuelve
+                $('#exampleModalToggle19').modal('hide');
+                toastMixin.fire({
+                    animation: true,
+                    title: 'Rol Registrado'
+                });
+                limpiar();    
+                listarRoles();
+                    
+            },error: (response) => {
+                console.log(response);
+            }
+        });
+    }else{
+        validacion("error","Error","Rellena los campos obligatorios");
+    }
+    
 }
 
 function consultarRoles(id) {
@@ -75,33 +105,57 @@ function guardarRol(){
         "descripcion" : descripcion,
         "id" : id
     };
-    $.ajax({
-        data:  parametros, //datos que se envian a traves de ajax
-        url:   'seguridad/guardarRol', //archivo que recibe la peticion
-        type:  'POST', //método de envio
-        success:  function (response) {
-            $('#exampleModalToggle20').modal('hide');    
-            listarRoles();
-        },
-        error: (response) => {
-            console.log(response);
-        }
-    });
+    if(nombre !="" && descripcion !=""){
+        $.ajax({
+            data:  parametros, //datos que se envian a traves de ajax
+            url:   'seguridad/guardarRol', //archivo que recibe la peticion
+            type:  'POST', //método de envio
+            success:  function (response) {
+                $('#exampleModalToggle20').modal('hide'); 
+                toastMixin.fire({
+                    animation: true,
+                    title: 'Rol Modificado'
+                });   
+                listarRoles();
+            },
+            error: (response) => {
+                console.log(response);
+            }
+        });
+    }else{
+        validacion("error","Error","Rellena los campos obligatorios");
+    }
 }
 
 function eliminarRol(id){
-
-    $.ajax({
-        url:   'seguridad/eliminarRol/'+id, //archivo que recibe la peticion
-        type:  'POST', //método de envio
-        success:  function (response) { //una vez que el archivo recibe el request lo procesa y lo devuelve
-            $('#exampleModalToggle20').modal('hide');    
-            listarRoles();
-        },
-        error: (response) => {
-            console.log(response);
-        }
-    });
+    Swal.fire({
+        title: '¿Estas seguro que deseas Eliminar el registro?',
+        ico: "warning",
+        showDenyButton: true,
+        showCancelButton: true,
+        confirmButtonText: 'Eliminar',
+        denyButtonText: `No Eliminar`,
+    }).then((result) => {
+        if (result.isConfirmed) {
+            $.ajax({
+                url:   'seguridad/eliminarRol/'+id, //archivo que recibe la peticion
+                type:  'POST', //método de envio
+                success:  function (response) { //una vez que el archivo recibe el request lo procesa y lo devuelve
+                    $('#exampleModalToggle20').modal('hide');  
+                    toastMixin.fire({
+                        animation: true,
+                        title: 'Rol Eliminado'
+                    });  
+                    listarRoles();
+                },
+                error: (response) => {
+                    console.log(response);
+                }
+            });
+        } else if (result.isDenied) {
+            Swal.fire('Los cambios no fueron guardados', '', 'info')
+          }
+    })
 }
 
 function permisos(id){

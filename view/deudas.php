@@ -13,7 +13,7 @@
             </div>
             <div class="col-lg-2 col-sm-4 col-3 grid-margin mb-0">
               <button type="button" class="text-white btn btn-danger mt-2 btn-icon-text" id="gastos" title="Compras">
-                <i class="ti-minus btn-icon-prepend"></i><b class="text">Realizar Gasto</b>
+                <i class="ti-minus btn-icon-prepend"></i><b class="text">Registrar Gasto</b>
               </button>
             </div>
             <?php } ?>

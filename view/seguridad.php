@@ -9,7 +9,7 @@
                 <?php if(in_array("Crear Roles", $_SESSION['permisos'])){ ?>
                 <div class="col-lg-2 col-sm-4 col-3 grid-margin mb-0 text-end">
                     <button type="button" class="text-white btn btn-success mt-2 btn-icon-text" onclick="aggRol();" title="agregar">
-                        <i class="ti-plus btn-icon-prepend"></i><b class="text">Agregar Rol</b>
+                        <i class="ti-plus btn-icon-prepend"></i><b class="text">Registrar Rol</b>
                     </button>
                 </div>
                 <?php } ?>

@@ -1,3 +1,26 @@
+var toastMixin = Swal.mixin({
+    toast: true,
+    icon: 'success',
+    title: 'General Title',
+    animation: false,
+    position: 'top-right',
+    showConfirmButton: false,
+    timer: 3000,
+    timerProgressBar: true,
+    didOpen: (toast) => {
+      toast.addEventListener('mouseenter', Swal.stopTimer)
+      toast.addEventListener('mouseleave', Swal.resumeTimer)
+    }
+});
+
+function validacion(tipo,titulo,texto){
+    Swal.fire({
+        icon: tipo,
+        title: titulo,
+        text: texto,
+      })
+}
+
 
 $("#close").on("click", function() {
     limpiar();
@@ -29,19 +52,29 @@ function listarCatProd(){
 function registrarCategorias(){
     var nombre = $("#nombreC").val();
     
-    $.ajax({
-        data:  {'nombre':nombre}, //datos que se envian a traves de ajax
-        url:   'categorias/registrar', //archivo que recibe la peticion
-        type:  'POST', //método de envio
-        success:  function (response) { //una vez que el archivo recibe el request lo procesa y lo devuelve
-            $('#exampleModalToggle3').modal('hide');
-            limpiar(); 
-            listarCategoriasProd();
-        },error: (response) => {
-            console.log(response);
+    if (nombre != "") {
+        $.ajax({
+            data:  {'nombre':nombre}, //datos que se envian a traves de ajax
+            url:   'categorias/registrar', //archivo que recibe la peticion
+            type:  'POST', //método de envio
+            success:  function (response) { //una vez que el archivo recibe el request lo procesa y lo devuelve 
+                
+                $('#exampleModalToggle3').modal('hide');
+                toastMixin.fire({
+                    animation: true,
+                    title: 'Categoría Registrada'
+                });
+                limpiar(); 
+                listarCategoriasProd();
+            },error: (response) => {
+                console.log(response);
 
-        }
-    });
+            }
+        });
+    }else{
+        validacion("error","Error","Debes ingresar el nombre","");
+    }
+    
 }
 
 function editarCat (id) {
@@ -85,48 +118,90 @@ function guardarCat(){
         "nombre" : nombre,
         "id" : id
     };
-    $.ajax({
-        data:  parametros, //datos que se envian a traves de ajax
-        url:   'categorias/guardar', //archivo que recibe la peticion
-        type:  'POST', //método de envio
-        success:  function (response) {
-            $('#exampleModalToggle6').modal('hide');    
-            limpiar();
-            listarCatProd();
-        },
-        error: (response) => {
-            console.log(response);
-        }
-    });
+    if (nombre != "") {
+        $.ajax({
+            data:  parametros, //datos que se envian a traves de ajax
+            url:   'categorias/guardar', //archivo que recibe la peticion
+            type:  'POST', //método de envio
+            success:  function (response) {
+                $('#exampleModalToggle6').modal('hide'); 
+                toastMixin.fire({
+                    animation: true,
+                    title: 'Categoría Modificada'
+                });  
+                limpiar();
+                listarCatProd();
+            },
+            error: (response) => {
+                console.log(response);
+            }
+        });
+    }else{
+        validacion("error","Error","Debes ingresar el nombre");
+    }
 }
 
 function eliminarProd(id,id_cat){
-   
-    $.ajax({
-        url:   'categorias/eliminarProd/'+id, //archivo que recibe la peticion
-        type:  'POST', //método de envio
-        success:  function (response) { 
-            listarProdCat(id_cat);
-        },
-        error: (response) => {
-            console.log(response);
-        }
-    });
+    Swal.fire({
+        title: '¿Estas seguro que deseas Eliminar el registro?',
+        ico: "warning",
+        showDenyButton: true,
+        showCancelButton: true,
+        confirmButtonText: 'Eliminar',
+        denyButtonText: `No Eliminar`,
+    }).then((result) => {
+        if (result.isConfirmed) {
+            $.ajax({
+                url:   'categorias/eliminarProd/'+id, //archivo que recibe la peticion
+                type:  'POST', //método de envio
+                success:  function (response) { 
+                    toastMixin.fire({
+                        animation: true,
+                        title: 'Producto Eliminado'
+                    });
+                    listarProdCat(id_cat);
+
+                },
+                error: (response) => {
+                    console.log(response);
+                }
+            })
+        } else if (result.isDenied) {
+            Swal.fire('Los cambios no fueron guardados', '', 'info')
+          }
+    })
 }
 
 function eliminarCat(){
-    var id = $('#idcatE').val();
-    $.ajax({
-        url:   'categorias/eliminarCat/'+id, //archivo que recibe la peticion
-        type:  'POST', //método de envio
-        success:  function (response) { //una vez que el archivo recibe el request lo procesa y lo devuelve
-            $('#exampleModalToggle6').modal('hide');    
-            listarCatProd();
-        },
-        error: (response) => {
-            console.log(response);
-        }
-    });
+    Swal.fire({
+        title: '¿Estas seguro que deseas Eliminar el registro?',
+        ico: "warning",
+        showDenyButton: true,
+        showCancelButton: true,
+        confirmButtonText: 'Eliminar',
+        denyButtonText: `No Eliminar`,
+    }).then((result) => {
+        if (result.isConfirmed) {
+            var id = $('#idcatE').val();
+            $.ajax({
+                url:   'categorias/eliminarCat/'+id, //archivo que recibe la peticion
+                type:  'POST', //método de envio
+                success:  function (response) { //una vez que el archivo recibe el request lo procesa y lo devuelve
+                    $('#exampleModalToggle6').modal('hide');   
+                    toastMixin.fire({
+                        animation: true,
+                        title: 'Categoría Eliminada'
+                    });
+                    listarCatProd();
+                },
+                error: (response) => {
+                    console.log(response);
+                }
+            })
+        } else if (result.isDenied) {
+            Swal.fire('Los cambios no fueron guardados', '', 'info')
+          }
+    })
 }
 
 $("#searchCat").on("keyup",function(e) {

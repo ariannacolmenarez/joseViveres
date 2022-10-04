@@ -89,6 +89,7 @@ class categoriasModel extends Conexion{
                 $p->getnombre(),
                 "1"
             ));
+            
         } catch (Exception $e) {
 
             die($e->getMessage());

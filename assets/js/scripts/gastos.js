@@ -1,3 +1,24 @@
+function validacion(tipo,titulo,texto){
+    Swal.fire({
+        icon: tipo,
+        title: titulo,
+        text: texto,
+      })
+}
+var toastMixin = Swal.mixin({
+    toast: true,
+    icon: 'success',
+    title: 'General Title',
+    animation: false,
+    position: 'top-right',
+    showConfirmButton: false,
+    timer: 3000,
+    timerProgressBar: true,
+    didOpen: (toast) => {
+      toast.addEventListener('mouseenter', Swal.stopTimer)
+      toast.addEventListener('mouseleave', Swal.resumeTimer)
+    }
+});
 $("#close").on("click", function() {
     window.location.reload();
 });
@@ -60,18 +81,48 @@ function registrarGasto(){
         "monto" : monto,
         "metodo" : metodo,
     };
-    $.ajax({
-        data:  parametros, 
-        url:   'gastos/registrar', //archivo que recibe la peticion
-        type:  'POST', //método de envio
-        success:  function (response) { //una vez que el archivo recibe el request lo procesa y lo devuelve
-            alert("registrado correctamente")
-            $('#exampleModalToggle2').modal('hide');  
-            window.location.reload();  
-        },error: (response) => {
-            console.log(response);
+    if (estado!="" && categoria!="" && fecha!="" && hora!="" && monto!="" && metodo!="") {
+        if (estado == "A CREDITO") {
+            if (proveedor != "" && proveedor != null) {
+                $.ajax({
+                    data:  parametros, 
+                    url:   'gastos/registrar', //archivo que recibe la peticion
+                    type:  'POST', //método de envio
+                    success:  function (response) { //una vez que el archivo recibe el request lo procesa y lo devuelve
+                        $('#exampleModalToggle2').modal('hide'); 
+                        toastMixin.fire({
+                            animation: true,
+                            title: 'Gasto Registrado'
+                        });
+                        window.location.reload();  
+                    },error: (response) => {
+                        console.log(response);
+                    }
+                });
+            }else{
+                validacion("error","Error","Ingresa el proveedor");
+            }
+        }else{
+            $.ajax({
+                data:  parametros, 
+                url:   'gastos/registrar', //archivo que recibe la peticion
+                type:  'POST', //método de envio
+                success:  function (response) { //una vez que el archivo recibe el request lo procesa y lo devuelve
+                    $('#exampleModalToggle2').modal('hide'); 
+                    toastMixin.fire({
+                        animation: true,
+                        title: 'Gasto Registrado'
+                    });
+                    window.location.reload();  
+                },error: (response) => {
+                    console.log(response);
+                }
+            });
         }
-    });
+    }else{
+        validacion("error","Error","Rellena los campos obligatorios");
+    }
+    
 }
 
 

@@ -12,12 +12,12 @@
                 <?php if(in_array("Crear Inventario", $_SESSION['permisos'])){ ?>
                 <div class="col-lg-2 col-sm-4 col-3 grid-margin mb-0">
                     <button type="button" class=" btn btn-outline-dark mt-2 " id="categorias">
-                        <b>Crear Categoría</b>
+                        <b>Registrar Categoría</b>
                     </button>
                 </div>
                 <div class="col-lg-2 col-sm-4 col-3 grid-margin mb-0">
                   <button type="button" class="text-white btn btn-warning  mt-2 btn-icon-text" onclick="aggProd();">
-                    <i class="ti-plus btn-icon-prepend text-dark"></i><b class="text text-dark">Agregar productos</b>
+                    <i class="ti-plus btn-icon-prepend text-dark"></i><b class="text text-dark">Registrar productos</b>
                   </button>
                 </div>
                 <?php } ?>
@@ -61,7 +61,7 @@
                                 <?php if(in_array("Modificar Inventario", $_SESSION['permisos'])){ ?>
                                 <div class="col p-1">
                                     <button type="button" class=" btn btn-outline-dark " id="editarCat">
-                                        <b>Editar Categorías</b>
+                                        <b>Modificar Categorías</b>
                                     </button>
                                 </div>
                                 <?php } ?>

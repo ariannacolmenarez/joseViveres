@@ -1,4 +1,35 @@
-
+<?php if(isset($_SESSION['mensaje'])){
+    if ($_SESSION['mensaje']!="") {
+       ?>
+            <script c_mensaje="<?= $_SESSION['mensaje'] ;?>" c_tipo_mensaje="<?= $_SESSION['tipo_mensaje'] ;?>"> 
+                var mensaje = document.currentScript.getAttribute("c_mensaje");
+                var tipo = document.currentScript.getAttribute("c_tipo_mensaje");
+                // $(document).ready(function(){
+                    var toastMixin = Swal.mixin({
+                        toast: true,
+                        icon: 'success',
+                        title: 'General Title',
+                        animation: false,
+                        position: 'top-right',
+                        showConfirmButton: false,
+                        timer: 3000,
+                        timerProgressBar: true,
+                        didOpen: (toast) => {
+                        toast.addEventListener('mouseenter', Swal.stopTimer)
+                        toast.addEventListener('mouseleave', Swal.resumeTimer)
+                        }
+                    });
+                    toastMixin.fire({
+                        animation: true,
+                        title: mensaje
+                    });
+                // });
+            </script>
+        <?php 
+            unset($_SESSION['mensaje']);
+            unset($_SESSION['tipo_mensaje']);
+        } 
+    }?>
     <div class="main-panel">
         <div class="content-wrapper">
             <div class="row py-0">
@@ -18,7 +49,7 @@
                                     <i class="fas fa-copy fa-9x text-muted"></i>
                                     <h5 class="mt-2 text-dark fs-4">Respaldar Base de Datos</h5>
                                     <small>Crear un archivo de respaldo con la información de la base de datos</small>
-                                    <a href="<?= _DIRECTORY_?>mantenimiento/respaldo">
+                                    <a id="respaldo" >
                                         <button class="mt-2 btn btn-outline-warning w-100">Respaldar</button>
                                     </a>
                                 </div>
@@ -54,14 +85,14 @@
               <div class="modal-body">
                 <div class="card">
                     <div class="card-body text-center">
-                        <form method="POST" action="<?= _DIRECTORY_?>mantenimiento/restaurar">
+                        <form method="POST" action="<?= _DIRECTORY_?>mantenimiento/restaurar" id="form_res">
                                 <div class="form-group col">
                                     <label for="cargo" ><b>Seleccione Archivo</b></label>
                                     <select class="form-control bg-light" name="sql" id="sql">
                                         <option value="" selected disabled>seleccionar</option>
                                     </select>
                                 </div>
-                                <button class="btn btn-warning mt-2 mr-2" type="submit">
+                                <button id="restaurar" class="btn btn-warning mt-2 mr-2">
                                     Restaurar
                                 </button>
                             </form>
@@ -88,3 +119,4 @@
                 });
             })
         </script>
+    <script src="<?= _THEME_?>js/scripts/alerts/mantenimiento.js"></script>

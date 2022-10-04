@@ -8,12 +8,12 @@
                 <?php if(in_array("Crear Balance", $_SESSION['permisos'])){ ?>
                 <div class="col-lg-2 col-sm-4 col-3 grid-margin mb-0">
                     <a href="<?= _DIRECTORY_ ?>ventas" class="text-white btn btn-success mt-2 btn-icon-text" title="Ventas" type="button" id="ventas">
-                      <i class="ti-plus btn-icon-prepend"></i><b class="text">Realizar Venta</b>
+                      <i class="ti-plus btn-icon-prepend"></i><b class="text">Registrar Venta</b>
                     </a>
                 </div>
                 <div class="col-lg-2 col-sm-4 col-3 grid-margin mb-0">
                   <button type="button" class="text-white btn btn-danger mt-2 btn-icon-text" id="gastos" title="Compras">
-                    <i class="ti-minus btn-icon-prepend"></i><b class="text">Realizar Gasto</b>
+                    <i class="ti-minus btn-icon-prepend"></i><b class="text">Registrar Gasto</b>
                   </button>
               </div>
               <?php } ?>

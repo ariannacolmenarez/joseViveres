@@ -29,7 +29,7 @@
           <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content modal-fullscreen w-100">
               <div class="modal-header text-center">
-                <h5 class="modal-title fs-5 display-6 fw-bold" id="exampleModalToggleLabel7">Editar Cliente </h5>
+                <h5 class="modal-title fs-5 display-6 fw-bold" id="exampleModalToggleLabel7">Modificar Cliente </h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
               </div>
               <input type="hidden" id="idcliente">
@@ -74,7 +74,7 @@
           <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content modal-fullscreen w-100">
               <div class="modal-header text-center">
-                <h5 class="modal-title fs-5 display-6 fw-bold" id="exampleModalToggleLabel9"><a type="button" id="volver9" data-bs-target="#exampleModalToggle7" data-bs-toggle="modal"><i class="ti-arrow-left"></i> </a> Nuevo Cliente</i></h5>
+                <h5 class="modal-title fs-5 display-6 fw-bold" id="exampleModalToggleLabel9"><a type="button" id="volver9" data-bs-target="#exampleModalToggle7" data-bs-toggle="modal"><i class="ti-arrow-left"></i> </a> Registrar Cliente</i></h5>
               </div>
               <div class="modal-body">
                 <h5 class="mt-3">Nombre *</h5>

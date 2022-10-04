@@ -34,7 +34,6 @@ $(document).ready(function() {
             contentType: false,
             processData: false,
             success: function(response) {
-                console.log(response);
                 // console.log(response.data.length);
                 if (response.data.length !== 0) {
                     $('.notifications-item').remove();
@@ -46,7 +45,6 @@ $(document).ready(function() {
                         else{
                             link = 'deudas';
                         }
-                        console.log(e)
                         $('#box').append(`<a class="dropdown-item w-100 notification-item-`+e.id+`">
                         <div class="item-content w-100">
                           <h6 class="font-weight-normal">`+e.titulo+`</h6>
@@ -76,7 +74,6 @@ $(document).ready(function() {
     var runned = false;
     var d = new Date();
     if(d.getDate() == 03 && d.getHours == 8  && !runned || d.getDate() == 30 && d.getHours == 8  && !runned){
-        console.log("sdfdf")
         registrar();
         runned = true;
     }
@@ -84,7 +81,6 @@ $(document).ready(function() {
 });
 
 function dismissNotificacion (id) {
-    console.log('dismiss: ' + id);
     $.ajax({
             type: "POST",
             url:"notificaciones/eliminar",

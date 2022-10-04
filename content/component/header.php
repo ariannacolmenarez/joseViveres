@@ -32,7 +32,6 @@
 </head>
 <body>
   <div class="container-scroller">
-    
     <!-- partial:partials/_navbar.html -->
     <nav class="navbar col-lg-12 col-12 p-0 fixed-top d-flex flex-row">
       <div class="text-center navbar-brand-wrapper d-flex align-items-center justify-content-center">
@@ -60,7 +59,7 @@
             <span class="mr-2 d-none d-lg-inline text-gray-600 small"><?= empty($_SESSION['usuario']) ? 'USUARIO' : $_SESSION['usuario'] ?> <i class="ti-angle-down text-primary"></i></span>
             </a>
             <div class="dropdown-menu dropdown-menu-right navbar-dropdown" aria-labelledby="profileDropdown">
-              <a class="dropdown-item" href="<?= _DIRECTORY_ ?>logout">
+              <a class="dropdown-item" id="logout">
                 <i class="ti-power-off text-primary"></i>
                 Cerrar sesión
               </a>
@@ -77,12 +76,18 @@
       <!-- partial:partials/_sidebar.html -->
       <nav class="sidebar sidebar-offcanvas" id="sidebar">
         <ul class="nav">
+          
           <li class="nav-item">
             <a class="nav-link" href="<?= _DIRECTORY_ ?>">
               <img src="<?=_THEME_?>/images/MP.png"  class="img-fluid" />
             </a>
           </li>
-          
+          <li class="nav-item">
+            <a class="nav-link" type="button"  id="usuarios">
+              <i class="ti-user menu-icon"></i>
+              <span class="menu-title">Gestionar Usuarios</span>
+            </a>
+          </li>
           <li class="nav-item">
             <a class="nav-link" href="<?= _DIRECTORY_ ?>">
               <i class="ti-receipt menu-icon"></i>
@@ -117,24 +122,18 @@
               <span class="menu-title">Gestionar Proveedores</span>
             </a>
           </li> 
-          <li class="nav-item">
-            <a class="nav-link" type="button"  id="usuarios">
-              <i class="ti-user menu-icon"></i>
-              <span class="menu-title">Gestionar Usuarios</span>
-            </a>
-          </li>
           <?php if(in_array("Consultar Estadisticas", $_SESSION['permisos'])){ ?>
           <li class="nav-item">
             <a class="nav-link" href="#">
               <i class="ti-bar-chart-alt menu-icon"></i>
-              <span class="menu-title">Gestionar Estadísticas</span>
+              <span class="menu-title">Generar Estadísticas</span>
             </a>
           </li>
           <?php } ?>
           <li class="nav-item">
             <a class="nav-link" data-bs-toggle="collapse" href="#ui-basic" aria-expanded="false" aria-controls="ui-basic">
               <i class="ti-clipboard menu-icon"></i>
-              <span class="menu-title">Gestionar Reportes</span>
+              <span class="menu-title">Generar Reportes</span>
               <i class="menu-arrow"></i>
             </a>
             <div class="collapse" id="ui-basic">

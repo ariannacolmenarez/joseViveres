@@ -1,3 +1,25 @@
+var toastMixin = Swal.mixin({
+    toast: true,
+    icon: 'success',
+    title: 'General Title',
+    animation: false,
+    position: 'top-right',
+    showConfirmButton: false,
+    timer: 3000,
+    timerProgressBar: true,
+    didOpen: (toast) => {
+      toast.addEventListener('mouseenter', Swal.stopTimer)
+      toast.addEventListener('mouseleave', Swal.resumeTimer)
+    }
+});
+function validacion(tipo,titulo,texto){
+    Swal.fire({
+        icon: tipo,
+        title: titulo,
+        text: texto,
+      })
+}
+
 $(document).ready(function () {
    listar($("#cat").val()); 
    listarCategorias();    
@@ -12,7 +34,7 @@ $("#confirmar").on("click",function(){
     listarClientes();
     $('#exampleModal').modal('show');
   }else{
-    alert("elige algun producto");
+    validacion("warning","Error","Elige algun producto a la canasta");
   }
 });
 
@@ -245,22 +267,55 @@ function registrarVenta(){
     };
     const locations = canasta.map(([value]) => ({value}));
 
-    $.ajax({
-        contentType: "application/x-www-form-urlencoded; charset=UTF-8", 
-        method: "POST",
-        url: "ventas/registrar",
-        data: {parametros: parametros, data: locations},
-        success:  function (response) {
-            alert("guardado");
-            listar("");
-            vaciarCanasta();
-            $('#exampleModal').modal('hide');
-            getNotifications();         
-        },
-        error: (response) => {
-            console.log(response);
-        }  
-    });
+    if(estado !="" && fecha!="" && hora !="" && metodo != "" && suma != "" && locations != ""){
+        if (estado == "A CREDITO") {
+            if (cliente != "") {
+                $.ajax({
+                    contentType: "application/x-www-form-urlencoded; charset=UTF-8", 
+                    method: "POST",
+                    url: "ventas/registrar",
+                    data: {parametros: parametros, data: locations},
+                    success:  function (response) {
+                        $('#exampleModal').modal('hide');
+                        toastMixin.fire({
+                            animation: true,
+                            title: 'Venta Registrada'
+                        });
+                        listar("");
+                        vaciarCanasta();
+                        getNotifications();         
+                    },
+                    error: (response) => {
+                        console.log(response);
+                    }  
+                });
+            }else{
+              validacion("error","Error","Debes ingresar el cliente");  
+            }
+        }else{
+            $.ajax({
+                contentType: "application/x-www-form-urlencoded; charset=UTF-8", 
+                method: "POST",
+                url: "ventas/registrar",
+                data: {parametros: parametros, data: locations},
+                success:  function (response) {
+                    $('#exampleModal').modal('hide');
+                    toastMixin.fire({
+                        animation: true,
+                        title: 'Venta Registrada'
+                    });
+                    listar("");
+                    vaciarCanasta();
+                    getNotifications();          
+                },
+                error: (response) => {
+                    console.log(response);
+                }  
+            });
+        }
+    }
+
+    
 }
 
 $("#search").on("keyup",function(e) {

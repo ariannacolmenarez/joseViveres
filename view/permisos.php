@@ -190,7 +190,7 @@
                                 </tr>
                                 <tr class="text-center">
                                     <td>7</td>
-                                    <td>Gestionar Estadísticas</td>
+                                    <td>Generar Estadísticas</td>
                                     <td>
                                         <label class="switchBtn">
                                             <input type="checkbox" name="permisos[]" value="25" <?= in_array("Consultar Estadisticas", $data['permisos']) ? "checked='1'": '' ?>>
@@ -209,7 +209,7 @@
                                 </tr>
                                 <tr class="text-center">
                                     <td>8</td>
-                                    <td>Gestionar Reportes Balance</td>
+                                    <td>Generar Reportes Balance</td>
                                     <td>
                                         <label class="switchBtn">
                                             <input type="checkbox" name="permisos[]" value="26" <?= in_array("Consultar Reportes Balance", $data['permisos']) ? "checked='1'": '' ?>>
@@ -228,7 +228,7 @@
                                 </tr>
                                 <tr class="text-center">
                                     <td>9</td>
-                                    <td>Gestionar Reportes Inventario</td>
+                                    <td>Generar Reportes Inventario</td>
                                     <td>
                                         <label class="switchBtn">
                                             <input type="checkbox" name="permisos[]" value="27" <?= in_array("Consultar Reportes Inventario", $data['permisos']) ? "checked='1'": '' ?>>
@@ -247,7 +247,7 @@
                                 </tr>
                                 <tr class="text-center">
                                     <td>10</td>
-                                    <td>Gestionar Reportes Inventario</td>
+                                    <td>Generar Reportes Inventario</td>
                                     <td>
                                         <label class="switchBtn">
                                             <input type="checkbox" name="permisos[]" value="28" <?= in_array("Consultar Reportes Deudas", $data['permisos']) ? "checked='1'": '' ?>>
@@ -336,7 +336,7 @@
                                 </tr>
                                 <tr class="text-center">
                                     <td>13</td>
-                                    <td>Gestionar Bitacora</td>
+                                    <td>Generar Bitacora</td>
                                     <td>
                                         <label class="switchBtn">
                                             <input type="checkbox" name="permisos[]" value="36" <?= in_array("Consultar Reportes Bitacora", $data['permisos']) ? "checked='1'": '' ?>>

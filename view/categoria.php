@@ -4,7 +4,7 @@
           <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content modal-fullscreen w-100">
               <div class="modal-header text-center">
-                <h5 class="modal-title fs-5 display-6 fw-bold" id="exampleModalToggleLabel3">Crear Categoría <i class="ti-tag"></i></h5>
+                <h5 class="modal-title fs-5 display-6 fw-bold" id="exampleModalToggleLabel3">Registrar Categoría <i class="ti-tag"></i></h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
               </div>
               <div class="modal-body">
@@ -13,7 +13,7 @@
                   <input type="text" class="form-control form-control-lg" id="nombreC">
                 </div>
                 <div class="d-grid gap-2 d-md-block w-100 mt-5">
-                  <button class="btn btn-warning w-100" type="button" onclick="registrarCategorias();" >Crear categoría</button>
+                  <button class="btn btn-warning w-100" type="button" onclick="registrarCategorias();" >Registrar categoría</button>
                 </div>
               </div>
             </div>
@@ -24,7 +24,7 @@
           <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content modal-fullscreen w-100">
               <div class="modal-header text-center">
-                <h5 class="modal-title fs-5 display-6 fw-bold" id="exampleModalToggleLabel5">Editar Categorías <i class="ti-tag"></i></h5>
+                <h5 class="modal-title fs-5 display-6 fw-bold" id="exampleModalToggleLabel5">Modificar Categorías <i class="ti-tag"></i></h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
               </div>
               <div class="modal-body">
@@ -35,7 +35,7 @@
                     
                 </div>
                 <div class="d-grid gap-2 d-md-block w-100 mt-5">
-                  <button class="btn btn-warning w-100" type="button">Crear categoría</button>
+                  <button class="btn btn-warning w-100" type="button">Registrar categoría</button>
                 </div>
               </div>
             </div>
@@ -47,7 +47,7 @@
           <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content modal-fullscreen w-100">
               <div class="modal-header text-center">
-                <h5 class="modal-title fs-5 display-6 fw-bold" id="exampleModalToggleLabel6">Editar Categoría <i class="ti-tag"></i></h5>
+                <h5 class="modal-title fs-5 display-6 fw-bold" id="exampleModalToggleLabel6">Modificar Categoría <i class="ti-tag"></i></h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
               </div>
               <input type="hidden" id="idcatE">

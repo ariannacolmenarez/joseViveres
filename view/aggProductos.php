@@ -4,7 +4,7 @@
           <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content modal-fullscreen w-100">
               <div class="modal-header text-center">
-                <h5 class="modal-title fs-5 display-6 fw-bold" id="exampleModalToggleLabel4">Agregar productos </h5>
+                <h5 class="modal-title fs-5 display-6 fw-bold" id="exampleModalToggleLabel4">Registrar productos </h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" name="close"></button>
               </div>
               <div class="modal-body">
@@ -63,7 +63,7 @@
           <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content modal-fullscreen w-100">
               <div class="modal-header text-center">
-                <h5 class="modal-title fs-5 display-6 fw-bold" id="editarProdLabel">Editar producto </h5>
+                <h5 class="modal-title fs-5 display-6 fw-bold" id="editarProdLabel">Modificar producto </h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" name="close"></button>
               </div>
               <div class="modal-body">

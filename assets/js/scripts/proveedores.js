@@ -1,3 +1,24 @@
+var toastMixin = Swal.mixin({
+    toast: true,
+    icon: 'success',
+    title: 'General Title',
+    animation: false,
+    position: 'top-right',
+    showConfirmButton: false,
+    timer: 3000,
+    timerProgressBar: true,
+    didOpen: (toast) => {
+      toast.addEventListener('mouseenter', Swal.stopTimer)
+      toast.addEventListener('mouseleave', Swal.resumeTimer)
+    }
+});
+function validacion(tipo,titulo,texto){
+    Swal.fire({
+        icon: tipo,
+        title: titulo,
+        text: texto,
+      })
+}
 $("#volver11").on("click", function() {
     $('#exampleModalToggle11').modal('hide');
 });
@@ -62,7 +83,6 @@ function guardarProveedor(){
     var nro_doc = $("#nro_doc").val();
     var tipo_doc= $("#tipo_doc").val();
     var comentario = $("#comentario").val();
-
     var parametros = {
         "nombre" : nombre,
         "telefono" : telefono,
@@ -71,19 +91,27 @@ function guardarProveedor(){
         "comentario" : comentario,
         "id" : id
     };
-    $.ajax({
-        data:  parametros, //datos que se envian a traves de ajax
-        url:   'proveedores/guardar', //archivo que recibe la peticion
-        type:  'POST', //método de envio
-        success:  function (response) {
-            $('#exampleModalToggle11').modal('hide');    
-            listarproveedores();
-                
-        },
-        error: (response) => {
-            console.log(response);
-        }
-    });
+    if (telefono!="" && nombre !="") {
+        $.ajax({
+            data:  parametros, //datos que se envian a traves de ajax
+            url:   'proveedores/guardar', //archivo que recibe la peticion
+            type:  'POST', //método de envio
+            success:  function (response) {
+                $('#exampleModalToggle11').modal('hide'); 
+                toastMixin.fire({
+                    animation: true,
+                    title: 'Proveedor Modificado'
+                });   
+                listarproveedores(); 
+            },
+            error: (response) => {
+                console.log(response);
+            }
+        });
+    }else{
+        validacion("error","Error","Rellena los campos obligatorios")
+    }
+    
 }
 
 function registrarProveedor(){
@@ -92,7 +120,6 @@ function registrarProveedor(){
     var nro_doc = $("#nro_docR").val();
     var tipo_doc= $("#tipo_docR").val();
     var comentario = $("#comentarioR").val();
-
     
     var parametros = {
         "nombre" : nombre,
@@ -101,38 +128,62 @@ function registrarProveedor(){
         "tipo_doc" : tipo_doc,
         "comentario" : comentario,
     };
-    $.ajax({
-        data:  parametros, //datos que se envian a traves de ajax
-        url:   'proveedores/registrar', //archivo que recibe la peticion
-        type:  'POST', //método de envio
-        success:  function (response) { //una vez que el archivo recibe el request lo procesa y lo devuelve
-            $('#exampleModalToggle12').modal('hide');
-            limpiar();    
-            listarproveedores();
-                
-        },error: (response) => {
-            console.log(response);
-        }
-    });
+
+    if (telefono!="" && nombre !="") {
+        $.ajax({
+            data:  parametros, //datos que se envian a traves de ajax
+            url:   'proveedores/registrar', //archivo que recibe la peticion
+            type:  'POST', //método de envio
+            success:  function (response) { //una vez que el archivo recibe el request lo procesa y lo devuelve
+                $('#exampleModalToggle12').modal('hide');
+                toastMixin.fire({
+                    animation: true,
+                    title: 'Proveedor Registrado'
+                });
+                limpiar();    
+                listarproveedores();
+                    
+            },error: (response) => {
+                console.log(response);
+            }
+        });
+    }else{
+        validacion("error","Error","Rellena los campos obligatorios")
+    }
 }
 
 function eliminarProveedor(){
     var id = $("#id").val();
-
     var parametro = {"id" : id};
-    $.ajax({
-        data:  parametro, //datos que se envian a traves de ajax
-        url:   'proveedores/eliminar', //archivo que recibe la peticion
-        type:  'POST', //método de envio
-        success:  function (response) { //una vez que el archivo recibe el request lo procesa y lo devuelve
-            $('#exampleModalToggle11').modal('hide');    
-            listarproveedores();
-                
-        },
-        error: (response) => {
-            console.log(response);
-        }
-    });
+    Swal.fire({
+        title: '¿Estas seguro que deseas Eliminar el registro?',
+        ico: "warning",
+        showDenyButton: true,
+        showCancelButton: true,
+        confirmButtonText: 'Eliminar',
+        denyButtonText: `No Eliminar`,
+    }).then((result) => {
+        if (result.isConfirmed) {
+            $.ajax({
+                data:  parametro, //datos que se envian a traves de ajax
+                url:   'proveedores/eliminar', //archivo que recibe la peticion
+                type:  'POST', //método de envio
+                success:  function (response) { //una vez que el archivo recibe el request lo procesa y lo devuelve
+                    $('#exampleModalToggle11').modal('hide');  
+                    toastMixin.fire({
+                        animation: true,
+                        title: 'Proveedor Eliminado'
+                    });  
+                    listarproveedores(); 
+                },
+                error: (response) => {
+                    console.log(response);
+                }
+            });
+        } else if (result.isDenied) {
+            Swal.fire('Los cambios no fueron guardados', '', 'info')
+          }
+    })
 }
 
 $("#buscador").on("keyup",function(e) {

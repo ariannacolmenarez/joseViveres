@@ -16,7 +16,7 @@
                 </div>
                 <?php if(in_array("Crear Usuarios", $_SESSION['permisos'])){ ?>
                 <div class="d-grid gap-2 d-md-block w-100 mt-5">
-                  <button class="btn btn-warning w-100" type="button" onclick="crearUsuario();">Crear usuarios</button>
+                  <button class="btn btn-warning w-100" type="button" onclick="crearUsuario();">Registrar usuarios</button>
                 </div>
                 <?php } ?>
               </div>
@@ -29,7 +29,7 @@
           <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content modal-fullscreen w-100">
               <div class="modal-header text-center">
-                <h5 class="modal-title fs-5 display-6 fw-bold" id="exampleModalToggleLabel26">Editar Usuario </h5>
+                <h5 class="modal-title fs-5 display-6 fw-bold" id="exampleModalToggleLabel26">Modificar Usuario </h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
               </div>
               <input type="hidden" id="idusuarios">
@@ -67,7 +67,7 @@
                     </div>
                     <?php if(in_array("Eliminar Usuarios", $_SESSION['permisos'])){ ?>
                       <div class="d-grid gap-2 d-md-block w-100 mt-3">
-                        <button onclick="eliminarCliente();" class="btn btn-danger w-100" type="button">Eliminar Cliente</button>
+                        <button onclick="eliminarUsuarios();" class="btn btn-danger w-100" type="button">Eliminar Cliente</button>
                       </div>
                     <?php } ?>
                   </div>
@@ -80,7 +80,7 @@
           <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content modal-fullscreen w-100">
             <div class="modal-header text-center">
-                <h5 class="modal-title fs-5 display-6 fw-bold" id="exampleModalToggleLabel26">Nuevo Usuarios </h5>
+                <h5 class="modal-title fs-5 display-6 fw-bold" id="exampleModalToggleLabel26">Registrar Usuario </h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
               </div>
               <div class="modal-body">

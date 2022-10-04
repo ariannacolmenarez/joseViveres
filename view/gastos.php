@@ -3,7 +3,7 @@
               <div class="modal-dialog modal-dialog-centered">
                 <div class="modal-content modal-fullscreen w-100">
                   <div class="modal-header text-center">
-                    <h5 class="modal-title fs-5 display-6 fw-bold" id="exampleModalToggleLabel2">Registrar Gastos <i class="ti-shopping-cart"></i></h5>
+                    <h5 class="modal-title fs-5 display-6 fw-bold" id="exampleModalToggleLabel2">Registrar Gasto <i class="ti-shopping-cart"></i></h5>
                     <button type="button" class="btn-close" id="close" data-bs-dismiss="modal" aria-label="Close"></button>
                   </div>
                   <div class="modal-body">

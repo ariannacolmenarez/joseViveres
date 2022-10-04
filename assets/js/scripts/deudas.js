@@ -1,3 +1,25 @@
+var toastMixin = Swal.mixin({
+    toast: true,
+    icon: 'success',
+    title: 'General Title',
+    animation: false,
+    position: 'top-right',
+    showConfirmButton: false,
+    timer: 3000,
+    timerProgressBar: true,
+    didOpen: (toast) => {
+      toast.addEventListener('mouseenter', Swal.stopTimer)
+      toast.addEventListener('mouseleave', Swal.resumeTimer)
+    }
+});
+function validacion(tipo,titulo,texto){
+    Swal.fire({
+        icon: tipo,
+        title: titulo,
+        text: texto,
+      })
+}
+
 $(document).ready(function() {
     listardeudasCobrar()
     listardeudasPagar()
@@ -164,83 +186,143 @@ function aggAbonoPago(id,tipo,id_p){
         var concepto = $("#conceptoA").val();
         var metodo= $("input[name='opciones']:radio:checked").val();
 
-        var parametros = {
-            "fecha" : fecha,
-            "valor" : valor,
-            "concepto" : concepto,
-            "metodo" : metodo,
-            "id" : id,
-            "persona": id_p
-        };
-        console.log(parametros)
-        $.ajax({
-            data:  parametros, //datos que se envian a traves de ajax
-            url:   'deudas/abonar/'+tipo, //archivo que recibe la peticion
-            type:  'POST', //método de envio
-            success:  function (response) {
-                alert("abono realizado correctamente");
-                $('.modal').modal('hide');  
-                listardeudasPagar();
-                listardeudasCobrar();   
-            },
-            error: (response) => {
-                console.log(response);
-            }
-        });
+        if (fecha != ""&& valor!="" && concepto!="" && metodo != "") {
+           if ($("#valorA").attr("max") > valor) {
+            var parametros = {
+                "fecha" : fecha,
+                "valor" : valor,
+                "concepto" : concepto,
+                "metodo" : metodo,
+                "id" : id,
+                "persona": id_p
+            };
+            console.log(parametros)
+            $.ajax({
+                data:  parametros, //datos que se envian a traves de ajax
+                url:   'deudas/abonar/'+tipo, //archivo que recibe la peticion
+                type:  'POST', //método de envio
+                success:  function (response) {
+                    $('.modal').modal('hide');  
+                    toastMixin.fire({
+                        animation: true,
+                        title: 'Abono Registrado correctamente'
+                    });
+                    listardeudasPagar();
+                    listardeudasCobrar();   
+                },
+                error: (response) => {
+                    console.log(response);
+                }
+            });
+            }else{
+                validacion("error","Error","El monto ingresado es mayor que la deuda");
+            } 
+        }else{
+            validacion("error","Error","Ingresa los campos obligatorios");
+        } 
     })
 }
 
 function eliminarDC(){
     var id = $("#id").val();
-
     var parametro = {"id" : id};
-    $.ajax({
-        data:  parametro, //datos que se envian a traves de ajax
-        url:   'deudas/eliminar', //archivo que recibe la peticion
-        type:  'POST', //método de envio
-        success:  function (response) { //una vez que el archivo recibe el request lo procesa y lo devuelve
-            $('#exampleModalToggle14').modal('hide');    
-            listardeudasCobrar(); 
-                
-        },
-        error: (response) => {
-            console.log(response);
+    Swal.fire({
+        title: '¿Estas seguro que deseas Eliminar el registro?',
+        ico: "warning",
+        showDenyButton: true,
+        showCancelButton: true,
+        confirmButtonText: 'Eliminar',
+        denyButtonText: `No Eliminar`,
+    }).then((result) => {
+        if (result.isConfirmed) {
+            $.ajax({
+                data:  parametro, //datos que se envian a traves de ajax
+                url:   'deudas/eliminar', //archivo que recibe la peticion
+                type:  'POST', //método de envio
+                success:  function (response) { //una vez que el archivo recibe el request lo procesa y lo devuelve
+                    $('#exampleModalToggle14').modal('hide');
+                    toastMixin.fire({
+                        animation: true,
+                        title: 'Deuda Eliminada'
+                    });    
+                    listardeudasCobrar(); 
+                        
+                },
+                error: (response) => {
+                    console.log(response);
+                }
+            })
+        } else if (result.isDenied) {
+            Swal.fire('Los cambios no fueron guardados', '', 'info')
         }
-    });
+    })
 }
 function eliminarDP(){
     var id = $("#id").val();
-
     var parametro = {"id" : id};
-    $.ajax({
-        data:  parametro, //datos que se envian a traves de ajax
-        url:   'deudas/eliminar', //archivo que recibe la peticion
-        type:  'POST', //método de envio
-        success:  function (response) { //una vez que el archivo recibe el request lo procesa y lo devuelve
-            $('#exampleModalToggle18').modal('hide');    
-            listardeudasPagar(); 
-                
-        },
-        error: (response) => {
-            console.log(response);
+    Swal.fire({
+        title: '¿Estas seguro que deseas Eliminar el registro?',
+        ico: "warning",
+        showDenyButton: true,
+        showCancelButton: true,
+        confirmButtonText: 'Eliminar',
+        denyButtonText: `No Eliminar`,
+    }).then((result) => {
+        if (result.isConfirmed) {
+            $.ajax({
+                data:  parametro, //datos que se envian a traves de ajax
+                url:   'deudas/eliminar', //archivo que recibe la peticion
+                type:  'POST', //método de envio
+                success:  function (response) { //una vez que el archivo recibe el request lo procesa y lo devuelve
+                    $('#exampleModalToggle18').modal('hide'); 
+                    toastMixin.fire({
+                        animation: true,
+                        title: 'Deuda Eliminada'
+                    });   
+                    listardeudasPagar(); 
+                        
+                },
+                error: (response) => {
+                    console.log(response);
+                }
+            });
+        } else if (result.isDenied) {
+            Swal.fire('Los cambios no fueron guardados', '', 'info')
         }
-    });
+    })
 }
 
 function eliminarAbono(id){
-
-    $.ajax({
-        url:   'deudas/eliminarAbono/'+id, //archivo que recibe la peticion
-        type:  'POST', //método de envio
-        success:  function (response) { //una vez que el archivo recibe el request lo procesa y lo devuelve
-            $('#exampleModalToggle13').modal('hide');    
-            listardeudasCobrar(); 
-            listardeudasPagar();
-        },
-        error: (response) => {
-            console.log(response);
-        }
-    });
+    Swal.fire({
+        title: '¿Estas seguro que deseas Eliminar el registro?',
+        ico: "warning",
+        showDenyButton: true,
+        showCancelButton: true,
+        confirmButtonText: 'Eliminar',
+        denyButtonText: `No Eliminar`,
+    }).then((result) => {
+        if (result.isConfirmed) {
+            $.ajax({
+                url:   'deudas/eliminarAbono/'+id, //archivo que recibe la peticion
+                type:  'POST', //método de envio
+                success:  function (response) { //una vez que el archivo recibe el request lo procesa y lo devuelve
+                    $('#exampleModalToggle13').modal('hide');
+                    toastMixin.fire({
+                        animation: true,
+                        title: 'Abono Eliminado'
+                    });    
+                    listardeudasCobrar(); 
+                    listardeudasPagar();
+                },
+                error: (response) => {
+                    console.log(response);
+                }
+            })
+        } else if (result.isDenied) {
+            Swal.fire('Los cambios no fueron guardados', '', 'info')
+          }
+    })
+        
 }
 
 

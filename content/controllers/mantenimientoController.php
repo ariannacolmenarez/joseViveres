@@ -37,7 +37,7 @@
 
 	    public function restaurar(){
 			
-			$this->model->restaurar();
+			$result=$this->model->restaurar();
 			header("location:"._DIRECTORY_."mantenimiento");
 		}
 	

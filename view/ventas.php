@@ -7,7 +7,7 @@
                         <a href="<?= _DIRECTORY_ ?>balance" class="btn btn-warning btn-icon-text"><i class="ti-arrow-left"></i></a>
                     </div>
                     <div class="col">
-                        <h3 class="font-weight-bold text-dark text py-2">Nueva Venta</h3> 
+                        <h3 class="font-weight-bold text-dark text py-2">Registrar Venta</h3> 
                     </div>
             </div>
   <hr>

@@ -1,3 +1,24 @@
+var toastMixin = Swal.mixin({
+    toast: true,
+    icon: 'success',
+    title: 'General Title',
+    animation: false,
+    position: 'top-right',
+    showConfirmButton: false,
+    timer: 3000,
+    timerProgressBar: true,
+    didOpen: (toast) => {
+      toast.addEventListener('mouseenter', Swal.stopTimer)
+      toast.addEventListener('mouseleave', Swal.resumeTimer)
+    }
+});
+function validacion(tipo,titulo,texto){
+    Swal.fire({
+        icon: tipo,
+        title: titulo,
+        text: texto,
+      })
+}
 
 $("#volver27").on("click", function() {
     limpiar();
@@ -56,7 +77,7 @@ function consultarusuarios (id) {
         dataType: "json",
         success: function (response) {
             response.map( function (elem) {
-                $("#id").val(elem.id);
+                $("#idusuarios").val(elem.id);
                 $("#nombre1").val(elem.nombre);
                 $("#correo").val(elem.correo);
                 $("#rol_usuario option[value='"+ elem.rol_usuario +"']").attr("selected",true);
@@ -70,7 +91,7 @@ function consultarusuarios (id) {
 }
 
 function guardarUsuarios(){
-    var id = $("#id").val();
+    var id = $("#idusuarios").val();
     var nombre = $("#nombre1").val();
     var correo = $("#correo").val();
     var contraseña = $("#contraseña").val();
@@ -83,19 +104,29 @@ function guardarUsuarios(){
         "id" : id,
         "rol": rol
     };
-    $.ajax({
-        data:  parametros, //datos que se envian a traves de ajax
-        url:   'usuarios/guardar', //archivo que recibe la peticion
-        type:  'POST', //método de envio
-        success:  function (response) {
-            $('#exampleModalToggle16').modal('hide');    
-            listarusuarios();
-                
-        },
-        error: (response) => {
-            console.log(response);
-        }
-    });
+
+    if(nombre != "" && correo !="" && rol !=""){
+        $.ajax({
+            data:  parametros, //datos que se envian a traves de ajax
+            url:   'usuarios/guardar', //archivo que recibe la peticion
+            type:  'POST', //método de envio
+            success:  function (response) {
+                $('#exampleModalToggle16').modal('hide');  
+                toastMixin.fire({
+                    animation: true,
+                    title: 'Usuario Modificado'
+                });  
+                listarusuarios();
+                    
+            },
+            error: (response) => {
+                console.log(response);
+            }
+        });
+    }else{
+        validacion("error","Error","Rellena los campos obligatorios");
+    }
+    
 }
 
 function crearUsuario(){
@@ -107,7 +138,7 @@ function registrarUsuarios(){
     var nombre = $("#nombre3").val();
     var correo = $("#correo2").val();
     var contraseña = $("#contraseña1").val();
-    var rol = $("#rol_usuario").val();
+    var rol = $("#rol_usuarioR").val();
    
     var parametros = {
         "nombre" : nombre,
@@ -115,38 +146,63 @@ function registrarUsuarios(){
         "contraseña" : contraseña,
         "rol" : rol
     };
-    $.ajax({
-        data:  parametros, //datos que se envian a traves de ajax
-        url:   'usuarios/registrar', //archivo que recibe la peticion
-        type:  'POST', //método de envio
-        success:  function (response) { //una vez que el archivo recibe el request lo procesa y lo devuelve
-            $('#exampleModalToggle27').modal('hide');
-            limpiar();    
-            listarusuarios();
-                
-        },error: (response) => {
-            console.log(response);
-        }
-    });
+
+    if(nombre != "" && correo !="" && contraseña !="" && rol !=""){
+        $.ajax({
+            data:  parametros, //datos que se envian a traves de ajax
+            url:   'usuarios/registrar', //archivo que recibe la peticion
+            type:  'POST', //método de envio
+            success:  function (response) { //una vez que el archivo recibe el request lo procesa y lo devuelve
+                $('#exampleModalToggle27').modal('hide');
+                toastMixin.fire({
+                    animation: true,
+                    title: 'Usuario Registrado'
+                });
+                limpiar();    
+                listarusuarios();
+                    
+            },error: (response) => {
+                console.log(response);
+            }
+        });
+    }else{
+        validacion("error","Error","Rellena los campos obligatorios");
+    }
 }
 
-function eliminarusuarios(){
+function eliminarUsuarios(){
     var id = $("#idusuarios").val();
 
-    var parametro = {"idusuarios" : id};
-    $.ajax({
-        data:  parametro, //datos que se envian a traves de ajax
-        url:   'usuarios/eliminar', //archivo que recibe la peticion
-        type:  'POST', //método de envio
-        success:  function (response) { //una vez que el archivo recibe el request lo procesa y lo devuelve
-            $('#exampleModalToggle16').modal('hide');    
-            listarusuarios();
-                
-        },
-        error: (response) => {
-            console.log(response);
-        }
-    });
+    var parametro = {"id" : id};
+    Swal.fire({
+        title: '¿Estas seguro que deseas Eliminar el registro?',
+        ico: "warning",
+        showDenyButton: true,
+        showCancelButton: true,
+        confirmButtonText: 'Eliminar',
+        denyButtonText: `No Eliminar`,
+    }).then((result) => {
+        if (result.isConfirmed) {
+            $.ajax({
+                data:  parametro, //datos que se envian a traves de ajax
+                url:   'usuarios/eliminar', //archivo que recibe la peticion
+                type:  'POST', //método de envio
+                success:  function (response) { //una vez que el archivo recibe el request lo procesa y lo devuelve
+                    $('#exampleModalToggle16').modal('hide');    
+                    toastMixin.fire({
+                        animation: true,
+                        title: 'Usuario Eliminado'
+                    });
+                    listarusuarios();     
+                },
+                error: (response) => {
+                    console.log(response);
+                }
+            });
+        } else if (result.isDenied) {
+            Swal.fire('Los cambios no fueron guardados', '', 'info')
+          }
+    })
 }
 
 $("#buscadorU").on("keyup",function(e) {

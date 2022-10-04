@@ -16,7 +16,7 @@
                   <span class="input-group-text"><b>Valor total</b> </span>
                 </div>
                 <div class="form-group mt-3">
-                  <h5>Concepto</h5>
+                  <h5>Concepto *</h5>
                   <input type="text" class="form-control form-control-lg" id="conceptoA" placeholder="Concepto">
                 </div>
                 <h5 class="mt-2">Método de pago*</h5>
@@ -36,7 +36,7 @@
               </div>
               <div class="modal-footer">
                 <div class="d-grid gap-2 d-md-block w-100">
-                  <button class="btn btn-warning w-100" type="button" id="guardar">Guardar Cambios</button>
+                  <button class="btn btn-warning w-100" type="button" id="guardar">Registrar Abono</button>
                 </div>
               </div>
             </div>

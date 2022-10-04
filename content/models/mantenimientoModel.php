@@ -87,8 +87,6 @@ class mantenimientoModel extends Conexion{
             }
             mysqli_free_result($result);
             if (!$error) {
-                $_SESSION["mensaje"] = "¡Respaldo realizado correctamente!";
-                $_SESSION["tipo_mensaje"] = "success";
                 return 0;
             }
             else{

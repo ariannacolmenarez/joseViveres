@@ -32,7 +32,7 @@
               </div>
               <h4 class="text-center">Bienvenid@, Empecemos...</h4>
               <h6 class="font-weight-light text-center">Inicio de Sessión</h6>
-              <form class="pt-3 mt-4" method="POST" action="">
+              <form class="pt-3 mt-4" method="POST" action="<?= _DIRECTORY_ ?>login" id="form">
                 <div class="form-group mt-2">
                   <input type="text" class="form-control form-control-lg" name="usuario" id="usuario" placeholder="User Name">
                 </div>
@@ -47,7 +47,7 @@
                       }
                     ?>
                 <div class="mt-3">
-                  <button type="submit" class="btn btn-block btn-primary btn-lg font-weight-medium auth-form-btn">Login</button>
+                  <button id="submit" class="btn btn-block btn-primary btn-lg font-weight-medium auth-form-btn">Login</button>
                 </div>
                 <div class="my-2 d-flex justify-content-between align-items-center">
                   <a id="recuperar" class="auth-link text-black">¿Olvidaste la Contraseña?</a>
@@ -71,6 +71,8 @@
   <script src="<?= _THEME_ ?>js/template.js"></script>
   <script src="<?= _THEME_ ?>js/todolist.js"></script>
   <script src="<?= _THEME_ ?>/js/scripts/recuperarCont.js"></script>
+  <script src="<?= _THEME_ ?>/js/scripts/alerts/login.js"></script>
+
   <!-- endinject -->
 </body>
 
