@@ -410,9 +410,9 @@ class deudasModel extends Conexion{
     public function listarAbonos($id,$tipo){
         try {
             if($tipo == 1){
-                $sql= "SELECT a.concepto, a.valor, a.id, a.fecha FROM abonos as a,abono_movimiento as am, movimientos as m WHERE a.id=am.id_abono and am.id_movimiento=m.id and M.id_concepto_movimiento = 1 and m.id_persona=$id";
+                $sql= "SELECT a.concepto, a.valor, a.id, a.fecha FROM abonos as a,abono_movimiento as am, movimientos as m WHERE a.id=am.id_abono and am.id_movimiento=m.id and m.id_concepto_movimiento = 1 and m.id_persona=$id";
             }else{
-                $sql= "SELECT a.concepto, a.valor, a.id, a.fecha FROM abonos as a,abono_movimiento as am, movimientos as m WHERE a.id=am.id_abono and am.id_movimiento=m.id and M.id_concepto_movimiento != 1 and m.id_persona=$id";
+                $sql= "SELECT a.concepto, a.valor, a.id, a.fecha FROM abonos as a,abono_movimiento as am, movimientos as m WHERE a.id=am.id_abono and am.id_movimiento=m.id and m.id_concepto_movimiento != 1 and m.id_persona=$id";
             }
 
             $consulta= Conexion::conect()->prepare($sql);
