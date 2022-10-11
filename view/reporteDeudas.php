@@ -1,7 +1,3 @@
-<?php
-     require_once "../content/component/header.php"
-     ?>
-     <!-- partial -->
     <div class="main-panel">
         <div class="content-wrapper">
             <div class="row py-0">
@@ -12,7 +8,7 @@
             <hr>
             <div class="row w-75 m-auto">
             <div class="card">
-                <div class="card-body">
+                <div class="card-body" id='botones'>
                     <ul class="nav nav-pills mb-3 nav-justified" id="pills-tab" role="tablist">
                         <li class="nav-item" role="presentation">
                             <button class="nav-link active three" id="pills-home-tab" data-bs-toggle="pill" data-bs-target="#pills-home" type="button" role="tab" aria-controls="pills-home" aria-selected="true">Semanal</button>
@@ -26,46 +22,22 @@
                     </ul>
                     <div class="tab-content" id="pills-tabContent">
                         <div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab" tabindex="0">
-                            
                             <div class="row justify-content-md-center">
                                 <div class="form-group col-md-6 col-md-offset-2" id="week-picker-wrapper">
                                     <div class="input-group">
                                         <span class="input-group-btn">
                                             <button type="button" class="btn week-prev"><b><i class=" ti-angle-left"></i></b></button>
                                         </span>
-                                        <input type="text" class="form-control week-picker text-center" placeholder="Select a Week">
+                                        <input type="text" id='weekDate' class="form-control week-picker text-center" placeholder="Select a Week">
                                         <span class="input-group-btn">
                                             <button type="button" class="btn  week-next"><b><i class=" ti-angle-right"></i></b></button>
                                         </span>
                                     </div>
                                 </div>
                             </div>
-                            <div class="card mt-1 w-75 m-auto">
-                                <div class="card-body rounded">
-                                    <ul class="nav nav-pills mb-3 nav-justified m-auto border border-secondary rounded" id="pills-tab" role="tablist">
-                                        <li class="nav-item " role="presentation">
-                                            <button class="nav-link active one" id="venta-label" data-bs-toggle="pill" data-bs-target="#venta" type="button" role="tab" aria-controls="venta" aria-selected="true">Deudas por Cobrar</button>
-                                        </li>
-                                        <li class="nav-item" role="presentation">
-                                            <button class="nav-link two " id="gasto-label" data-bs-toggle="pill" data-bs-target="#gasto" type="button" role="tab" aria-controls="gasto" aria-selected="false">Deudas por Pagar</button>
-                                        </li>
-                                    </ul>
-                                    <div class="tab-content" id="pills-tabContent">
-                                        <div class="tab-pane fade show active" id="venta" role="tabpanel" aria-labelledby="venta-label" tabindex="0">
-                                            <div class="card w-50 m-auto">
-                                                <div class="card-body">
-                                                <i class="ti-clipboard icon-md text-primary mb-0 mb-md-3 mb-xl-0"></i><h4 class="card-title text-md-center text-primary">Generar Reporte</h4>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="tab-pane fade" id="gasto" role="tabpanel" aria-labelledby="gasto-label" tabindex="0">
-                                            <div class="card w-50 m-auto">
-                                                <div class="card-body">
-                                                <i class="ti-clipboard icon-md text-primary mb-0 mb-md-3 mb-xl-0"></i><h4 class="card-title text-md-center text-primary">Generar Reporte</h4>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
+                            <div class="card mt-1 w-90 m-auto">
+                                <div class="card-body rounded" id="infoSemanal">
+
                                 </div>
                             </div>
                         </div>
@@ -82,34 +54,11 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="card mt-1 w-75 m-auto">
-                                <div class="card-body rounded">
-                                    <ul class="nav nav-pills mb-3 nav-justified m-auto border border-secondary rounded" id="pills-tab" role="tablist">
-                                        <li class="nav-item " role="presentation">
-                                            <button class="nav-link active one" id="venta-label" data-bs-toggle="pill" data-bs-target="#venta" type="button" role="tab" aria-controls="venta" aria-selected="true">Deudas por Cobrar</button>
-                                        </li>
-                                        <li class="nav-item" role="presentation">
-                                            <button class="nav-link two " id="gasto-label" data-bs-toggle="pill" data-bs-target="#gasto" type="button" role="tab" aria-controls="gasto" aria-selected="false">Deudas por Pagar</button>
-                                        </li>
-                                    </ul>
-                                    <div class="tab-content" id="pills-tabContent">
-                                        <div class="tab-pane fade show active" id="venta" role="tabpanel" aria-labelledby="venta-label" tabindex="0">
-                                            <div class="card w-50 m-auto">
-                                                <div class="card-body">
-                                                <i class="ti-clipboard icon-md text-primary mb-0 mb-md-3 mb-xl-0"></i><h4 class="card-title text-md-center text-primary">Generar Reporte</h4>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="tab-pane fade" id="gasto" role="tabpanel" aria-labelledby="gasto-label" tabindex="0">
-                                            <div class="card w-50 m-auto">
-                                                <div class="card-body">
-                                                <i class="ti-clipboard icon-md text-primary mb-0 mb-md-3 mb-xl-0"></i><h4 class="card-title text-md-center text-primary">Generar Reporte</h4>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
+                            <div class="card mt-1 w-90 m-auto">
+                                <div class="card-body rounded" id="infoMensual">
+
                                 </div>
-                            </div>
+                            </div> 
                         </div>
                         <div class="tab-pane fade" id="pills-contact" role="tabpanel" aria-labelledby="pills-contact-tab" tabindex="0">
                         <div class="row justify-content-md-center">
@@ -123,44 +72,16 @@
                                         </span>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="card mt-1 w-75 m-auto">
-                                <div class="card-body rounded">
-                                    <ul class="nav nav-pills mb-3 nav-justified m-auto border border-secondary rounded" id="pills-tab" role="tablist">
-                                        <li class="nav-item " role="presentation">
-                                            <button class="nav-link active one" id="venta-label" data-bs-toggle="pill" data-bs-target="#venta" type="button" role="tab" aria-controls="venta" aria-selected="true">Deudas por Cobrar</button>
-                                        </li>
-                                        <li class="nav-item" role="presentation">
-                                            <button class="nav-link two " id="gasto-label" data-bs-toggle="pill" data-bs-target="#gasto" type="button" role="tab" aria-controls="gasto" aria-selected="false">Deudas por Pagar</button>
-                                        </li>
-                                    </ul>
-                                    <div class="tab-content" id="pills-tabContent">
-                                        <div class="tab-pane fade show active" id="venta" role="tabpanel" aria-labelledby="venta-label" tabindex="0">
-                                            <div class="card w-50 m-auto">
-                                                <div class="card-body">
-                                                <i class="ti-clipboard icon-md text-primary mb-0 mb-md-3 mb-xl-0"></i><h4 class="card-title text-md-center text-primary">Generar Reporte</h4>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="tab-pane fade" id="gasto" role="tabpanel" aria-labelledby="gasto-label" tabindex="0">
-                                            <div class="card w-50 m-auto">
-                                                <div class="card-body">
-                                                <i class="ti-clipboard icon-md text-primary mb-0 mb-md-3 mb-xl-0"></i><h4 class="card-title text-md-center text-primary">Generar Reporte</h4>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
+                           </div> 
+                           <div class="card mt-1 w-90 m-auto">
+                                <div class="card-body rounded" id="infoAnual">
+
                                 </div>
-                            </div>
+                            </div> 
                     </div>
                 </div>
             </div>
             </div>
         </div>
     </div>
-        <!-- content-wrapper ends -->   
-        
- <?php
- require_once "../content/component/footer.php";
- ?>
-
+    <script src="<?= _THEME_?>js/scripts/reporteDeudas.js"></script>

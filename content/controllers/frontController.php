@@ -40,7 +40,8 @@ require_once 'content/config/settings/SysConfig.php';
 					if (method_exists($i, $method)) {
 						$i->{$method}($params);
 					}else{
-						die("<script>document.location.href='error';</script>");
+			            echo $params;
+					//	die("<script>document.location.href='error';</script>");
 					}
 					
 				}else{

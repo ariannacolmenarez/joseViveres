@@ -157,7 +157,7 @@
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#">
+            <a class="nav-link" href="<?= _DIRECTORY_ ?>estadistica">
               <i class="ti-bar-chart-alt menu-icon"></i>
               <span class="menu-title">Gestionar Estadísticas</span>
             </a>
@@ -170,9 +170,9 @@
             </a>
             <div class="collapse" id="ui-basic">
               <ul class="nav flex-column sub-menu">
-                <li class="nav-item"> <a class="nav-link" href="#">Reportes de Inventario</a></li>
-                <li class="nav-item"> <a class="nav-link" href="#">Reportes de Balance</a></li>
-                <li class="nav-item"> <a class="nav-link" href="#">Reportes de Deudas</a></li>
+                <li class="nav-item"> <a class="nav-link" href="<?= _DIRECTORY_ ?>reporteInventario">Reportes de Inventario</a></li>
+                <li class="nav-item"> <a class="nav-link" href="<?= _DIRECTORY_ ?>reporteBalance">Reportes de Balance</a></li>
+                <li class="nav-item"> <a class="nav-link" href="<?= _DIRECTORY_ ?>reporteDeudas">Reportes de Deudas</a></li>
                 <li class="nav-item"> <a class="nav-link" href="#">Reportes de Bítacora</a></li>
               </ul>
             </div>
