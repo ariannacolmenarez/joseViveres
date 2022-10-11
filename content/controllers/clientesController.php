@@ -79,8 +79,8 @@ class clientesController extends Autoload {
             $p->setcomentario($_POST['comentariocliente']);
             $p->settelefono($_POST['telefonocliente']);
 
-			$this->model->registrar($p);
-				
+			$resp=$this->model->registrar($p);
+			echo json_encode($resp);
 		}
     }
 

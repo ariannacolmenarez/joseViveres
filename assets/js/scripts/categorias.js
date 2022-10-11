@@ -1,3 +1,40 @@
+$(document).ready(function() {
+
+    $("#cat_form").validate({
+        rules: {
+            nombrec : {
+                required: true,
+                minlength: 5,
+                maxlength: 50
+            }
+        },
+        messages : {
+        nombre: {
+            required: "El nombre de usuario es requerido",
+            minlength: "El nombre debe contener mas de 5 carácteres Alfanuméricos"
+        }
+        },
+        errorElement : 'span'
+    });
+    $("#cat_formM").validate({
+        rules: {
+            nombrecat : {
+                required: true,
+                minlength: 5,
+                maxlength: 50
+            }
+        },
+        messages : {
+        nombre: {
+            required: "El nombre de usuario es requerido",
+            minlength: "El nombre debe contener mas de 5 carácteres Alfanuméricos"
+        }
+        },
+        errorElement : 'span'
+    });
+    
+});
+
 var toastMixin = Swal.mixin({
     toast: true,
     icon: 'success',
@@ -52,27 +89,32 @@ function listarCatProd(){
 function registrarCategorias(){
     var nombre = $("#nombreC").val();
     
-    if (nombre != "") {
+    if ($('#cat_form').valid()) {
         $.ajax({
             data:  {'nombre':nombre}, //datos que se envian a traves de ajax
             url:   'categorias/registrar', //archivo que recibe la peticion
             type:  'POST', //método de envio
             success:  function (response) { //una vez que el archivo recibe el request lo procesa y lo devuelve 
-                
-                $('#exampleModalToggle3').modal('hide');
-                toastMixin.fire({
-                    animation: true,
-                    title: 'Categoría Registrada'
-                });
-                limpiar(); 
-                listarCategoriasProd();
+                if(response !== "true"){
+                    $('#exampleModalToggle3').modal('hide');
+                    validacion("error","Duplicado","El número de documento esta duplicado");
+                    limpiar();
+                }else{
+                    $('#exampleModalToggle3').modal('hide');
+                    toastMixin.fire({
+                        animation: true,
+                        title: 'Categoría Registrada'
+                    });
+                    limpiar(); 
+                    listarCategoriasProd();
+                }
             },error: (response) => {
                 console.log(response);
 
             }
         });
-    }else{
-        validacion("error","Error","Debes ingresar el nombre","");
+    } else {
+        validacion("error","Error","Rellena los campos correctamente")
     }
     
 }
@@ -118,7 +160,7 @@ function guardarCat(){
         "nombre" : nombre,
         "id" : id
     };
-    if (nombre != "") {
+    if ($('#cat_formM').valid()) {
         $.ajax({
             data:  parametros, //datos que se envian a traves de ajax
             url:   'categorias/guardar', //archivo que recibe la peticion
@@ -136,8 +178,8 @@ function guardarCat(){
                 console.log(response);
             }
         });
-    }else{
-        validacion("error","Error","Debes ingresar el nombre");
+    } else {
+        validacion("error","Error","Rellena los campos correctamente")
     }
 }
 

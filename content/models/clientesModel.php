@@ -130,25 +130,31 @@ class clientesModel extends Conexion{
 
     public function registrar(clientesModel $p){
         try {
-            
-            $consulta="INSERT INTO persona(
-                nombre , 
-                nro_doc,
-                tipo_doc,
-                telefono,
-                comentario,
-                estado,
-                id_tipo_persona)
-            VALUES (?,?,?,?,?,?,?)";
-            Conexion::conect()->prepare($consulta)->execute(array(
-                $p->getnombre(),
-                $p->getnroDoc(),
-                $p->gettipoDoc(),
-                $p->gettelefono(),
-                $p->getcomentario(),
-                "1",
-                "2 ",
-            ));
+            $documento=$p->getnroDoc();
+            if( builder::duplicado_persona("$documento",2) === false ){
+                return $documento;
+            }
+            else{
+                $consulta="INSERT INTO persona(
+                    nombre , 
+                    nro_doc,
+                    tipo_doc,
+                    telefono,
+                    comentario,
+                    estado,
+                    id_tipo_persona)
+                VALUES (?,?,?,?,?,?,?)";
+                Conexion::conect()->prepare($consulta)->execute(array(
+                    $p->getnombre(),
+                    $p->getnroDoc(),
+                    $p->gettipoDoc(),
+                    $p->gettelefono(),
+                    $p->getcomentario(),
+                    "1",
+                    "2 ",
+                ));
+                return true;
+            }
 
         } catch (Exception $e) {
 

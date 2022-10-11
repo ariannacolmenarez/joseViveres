@@ -17,8 +17,9 @@ class loginController extends Autoload {
             $p->setcontraseña($_POST['password']);  
             $contraseña = $p->getcontraseña();
             $resp = $p->verificarUsuario();
+            $password=builder::desencriptar($resp->contraseña);
             if($resp){
-                if(strcmp ($contraseña , $resp->contraseña ) !== 0){
+                if(strcmp ($contraseña , $password ) !== 0){
                     $mensaje = "La Contraseña es incorrecta";
                     $iniciar = false;
                 }

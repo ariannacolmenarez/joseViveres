@@ -1,3 +1,5 @@
+
+
 var toastMixin = Swal.mixin({
     toast: true,
     icon: 'success',

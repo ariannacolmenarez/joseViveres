@@ -37,8 +37,8 @@ class productosController extends Autoload {
             die("<script>document.location.href='error';</script>");
           }
         }
-				$this->model->registrar($p);
-				
+				$resp=$this->model->registrar($p);
+				echo json_encode($resp);
 			}
     }
 

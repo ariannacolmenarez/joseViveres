@@ -1,3 +1,99 @@
+$(document).ready(function() {
+
+    $("#form").validate({
+        rules: {
+        nombrep : {
+            required: true,
+            minlength: 5,
+            maxlength: 50
+        },
+        costop: {
+            required: true,
+            number: true
+        },
+        preciop: {
+            required: true,
+            number: true
+        },
+        catprod: {
+            required: true
+        },
+        descripcionp: {
+            minlength: 5,
+            maxlength: 150
+        }
+        },
+        messages : {
+        nombrep: {
+            required: "El nombre es requerido",
+            minlength: "El nombre debe contener mas de 5 carácteres Alfanuméricos"
+        },
+        catprod: {
+            required: "La selección de la categoria es requerida",
+        },
+        costop: {
+            required: "El precio costo es requerido",
+            number: "El precio costo  debe tener un formato numérico"
+        },
+        preciop: {
+            required: "El precio de venta es requerido",
+            number: "El precio de venta  debe tener un formato numérico"
+        },
+        descripcionp: {
+            minlength: "La descripción debe contener mas de 5 carácteres Alfanuméricos"
+        },
+        },
+        errorElement : 'span'
+    });
+      
+    $("#form2").validate({
+        rules: {
+        nombrep : {
+            required: true,
+            minlength: 5,
+            maxlength: 50
+        },
+        costop: {
+            required: true,
+            number: true
+        },
+        preciop: {
+            required: true,
+            number: true
+        },
+        catprod: {
+            required: true
+        },
+        descripcionp: {
+            minlength: 5,
+            maxlength: 150
+        }
+        },
+        messages : {
+        nombrep: {
+            required: "El nombre es requerido",
+            minlength: "El nombre debe contener mas de 5 carácteres Alfanuméricos"
+        },
+        catprod: {
+            required: "La selección de la categoria es requerida",
+        },
+        costop: {
+            required: "El precio costo es requerido",
+            number: "El precio costo  debe tener un formato numérico"
+        },
+        preciop: {
+            required: "El precio de venta es requerido",
+            number: "El precio de venta  debe tener un formato numérico"
+        },
+        descripcionp: {
+            minlength: "La descripción debe contener mas de 5 carácteres Alfanuméricos"
+        },
+        },
+        errorElement : 'span'
+    });
+});
+
+
 var toastMixin = Swal.mixin({
     toast: true,
     icon: 'success',
@@ -77,7 +173,7 @@ function imgPreview(input,id) {
        }
        reader.readAsDataURL(input.files[0]);
      }else{
-         alert("Invalid file type");
+         validacion("error","Error","Invalid file type");
      }
 }
 
@@ -93,8 +189,7 @@ function registrarProducto(){
         formData.append('cantidad' , $("#cantidadp").val());
         formData.append('nombre' , $("#nombrep").val());
 
-        if ($("#preciop").val()!="" && $("#costop").val()!="" 
-        && $("#cantidadp").val()!=""&& $("#nombrep").val()!="") {
+        if ($('#form').valid()) {
             $.ajax({
 
                 cache: false,
@@ -104,24 +199,29 @@ function registrarProducto(){
                 processData: false,
                 method: "POST",
                 url: "productos/registrar",
-                success: function (data) {
-                    alert("registrado correctamente");
-                    listarInventario("");
-                    $("#preview-img").show().attr("src", "");
-                    $('#exampleModalToggle4').modal('hide');
-                    toastMixin.fire({
-                        animation: true,
-                        title: 'Producto Registrado'
-                    });
-                    limpiar();
+                success: function (response) {
+                    if(response !== "true"){
+                        $('#exampleModalToggle4').modal('hide');
+                        validacion("error","Duplicado","El nombre del producto esta duplicado");
+                        limpiar();
+                    }else{
+                        listarInventario("");
+                        $("#preview-img").show().attr("src", "");
+                        $('#exampleModalToggle4').modal('hide');
+                        toastMixin.fire({
+                            animation: true,
+                            title: 'Producto Registrado'
+                        });
+                        limpiar();
+                    }
                 },
                 error: (response) => {
                     console.log(response);
                 }
 
             })
-        }else{
-            validacion("error","Error","Rellena los campos obligatorios");
+        } else {
+            validacion("error","Error","Rellena los campos correctamente");
         }
         
 }
@@ -175,8 +275,7 @@ function guardarProducto(){
         formData.append('nombre' , $("#nombreE").val());
         formData.append('id' , $("#idE").val());
         
-        if ($("#preciop").val()!="" && $("#costop").val()!="" 
-        && $("#cantidadp").val()!=""&& $("#nombrep").val()!="") {
+        if ($('#form2').valid()) {
             $.ajax({
 
                 cache: false,
@@ -187,7 +286,6 @@ function guardarProducto(){
                 method: "POST",
                 url: "productos/guardar",
                 success: function (data) {
-                    alert("guardado correctamente");
                     $('#editarProd').modal('hide');
                     toastMixin.fire({
                         animation: true,
@@ -198,8 +296,8 @@ function guardarProducto(){
                 }
 
             });
-        }else{
-            validacion("error","Error","Rellena los campos obligatorios");
+        } else {
+            validacion("error","Error","Rellena los campos correctamente");
         }
 }
 
@@ -239,7 +337,6 @@ function eliminarProducto(){
                 url:   'productos/eliminar', //archivo que recibe la peticion
                 type:  'POST', //método de envio
                 success:  function (response) { //una vez que el archivo recibe el request lo procesa y lo devuelve
-                    alert("eliminado correctamente");
                     $('#editarProd').modal('hide');
                     toastMixin.fire({
                         animation: true,

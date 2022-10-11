@@ -128,27 +128,36 @@ class proveedoresModel extends Conexion{
         }
     }
 
+    
+
     public function registrar(proveedoresModel $p){
         try {
-            
-            $consulta="INSERT INTO persona(
-                nombre , 
-                nro_doc,
-                tipo_doc,
-                telefono,
-                comentario,
-                estado,
-                id_tipo_persona)
-            VALUES (?,?,?,?,?,?,?)";
-            Conexion::conect()->prepare($consulta)->execute(array(
-                $p->getnombre(),
-                $p->getnroDoc(),
-                $p->gettipoDoc(),
-                $p->gettelefono(),
-                $p->getcomentario(),
-                "1",
-                "1",
-            ));
+            $documento=$p->getnroDoc();
+            $resp=builder::duplicado_persona("$documento",1);
+            if( builder::duplicado_persona("$documento",1) == false ){
+                return $documento;
+            }
+            else{
+                $consulta="INSERT INTO persona(
+                    nombre , 
+                    nro_doc,
+                    tipo_doc,
+                    telefono,
+                    comentario,
+                    estado,
+                    id_tipo_persona)
+                VALUES (?,?,?,?,?,?,?)";
+                Conexion::conect()->prepare($consulta)->execute(array(
+                    $p->getnombre(),
+                    $p->getnroDoc(),
+                    $p->gettipoDoc(),
+                    $p->gettelefono(),
+                    $p->getcomentario(),
+                    "1",
+                    "1",
+                ));
+                return true;
+            }
 
         } catch (Exception $e) {
 

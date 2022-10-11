@@ -1,3 +1,36 @@
+$(document).ready(function() {
+
+    $("#form_rol").validate({
+        rules: {
+            nombrer : {
+                required: true,
+                minlength: 5,
+                maxlength: 50
+            },
+            descripcionr : {
+                minlength: 5,
+                maxlength: 150
+            }
+        },
+        errorElement : 'span'
+    });
+      
+    $("#form_rolM").validate({
+        rules: {
+            nombrer : {
+                required: true,
+                minlength: 5,
+                maxlength: 50
+            },
+            descripcionr : {
+                minlength: 5,
+                maxlength: 150
+            }
+        },
+        errorElement : 'span'
+    });
+});
+
 var toastMixin = Swal.mixin({
     toast: true,
     icon: 'success',
@@ -53,26 +86,31 @@ function registrarRol(){
         "nombre" : nombre,
         "desc" : descripcion
     };
-    if(nombre !="" && descripcion !=""){
+    if ($('#form_rol').valid()) {
         $.ajax({
             data:  parametros, //datos que se envian a traves de ajax
             url:   'seguridad/registrarRol', //archivo que recibe la peticion
             type:  'POST', //método de envio
             success:  function (response) { //una vez que el archivo recibe el request lo procesa y lo devuelve
-                $('#exampleModalToggle19').modal('hide');
-                toastMixin.fire({
-                    animation: true,
-                    title: 'Rol Registrado'
-                });
-                limpiar();    
-                listarRoles();
-                    
+                if(response !== "true"){
+                    $('#exampleModalToggle19').modal('hide');
+                    validacion("error","Duplicado","El nombre del rol esta duplicado");
+                    limpiar();
+                }else{
+                    $('#exampleModalToggle19').modal('hide');
+                    toastMixin.fire({
+                        animation: true,
+                        title: 'Rol Registrado'
+                    });
+                    limpiar();    
+                    //window.location.reload()
+                }
             },error: (response) => {
                 console.log(response);
             }
         });
-    }else{
-        validacion("error","Error","Rellena los campos obligatorios");
+    } else {
+        validacion("error","Error","Rellena los campos correctamente");
     }
     
 }
@@ -105,7 +143,7 @@ function guardarRol(){
         "descripcion" : descripcion,
         "id" : id
     };
-    if(nombre !="" && descripcion !=""){
+    if ($('#form_rolM').valid()) {
         $.ajax({
             data:  parametros, //datos que se envian a traves de ajax
             url:   'seguridad/guardarRol', //archivo que recibe la peticion
@@ -116,14 +154,14 @@ function guardarRol(){
                     animation: true,
                     title: 'Rol Modificado'
                 });   
-                listarRoles();
+                window.location.reload()
             },
             error: (response) => {
                 console.log(response);
             }
         });
-    }else{
-        validacion("error","Error","Rellena los campos obligatorios");
+    } else {
+        validacion("error","Error","Rellena los campos correctamente");
     }
 }
 
@@ -146,7 +184,7 @@ function eliminarRol(id){
                         animation: true,
                         title: 'Rol Eliminado'
                     });  
-                    listarRoles();
+                    window.location.reload();
                 },
                 error: (response) => {
                     console.log(response);

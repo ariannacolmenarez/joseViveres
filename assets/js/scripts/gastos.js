@@ -1,3 +1,32 @@
+$(document).ready(function() {
+
+    $("#spentform").validate({
+        rules: {
+            nombrev : {
+                minlength: 5,
+                maxlength: 50
+            },
+            cat: {
+                required: true,
+            },
+            fechav: {
+                required: true,
+            },
+            horav: {
+                required: true,
+            },
+            montov: {
+                required: true,
+                number: true
+            },
+            proveedorv: {
+                required: true,
+            }
+        },
+        errorElement : 'span'
+    });
+});
+
 function validacion(tipo,titulo,texto){
     Swal.fire({
         icon: tipo,
@@ -81,7 +110,7 @@ function registrarGasto(){
         "monto" : monto,
         "metodo" : metodo,
     };
-    if (estado!="" && categoria!="" && fecha!="" && hora!="" && monto!="" && metodo!="") {
+    if ($('#spentform').valid()) {
         if (estado == "A CREDITO") {
             if (proveedor != "" && proveedor != null) {
                 $.ajax({
@@ -119,8 +148,8 @@ function registrarGasto(){
                 }
             });
         }
-    }else{
-        validacion("error","Error","Rellena los campos obligatorios");
+    } else {
+        validacion("error","Error","Rellena los campos correctamente");
     }
     
 }

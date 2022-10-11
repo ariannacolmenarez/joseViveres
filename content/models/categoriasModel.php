@@ -82,13 +82,20 @@ class categoriasModel extends Conexion{
 
     public function registrar(categoriasModel $p){
         try { 
-            $consulta="INSERT INTO cat_producto(
-                categoria, estado)
-            VALUES (?,?)";
-            Conexion::conect()->prepare($consulta)->execute(array(
-                $p->getnombre(),
-                "1"
-            ));
+            $categoria=$p->getnombre();
+            if(builder::duplicados("categoria","cat_producto","$categoria") === false ){
+                return $categoria;
+            }
+            else{
+                $consulta="INSERT INTO cat_producto(
+                    categoria, estado)
+                VALUES (?,?)";
+                Conexion::conect()->prepare($consulta)->execute(array(
+                    $p->getnombre(),
+                    "1"
+                ));
+                return true;
+            }
             
         } catch (Exception $e) {
 

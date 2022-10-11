@@ -48,17 +48,23 @@ class seguridadModel extends Conexion{
 
     public function registrarRol(seguridadModel $p){
         try {
-            
-            $consulta="INSERT INTO rol(
-                nombre , 
-                descripcion,
-                estado)
-            VALUES (?,?,?)";
-            Conexion::conect()->prepare($consulta)->execute(array(
-                $p->getnombreRol(),
-                $p->getdescripcionRol(),
-                "1"
-            ));
+            $nombre=$p->getnombreRol();
+            if( builder::duplicados("nombre","rol","$nombre") === false ){
+                return $nombre;
+            }
+            else{
+                $consulta="INSERT INTO rol(
+                    nombre , 
+                    descripcion,
+                    estado)
+                VALUES (?,?,?)";
+                Conexion::conect()->prepare($consulta)->execute(array(
+                    $p->getnombreRol(),
+                    $p->getdescripcionRol(),
+                    "1"
+                ));
+                return true;
+            }
 
         } catch (Exception $e) {
 

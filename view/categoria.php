@@ -8,10 +8,12 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
               </div>
               <div class="modal-body">
-                <h5 class="mt-2">Nombre de la categoría *</h5>
-                <div class="input-group mt-1">
-                  <input type="text" class="form-control form-control-lg" id="nombreC">
-                </div>
+                <form id="cat_form">
+                  <h5 class="mt-2">Nombre de la categoría *</h5>
+                  <div class="input-group mt-1">
+                    <input type="text" class="form-control form-control-lg w-100 d-block" id="nombreC" name="nombrec">
+                  </div>
+                </form>
                 <div class="d-grid gap-2 d-md-block w-100 mt-5">
                   <button class="btn btn-warning w-100" type="button" onclick="registrarCategorias();" >Registrar categoría</button>
                 </div>
@@ -50,17 +52,20 @@
                 <h5 class="modal-title fs-5 display-6 fw-bold" id="exampleModalToggleLabel6">Modificar Categoría <i class="ti-tag"></i></h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
               </div>
-              <input type="hidden" id="idcatE">
+              
               <div class="modal-body">
-                <h5 class="mt-2">Nombre de la categoría *</h5>
-                <div class="input-group mt-1">
-                  <input type="text" class="form-control" id="nombrecatE">
-                </div>
-                <hr class="m-3">
-                <div class="list-group list-group-flush mt-3" id="list_prod">
-                    
-                   
-                </div>
+                <form id="cat_formM">
+                  <input type="hidden" id="idcatE">
+                    <h5 class="mt-2">Nombre de la categoría *</h5>
+                    <div class="input-group mt-1">
+                      <input type="text" class="form-control w-100 d-block" id="nombrecatE" name="nombrecat">
+                    </div>
+                    <hr class="m-3">
+                    <div class="list-group list-group-flush mt-3" id="list_prod">
+                        
+                      
+                    </div>
+                </form>
       
                 <div class="d-grid gap-2 d-md-block w-100 mt-5">
                   <button class="btn btn-success w-100" type="button" onclick="guardarCat();">Guardar Cambios</button>

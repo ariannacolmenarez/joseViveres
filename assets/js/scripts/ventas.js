@@ -1,3 +1,28 @@
+$(document).ready(function() {
+
+    $("#sell_form").validate({
+        rules: {
+            fecha: {
+                required: true,
+            },
+            hora: {
+                required: true,
+                email: true
+            }
+        },
+        messages : {
+            fecha: {
+                required: "La fecha es requerida",
+            },
+            hora: {
+                required: "La hora es requerida",
+            },
+        },
+        errorElement : 'span'
+    });
+      
+});
+
 var toastMixin = Swal.mixin({
     toast: true,
     icon: 'success',
@@ -267,7 +292,7 @@ function registrarVenta(){
     };
     const locations = canasta.map(([value]) => ({value}));
 
-    if(estado !="" && fecha!="" && hora !="" && metodo != "" && suma != "" && locations != ""){
+    if ($('#userform').valid()) {
         if (estado == "A CREDITO") {
             if (cliente != "") {
                 $.ajax({
@@ -281,9 +306,9 @@ function registrarVenta(){
                             animation: true,
                             title: 'Venta Registrada'
                         });
+                        window.location = "balance";
                         listar("");
-                        vaciarCanasta();
-                        getNotifications();         
+                        vaciarCanasta();                           
                     },
                     error: (response) => {
                         console.log(response);
@@ -302,17 +327,20 @@ function registrarVenta(){
                     $('#exampleModal').modal('hide');
                     toastMixin.fire({
                         animation: true,
-                        title: 'Venta Registrada'
+                        title: 'Ventas Registrada'
                     });
+                    window.location = "balance";
                     listar("");
                     vaciarCanasta();
-                    getNotifications();          
+                    // getNotifications();          
                 },
                 error: (response) => {
                     console.log(response);
                 }  
             });
         }
+    } else {
+        validacion("error","Error","Rellena los campos correctamente");
     }
 
     

@@ -101,28 +101,33 @@ class productosModel extends Conexion{
 
     public function registrar(productosModel $p){
         try {
-            
-            $consulta="INSERT INTO productos(
-                nombre , 
-                cantidad,
-                descripcion,
-                precio_costo,
-                precio_venta,
-                url_img,
-                estado,
-                id_categoria)
-            VALUES (?,?,?,?,?,?,?,?)";
-            Conexion::conect()->prepare($consulta)->execute(array(
-                $p->getnombre(),
-                $p->getcantidad(),
-                $p->getdescripcion(),
-                $p->getprecio_costo(),
-                $p->getprecio_venta(),
-                $p->geturl_img(),
-                "1",
-                $p->getid_categoria(),
-            ));
-
+            $nombre=$p->getnombre();
+            if( builder::duplicados("nombre","productos","$nombre") === false ){
+                return $nombre;
+            }
+            else{
+                $consulta="INSERT INTO productos(
+                    nombre , 
+                    cantidad,
+                    descripcion,
+                    precio_costo,
+                    precio_venta,
+                    url_img,
+                    estado,
+                    id_categoria)
+                VALUES (?,?,?,?,?,?,?,?)";
+                Conexion::conect()->prepare($consulta)->execute(array(
+                    $p->getnombre(),
+                    $p->getcantidad(),
+                    $p->getdescripcion(),
+                    $p->getprecio_costo(),
+                    $p->getprecio_venta(),
+                    $p->geturl_img(),
+                    "1",
+                    $p->getid_categoria(),
+                ));
+                return true;
+            }
         } catch (Exception $e) {
 
             die($e->getMessage());

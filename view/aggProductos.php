@@ -21,7 +21,7 @@
                     </div>
                     <h5 class="mt-2">Nombre del producto *</h5>
                     <div class="input-group mt-1">
-                      <input type="text" class="form-control" placeholder="Ej: Azucar Montalban" id="nombrep">
+                      <input type="text" class="form-control w-100 d-block" placeholder="Ej: Azucar Montalban" id="nombrep" name="nombrep">
                     </div>
                     <h5 class="mt-3">Cantidad disponible *</h5>
                     <div class="input-group mb-3">
@@ -31,21 +31,21 @@
                     </div>
                     <h5 class="mt-3">Costo Unitario del producto *</h5>
                     <div class="input-group ">
-                      <input type="text" class="form-control" placeholder="Ej: 1000" id="costop">
+                      <input type="text" class="form-control d-block w-100" placeholder="Ej: 1000" id="costop" name="costop">
                     </div>
                     <h5 class="mt-3">Precio del producto *</h5>
                     <div class="input-group ">
-                      <input type="text" class="form-control" placeholder="Ej: 2000" id="preciop">
+                      <input type="text" class="form-control d-block w-100" placeholder="Ej: 2000" id="preciop" name="preciop">
                     </div>
                     <div class="mt-2 form-group ">
                           <h5>Busca una categoría </h5>
-                          <select class="form-select  mb-3 shadow-none" aria-label=".form-select example" id="cat_prod">
+                          <select class="form-select  mb-3 shadow-none" aria-label=".form-select example" id="cat_prod" name="catprod">
 
                           </select>
                     </div>
                       <h5>Descripción <small>(opcional)</small></h5>
                     <div class="input-group mt-2">
-                      <textarea class="form-control" id="descripcionp" placeholder="Ingresa una descripción" id="floatingTextarea2" style="height: 100px"></textarea>
+                      <textarea class="form-control" id="descripcionp" name="descripcionp" placeholder="Ingresa una descripción" style="height: 100px"></textarea>
                     </div>
                     <div class="d-grid gap-2 d-md-block w-100 mt-5">
                       <button class="btn btn-success w-100" type="button" onclick="registrarProducto();">Registrar producto</button>
@@ -67,7 +67,7 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" name="close"></button>
               </div>
               <div class="modal-body">
-                <form method="post" action="#" enctype="multipart/form-data">
+                <form method="post" id="form2" action="#" enctype="multipart/form-data">
                   <input type="hidden" id="idE">
                   <div class="row ">
                     <div class="display-img-vid-con">
@@ -81,7 +81,7 @@
                     </div>
                     <h5 class="mt-2">Nombre del producto *</h5>
                     <div class="input-group mt-1">
-                      <input type="text" class="form-control" placeholder="Ej: Azucar Montalban" id="nombreE">
+                      <input type="text" class="form-control w-100 d-block" placeholder="Ej: Azucar Montalban" id="nombreE" name="nombrep">
                     </div>
                     <h5 class="mt-3">Cantidad disponible *</h5>
                     <div class="input-group mb-3">
@@ -91,21 +91,21 @@
                     </div>
                     <h5 class="mt-3">Costo Unitario del producto *</h5>
                     <div class="input-group ">
-                      <input type="text" class="form-control" placeholder="Ej: 1000" id="costoE">
+                      <input type="text" class="form-control w-100 d-block" placeholder="Ej: 1000" id="costoE" name="costop">
                     </div>
                     <h5 class="mt-3">Precio del producto *</h5>
                     <div class="input-group ">
-                      <input type="text" class="form-control" placeholder="Ej: 2000" id="precioE">
+                      <input type="text" class="form-control w-100 d-block" placeholder="Ej: 2000" id="precioE" name="preciop">
                     </div>
                     <div class="mt-2 form-group ">
                           <h5>Busca una categoría </h5>
-                          <select class="form-select  mb-3 shadow-none" aria-label=".form-select example" id="cat_prodE">
+                          <select class="form-select  mb-3 shadow-none" aria-label=".form-select example" id="cat_prodE" name="catprod">
 
                           </select>
                     </div>
                       <h5>Descripción <small>(opcional)</small></h5>
                     <div class="input-group mt-2">
-                      <textarea class="form-control" id="descripcionE" placeholder="Ingresa una descripción" id="floatingTextarea2" style="height: 100px"></textarea>
+                      <textarea class="form-control" id="descripcionE" name="descripcionp" placeholder="Ingresa una descripción"  style="height: 100px"></textarea>
                     </div>
                     <div class="d-grid gap-2 d-md-block w-100 mt-5">
                       <button class="btn btn-success w-100" type="button" onclick="guardarProducto();">Guardar Cambios</button>

@@ -1,3 +1,75 @@
+$(document).ready(function() {
+
+    $("#userform").validate({
+        rules: {
+        nombre : {
+            required: true,
+            minlength: 5,
+            maxlength: 50
+        },
+        rol: {
+            required: true,
+        },
+        correo: {
+            required: true,
+            email: true
+        },
+        password2: {
+            required: true,
+            minlength : 5,
+            maxlength: 50
+            },
+        password_conf : {
+            minlength : 5,
+            required: {
+                depends: function(elem) {
+                    return $("#contraseña1").val() != "" || $("#contraseña").val() != ""
+                }
+                },
+            equalTo : "#contraseña1"
+        }
+        },
+        errorElement : 'span'
+    });
+      
+    $("#userform2").validate({
+        rules: {
+          nombre : {
+            required: true,
+            minlength: 5,
+            maxlength: 50
+          },
+          rol: {
+            required: true,
+          },
+          correo: {
+            required: true,
+            email: true
+          },
+          password: {
+            required: {
+                depends: function(elem) {
+                  return $("#contraseña1").val() != "" || $("#contraseña").val() != ""
+                }
+              },
+              minlength : 5,
+              maxlength: 50
+            },
+          password_conf : {
+              minlength : 5,
+              required: {
+                  depends: function(elem) {
+                    return $("#contraseña1").val() != "" || $("#contraseña").val() != ""
+                  }
+                },
+              equalTo : "#contraseñaV"
+          }
+        },
+          errorElement : 'span'
+    });
+});
+
+
 var toastMixin = Swal.mixin({
     toast: true,
     icon: 'success',
@@ -19,6 +91,7 @@ function validacion(tipo,titulo,texto){
         text: texto,
       })
 }
+
 
 $("#volver27").on("click", function() {
     limpiar();
@@ -105,12 +178,13 @@ function guardarUsuarios(){
         "rol": rol
     };
 
-    if(nombre != "" && correo !="" && rol !=""){
+    if ($('#userform2').valid()) {
         $.ajax({
             data:  parametros, //datos que se envian a traves de ajax
             url:   'usuarios/guardar', //archivo que recibe la peticion
             type:  'POST', //método de envio
             success:  function (response) {
+                
                 $('#exampleModalToggle16').modal('hide');  
                 toastMixin.fire({
                     animation: true,
@@ -123,8 +197,8 @@ function guardarUsuarios(){
                 console.log(response);
             }
         });
-    }else{
-        validacion("error","Error","Rellena los campos obligatorios");
+    } else {
+        validacion("error","Error","Rellena los campos correctamente")
     }
     
 }
@@ -146,27 +220,32 @@ function registrarUsuarios(){
         "contraseña" : contraseña,
         "rol" : rol
     };
-
-    if(nombre != "" && correo !="" && contraseña !="" && rol !=""){
+    if ($('#userform').valid()) {
         $.ajax({
             data:  parametros, //datos que se envian a traves de ajax
             url:   'usuarios/registrar', //archivo que recibe la peticion
             type:  'POST', //método de envio
             success:  function (response) { //una vez que el archivo recibe el request lo procesa y lo devuelve
-                $('#exampleModalToggle27').modal('hide');
-                toastMixin.fire({
-                    animation: true,
-                    title: 'Usuario Registrado'
-                });
-                limpiar();    
-                listarusuarios();
+                if(response !== "true"){
+                    $('#exampleModalToggle27').modal('hide');
+                    validacion("error","Duplicado","el "+response+" esta duplicado");
+                    limpiar();
+                }else{
+                    $('#exampleModalToggle27').modal('hide');
+                    toastMixin.fire({
+                        animation: true,
+                        title: 'Usuario Registrado'
+                    });
+                    limpiar();    
+                    listarusuarios();
+                }      
                     
             },error: (response) => {
                 console.log(response);
             }
         });
-    }else{
-        validacion("error","Error","Rellena los campos obligatorios");
+    } else {
+        validacion("error","Error","Rellena los campos correctamente");
     }
 }
 

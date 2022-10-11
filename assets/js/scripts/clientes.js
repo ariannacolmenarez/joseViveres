@@ -1,3 +1,56 @@
+$(document).ready(function() {
+
+    $("#form_clien").validate({
+        rules: {
+            nombrec : {
+                required: true,
+                minlength: 5,
+                maxlength: 50
+            },
+            nro_doc: {
+                number: true,
+                minlength: 6,
+                maxlength:9
+            },
+            telefonoc: {
+                required: true,
+                number: true,
+                maxlength:11
+                },
+            comentarioc : {
+                minlength: 5,
+                maxlength: 150
+            }
+        },
+        errorElement : 'span'
+    });
+      
+    $("#form_clienM").validate({
+        rules: {
+            nombrec : {
+                required: true,
+                minlength: 5,
+                maxlength: 50
+            },
+            nro_doc: {
+                number: true,
+                minlength: 6,
+                maxlength:9
+            },
+            telefonoc: {
+                required: true,
+                number: true,
+                maxlength:11
+                },
+            comentarioc : {
+                minlength: 5,
+                maxlength: 150
+            }
+        },
+        errorElement : 'span'
+    });
+});
+
 var toastMixin = Swal.mixin({
     toast: true,
     icon: 'success',
@@ -91,7 +144,7 @@ function guardarCliente(){
     var tipo_doc= $("#doc_cliente").val();
     var comentario = $("#comentariocliente").val();
 
-    if (telefono != "" && nombre != "") {
+    if ($('#form_clienM').valid()) {
         var parametros = {
         "nombrecliente" : nombre,
         "telefonocliente" : telefono,
@@ -117,8 +170,8 @@ function guardarCliente(){
                 console.log(response);
             }
         });
-    }else{
-        validacion("error","Error","Rellena los campos obligatorios");
+    } else {
+        validacion("error","Error","Rellena los campos correctamente");
     }
 
     
@@ -131,7 +184,7 @@ function registrarCliente(){
     var tipo_doc= $("#tipo_docC").val();
     var comentario = $("#comentarioC").val();
 
-    if (telefono != "" && nombre != "") {
+    if ($('#form_clien').valid()) {
         var parametros = {
             "nombrecliente" : nombre,
             "telefonocliente" : telefono,
@@ -145,20 +198,25 @@ function registrarCliente(){
             url:   'clientes/registrar', //archivo que recibe la peticion
             type:  'POST', //método de envio
             success:  function (response) { //una vez que el archivo recibe el request lo procesa y lo devuelve
-                $('#exampleModalToggle9').modal('hide');
-                toastMixin.fire({
-                    animation: true,
-                    title: 'Cliente Registrado'
-                });
-                limpiar();    
-                listarclientes();
-                    
+                if(response !== "true"){
+                    $('#exampleModalToggle9').modal('hide');
+                    validacion("error","Duplicado","El número de documento esta duplicado");
+                    limpiar();
+                }else{
+                    $('#exampleModalToggle9').modal('hide');
+                    toastMixin.fire({
+                        animation: true,
+                        title: 'Cliente Registrado'
+                    });
+                    limpiar();    
+                    listarclientes();
+                }    
             },error: (response) => {
                 console.log(response);
             }
         });
-    }else{
-        validacion("error","Error","Rellena los campos obligatorios");
+    } else {
+        validacion("error","Error","Rellena los campos correctamente");
     }
 }
 

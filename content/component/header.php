@@ -14,6 +14,7 @@
   <link rel="stylesheet" href="<?= _THEME_ ?>fonts/css/all.css">
   <link rel="stylesheet" href="<?= _THEME_ ?>base/vendor.bundle.base.css">
   <link rel="stylesheet" href="<?= _THEME_ ?>sweetalert2/sweetalert2.min.css">
+
   <!-- <link href="css/notificaciones.css" rel="stylesheet"> -->
   <!-- endinject -->
   <!-- plugin css for this page -->
@@ -26,8 +27,10 @@
   <!-- endinject -->
   <link rel="shortcut icon" href="<?= _THEME_ ?>images/MP.png" />
   <script src="<?= _THEME_ ?>js/jquery-3.6.1.min.js"></script>
+  
   <script src="<?= _THEME_ ?>sweetalert2/sweetalert2.all.min.js"></script>
   <script src="<?= _THEME_ ?>js/scripts/notificaciones.js"></script>
+  
  
 </head>
 <body>
@@ -56,7 +59,8 @@
           
           <li class="nav-item nav-profile dropdown">
             <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" id="profileDropdown">
-            <span class="mr-2 d-none d-lg-inline text-gray-600 small"><?= empty($_SESSION['usuario']) ? 'USUARIO' : $_SESSION['usuario'] ?> <i class="ti-angle-down text-primary"></i></span>
+              <span class=" user mr-2 d-none d-lg-inline text-gray-600 small"><?= empty($_SESSION['usuario']) ? 'USUARIO' : $_SESSION['usuario'] ?> <i class="ti-angle-down text-primary"></i></span>
+              <span class="display-none ico-user"><i class="ti-user text-secondary"></i></span>
             </a>
             <div class="dropdown-menu dropdown-menu-right navbar-dropdown" aria-labelledby="profileDropdown">
               <a class="dropdown-item" id="logout">

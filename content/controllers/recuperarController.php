@@ -20,11 +20,10 @@ class recuperarController extends Autoload {
         $desc=Conexion::conect()->prepare($sql);
         $desc->execute();
         $cantidad=$desc->rowCount();
-        print($cantidad);
         if ($cantidad == "0") {
             $data = null;
         }else{
-            $pass=$clave;   
+            $pass=builder::encriptar($clave);   
             $updateClave = ("UPDATE usuarios SET contraseña ='$pass' WHERE correo ='$correo' ");
             $res=Conexion::conect()->prepare($updateClave);
             $res->execute();
@@ -37,7 +36,7 @@ class recuperarController extends Autoload {
                 $mail->Host       = 'smtp.gmail.com';                    
                 $mail->SMTPAuth   = true;                                  
                 $mail->Username   = 'aripaocol@gmail.com';                    
-                $mail->Password   = 'ksyxohbvrsuqfqms';                               
+                $mail->Password   = 'pavqktrjkwtwlgxk';                               
                 $mail->SMTPSecure = 'ssl';         
                 $mail->Port       = 465;   
                 $mail->CharSet = 'UTF-8';                              

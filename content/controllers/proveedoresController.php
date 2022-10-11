@@ -80,8 +80,8 @@ class proveedoresController extends Autoload {
         $p->setcomentario($_POST['comentario']);
         $p->settelefono($_POST['telefono']);
 
-				$this->model->registrar($p);
-				
+				$resp=$this->model->registrar($p);
+				echo json_encode($resp);
 			}
     }
 

@@ -101,8 +101,8 @@ class categoriasController extends Autoload {
             $p=new categoriasModel();
             $p->setnombre($_POST['nombre']);
 
-            $this->model->registrar($p);
-				
+            $resp=$this->model->registrar($p);
+            echo json_encode($resp);
 		    }
     }
 

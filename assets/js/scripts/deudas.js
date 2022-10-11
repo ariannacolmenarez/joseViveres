@@ -1,3 +1,26 @@
+$(document).ready(function() {
+
+    $("#form-abon").validate({
+        lang: 'es',
+        rules: {
+            fechaA : {
+                required: true,
+            },
+            valorA: {
+                required: true,
+                number: true
+            },
+            conceptoA: {
+                required: true,
+                minlength: 5,
+                maxlength: 50
+            },
+        },
+        
+        errorElement : 'span'
+    });
+});
+
 var toastMixin = Swal.mixin({
     toast: true,
     icon: 'success',
@@ -186,8 +209,7 @@ function aggAbonoPago(id,tipo,id_p){
         var concepto = $("#conceptoA").val();
         var metodo= $("input[name='opciones']:radio:checked").val();
 
-        if (fecha != ""&& valor!="" && concepto!="" && metodo != "") {
-           if ($("#valorA").attr("max") > valor) {
+        if ($('#form-abon').valid()) {
             var parametros = {
                 "fecha" : fecha,
                 "valor" : valor,
@@ -213,12 +235,9 @@ function aggAbonoPago(id,tipo,id_p){
                 error: (response) => {
                     console.log(response);
                 }
-            });
-            }else{
-                validacion("error","Error","El monto ingresado es mayor que la deuda");
-            } 
-        }else{
-            validacion("error","Error","Ingresa los campos obligatorios");
+            }); 
+        } else {
+            validacion("error","Error","Rellena los campos correctamente");
         } 
     })
 }

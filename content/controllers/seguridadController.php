@@ -78,8 +78,8 @@ class seguridadController extends Autoload {
             $p->setnombreRol($_POST['nombre']);
             $p->setdescripcionRol($_POST['desc']);
   
-            $this->model->registrarRol($p);
-                  
+            $resp=$this->model->registrarRol($p);
+            echo json_encode($resp);
         }
     }
 

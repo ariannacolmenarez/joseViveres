@@ -1,3 +1,58 @@
+$(document).ready(function() {
+
+    $("#form_prov").validate({
+        rules: {
+            nombrep : {
+                required: true,
+                minlength: 5,
+                maxlength: 50
+            },
+            nro_doc: {
+                number: true,
+                minlength: 6,
+                maxlength:9
+            },
+            telefonop: {
+                required: true,
+                number: true,
+                min:11,
+                maxlength:11
+                },
+            comentariop : {
+                minlength: 5,
+                maxlength: 150
+            }
+        },
+        errorElement : 'span'
+    });
+      
+    $("#form_provM").validate({
+        rules: {
+            nombrep : {
+                required: true,
+                minlength: 5,
+                maxlength: 50
+            },
+            nro_doc: {
+                number: true,
+                minlength: 6,
+                maxlength:9
+            },
+            telefonop: {
+                required: true,
+                number: true,
+                min:11,
+                maxlength:11
+                },
+            comentariop : {
+                minlength: 5,
+                maxlength: 150
+            }
+        },
+        errorElement : 'span'
+    });
+});
+
 var toastMixin = Swal.mixin({
     toast: true,
     icon: 'success',
@@ -91,7 +146,7 @@ function guardarProveedor(){
         "comentario" : comentario,
         "id" : id
     };
-    if (telefono!="" && nombre !="") {
+    if ($('#form_provM').valid()) {
         $.ajax({
             data:  parametros, //datos que se envian a traves de ajax
             url:   'proveedores/guardar', //archivo que recibe la peticion
@@ -108,8 +163,8 @@ function guardarProveedor(){
                 console.log(response);
             }
         });
-    }else{
-        validacion("error","Error","Rellena los campos obligatorios")
+    } else {
+        validacion("error","Error","Rellena los campos correctamente");
     }
     
 }
@@ -129,26 +184,32 @@ function registrarProveedor(){
         "comentario" : comentario,
     };
 
-    if (telefono!="" && nombre !="") {
+    if ($('#form_prov').valid()) {
         $.ajax({
-            data:  parametros, //datos que se envian a traves de ajax
-            url:   'proveedores/registrar', //archivo que recibe la peticion
-            type:  'POST', //método de envio
-            success:  function (response) { //una vez que el archivo recibe el request lo procesa y lo devuelve
-                $('#exampleModalToggle12').modal('hide');
-                toastMixin.fire({
-                    animation: true,
-                    title: 'Proveedor Registrado'
-                });
-                limpiar();    
-                listarproveedores();
+            data:  parametros, 
+            url:   'proveedores/registrar', 
+            type:  'POST', 
+            success:  function (response) { 
+                if(response == "true"){
+                    $('#exampleModalToggle12').modal('hide');
+                    toastMixin.fire({
+                        animation: true,
+                        title: 'Proveedor Registrado'
+                    });
+                    limpiar();    
+                    listarproveedores();
+                }else{
+                    $('#exampleModalToggle12').modal('hide');
+                    validacion("error","Duplicado","El número de documento esta duplicado");
+                    limpiar();
                     
+                }
             },error: (response) => {
                 console.log(response);
             }
         });
-    }else{
-        validacion("error","Error","Rellena los campos obligatorios")
+    } else {
+        validacion("error","Error","Rellena los campos correctamente");
     }
 }
 

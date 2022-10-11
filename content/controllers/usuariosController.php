@@ -17,25 +17,24 @@ class usuariosController extends Autoload {
         if(in_array("Consultar Usuarios", $_SESSION['permisos'])){
 
             foreach ($respuesta as $regist) {
-                if($regist['nombre'] == "SUPERUSUARIO"){
-                    $data.='<a type="button" class="list-group-item text-dark list-group-item-action py-3">
-                                <div class="row align-items-center">
-                                <div class="col-1 text-secondary"><i class="ti-user fa-2x"></i></div>
-                                <div class="col px-4">'.$regist['nombre'].' <small class="text-muted">'.$regist['correo'].'</small></div>
-                                <div class="col text-end"><i class="ti-marker-alt "></i></div>
-                                </div>
-                                </a>';
-                }else{
-                    $data .= '<a';
+                if($regist['nombre'] == $_SESSION['usuario']){
+                     $data .= '<a';
                     if(in_array("Modificar Usuarios", $_SESSION['permisos'])){ 
                         $data.=' onclick="editarUsuarios('.$regist["id"].');"';
                     }
-                    $data.='type="button" class="list-group-item text-dark list-group-item-action py-3">
+                    $data.='type="button" title="Modificar usuario" class="list-group-item text-dark list-group-item-action py-3">
                                     <div class="row align-items-center">
                                     <div class="col-1 text-secondary"><i class="ti-user fa-2x"></i></div>
                                     <div class="col px-4">'.$regist['nombre'].' <small class="text-muted">'.$regist['correo'].'</small></div>
                                     <div class="col text-end"><i class="ti-marker-alt "></i></div>
                                     </div> 
+                                </a>';
+                }else{
+                   $data.='<a type="button" class="list-group-item text-dark list-group-item-action py-3">
+                                <div class="row align-items-center">
+                                <div class="col-1 text-secondary"><i class="ti-user fa-2x"></i></div>
+                                <div class="col px-4">'.$regist['nombre'].'</div>
+                                </div>
                                 </a>';
                 }
             }
@@ -66,7 +65,7 @@ class usuariosController extends Autoload {
         $resultados [] = [
             "nombre"=>$resp->getnombre(),
             "correo"=>$resp->getcorreo(),
-            "contraseña"=>$resp->getcontraseña(),
+            "contraseña"=>builder::desencriptar($resp->getcontraseña()),
             "id"=>$resp->getid(),
             "rol_usuario"=>$resp->getrol_usuario()
         ];
@@ -80,13 +79,13 @@ class usuariosController extends Autoload {
 			$p=new usuariosModel();
 
 			$p->setid($_POST['id']);
-            $p->setnombre($_POST['nombre1']);
+            $p->setnombre(strtoupper($_POST['nombre1']));
             $p->setcorreo($_POST['correo']);
-            $p->setcontraseña($_POST['contraseña']);
+            $p->setcontraseña(strtoupper($_POST['contraseña']));
             $p->setrol_usuario($_POST['rol']);
 
 			$this->model->guardar($p);
-				
+            
 		}
     }
 
@@ -95,13 +94,13 @@ class usuariosController extends Autoload {
 
 		    $p=new usuariosModel();
 
-            $p->setnombre($_POST['nombre']);
+            $p->setnombre(strtoupper($_POST['nombre']));
             $p->setcorreo($_POST['correo']);
-            $p->setcontraseña($_POST['contraseña']);
+            $p->setcontraseña(strtoupper($_POST['contraseña']));
             $p->setrol_usuario($_POST['rol']);
 
-			$this->model->registrar($p);
-				
+			$resp=$this->model->registrar($p);
+			echo json_encode($resp);
 		}
     }
 

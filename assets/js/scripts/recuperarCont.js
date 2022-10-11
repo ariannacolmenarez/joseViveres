@@ -3,12 +3,12 @@ $("#recuperar").on("click",function(){
     Swal.fire({
         title: 'Recuperar Contraseña',
         text: 'Ingresa tu correo afiliado para enviar tu nueva contraseña',
-        html: `<input type="email" id="login" class="swal2-input" placeholder="Username">`,
+        html: `<input type="email" id="login" class="swal2-input" placeholder="Correo afiliado">`,
         inputAttributes: {
           autocapitalize: 'off'
         },
         showCancelButton: true,
-        confirmButtonText: 'Look up',
+        confirmButtonText: 'Enviar',
         showLoaderOnConfirm: true,
         preConfirm: () => {
           const email = Swal.getPopup().querySelector('#login').value

@@ -99,25 +99,25 @@ class usuariosModel extends Conexion{
 
     public function guardar(usuariosModel $p){
         try {
-            
-            $consulta="UPDATE usuarios SET 
-                nombre=?,
-                correo=?,
-                contraseña=?,
-                estado=?,
-                id_rol=?
-                WHERE id=?;
-            
-            ";
-            Conexion::conect()->prepare($consulta)->execute(array(
-                $p->getnombre(),
-                $p->getcorreo(),
-                $p->getcontraseña(),
-                "1",
-                $p->getrol_usuario(),
-                $p->getid(),
+            $contraseña= builder::encriptar($p->getcontraseña());
+                $consulta="UPDATE usuarios SET 
+                    nombre=?,
+                    correo=?,
+                    contraseña=?,
+                    estado=?,
+                    id_rol=?
+                    WHERE id=?;
+                
+                ";
+                Conexion::conect()->prepare($consulta)->execute(array(
+                    $p->getnombre(),
+                    $p->getcorreo(),
+                    $contraseña,
+                    "1",
+                    $p->getrol_usuario(),
+                    $p->getid(),
 
-            ));
+                ));
 
         } catch (Exception $e) {
 
@@ -127,21 +127,38 @@ class usuariosModel extends Conexion{
 
     public function registrar(usuariosModel $p){
         try {
-            
-            $consulta="INSERT INTO usuarios(
-                nombre , 
-                correo,
-                contraseña,
-                estado,
-                id_rol)
-            VALUES (?,?,?,?,?)";
-            Conexion::conect()->prepare($consulta)->execute(array(
-                $p->getnombre(),
-                $p->getcorreo(),
-                $p->getcontraseña(),
-                "1",
-                $p->getrol_usuario(),
-            ));
+            $correo=$p->getcorreo();
+            $nombre=$p->getnombre();
+            if( builder::duplicados("correo","usuarios","$correo") === false ||
+            builder::duplicados("nombre","usuarios","$nombre") === false ){
+                
+                if(builder::duplicados("correo","usuarios","$correo") === false){
+                    $nombre="Correo";
+                }else{
+                    $nombre="Nombre";
+                }
+                return $nombre;
+                
+                
+            }
+            else{
+                $contraseña= builder::encriptar($p->getcontraseña());
+                $consulta="INSERT INTO usuarios(
+                    nombre , 
+                    correo,
+                    contraseña,
+                    estado,
+                    id_rol)
+                VALUES (?,?,?,?,?)";
+                Conexion::conect()->prepare($consulta)->execute(array(
+                    $p->getnombre(),
+                    $p->getcorreo(),
+                    $contraseña,
+                    "1",
+                    $p->getrol_usuario(),
+                ));
+                return true;
+            }
 
         } catch (Exception $e) {
 
