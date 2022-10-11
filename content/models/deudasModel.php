@@ -197,68 +197,27 @@ class deudasModel extends Conexion{
         }
     }
 
-    // public function abonar(deudasModel $p){
-    //     try {
-    //         if($p->getid_abono()){
-    //             $consulta= Conexion::conect()->prepare("SELECT * FROM deudas WHERE id=?;");
-    //             $consulta->execute(array($p->getid_abono()));
-    //             $r=$consulta->fetch(PDO::FETCH_OBJ);
-    //             $montoDeuda = $r->monto;
-    //         }
-    //         $montoTotal=$montoDeuda - $p->getid_abono();
-    //         if ($montoTotal > 0) {
-    //             $consulta="UPDATE deudas SET monto=? WHERE id=?;";
-    //         }else{
-    //             $consulta="UPDATE deudas SET estado=0 WHERE id=?;";
-    //         }
-            
-    //         $consulta = Conexion::conect()->prepare($consulta);
-    //         $execute = $consulta->execute(array(
-    //             $montoTotal,$p->getid_abono()
-    //         ));
-
-    //         if ($execute) {
-    //             $consulta="INSERT INTO abonos(
-    //                 concepto , 
-    //                 valor,
-    //                 id_metodo_pago,
-    //                 id_deuda)
-    //             VALUES (?,?,?,?)";
-    //             Conexion::conect()->prepare($consulta)->execute(array(
-    //                 $p->getconcepto_abono(),
-    //                 $p->getvalor_abono(),
-    //                 $p->getmetodo_abono(),
-    //                 $p->getid_abono()
-    //             ));
-    //         }
-           
-    //     } catch (Exception $e) {
-
-    //         die($e->getMessage());
-    //     }
-    // }
-
-
-
-    public function registrarAbono(deudasModel $p,$tipo){
+    public function registrarAbono(deudasModel $p,$tipo,$id_p){
         try{
             $consulta="INSERT INTO abonos(
                 concepto, 
                 valor,
-                id_metodo_pago)
-            VALUES (?,?,?)";
+                id_metodo_pago,
+                fecha)
+            VALUES (?,?,?,?)";
             $pdo = Conexion::conect();
             $execute=$pdo->prepare($consulta)->execute(array(
                 $p->getconcepto_abono(),
                 $p->getvalor_abono(),
-                $p->getmetodo_abono()
+                $p->getmetodo_abono(),
+                $p->getfecha_abono()
             ));
             if ($execute) {
                 $id_abono = $pdo->lastInsertId();
             }else{
                 $lastInsertId = 0;
             }
-            $this->calcularAbonos($p->getid_abono(),$id_abono,$p->getvalor_abono(),$tipo);
+            $this->calcularAbonos($p->getid_abono(),$id_abono,$p->getvalor_abono(),$tipo,$id_p);
         } catch (Exception $e) {
 
             die($e->getMessage());
@@ -316,16 +275,13 @@ class deudasModel extends Conexion{
         }
     }
 
-    public function movAnterior($tipo){
+    public function movAnterior($tipo,$id_p,$id_mov){
         try{
-            if ($tipo = "1") {
-                $sql="SELECT m.id, MIN(m.fecha) FROM movimientos as m WHERE m.estado=1 AND
-             m.estado_movimiento='A CREDITO' AND m.id_concepto_movimiento = 1";
+            if ($tipo == 1) {
+                $sql="SELECT m.id, MIN(m.fecha) FROM movimientos as m WHERE m.estado=1 AND m.estado_movimiento='A CREDITO' AND m.id_concepto_movimiento = 1 AND m.id_persona=$id_p and m.id != $id_mov";
             }else{
-               $sql="SELECT m.id, MIN(m.fecha) FROM movimientos as m WHERE m.estado=1 AND
-             m.estado_movimiento='A CREDITO' AND m.id_concepto_movimiento != 1"; 
+               $sql="SELECT m.id, MIN(m.fecha) FROM movimientos as m WHERE m.estado=1 AND m.estado_movimiento='A CREDITO' AND m.id_concepto_movimiento != 1 AND m.id_persona=$id_p and m.id != $id_mov"; 
             }
-            
             $sql = Conexion::conect()->prepare($sql);
             $sql->execute();
             $r=$sql->fetch(PDO::FETCH_OBJ);
@@ -336,7 +292,7 @@ class deudasModel extends Conexion{
         }
     }
 
-    public function calcularAbonos($id_mov,$idAbono,$montoAbono,$tipo){
+    public function calcularAbonos($id_mov,$idAbono,$montoAbono,$tipo,$id_p){
         
         $totalMov = $this->consultarMov($id_mov);
         $totalAbonos = $this->totalAbonos($id_mov)+$montoAbono;
@@ -396,7 +352,7 @@ class deudasModel extends Conexion{
                 "1"
             ));
             $this->PagarDeuda($id_mov);
-            $idMov = $this->movAnterior($tipo);
+            $idMov = $this->movAnterior($tipo,$id_p,$id_mov);
             try{
 
                 $consulta="INSERT INTO abono_movimiento(
@@ -415,11 +371,7 @@ class deudasModel extends Conexion{
 
                 die($e->getMessage());
             }
-
         }
-        
-        
-
     }
     
     public function eliminar($id){
@@ -430,6 +382,45 @@ class deudasModel extends Conexion{
 
         } catch (Exception $e) {
 
+            die($e->getMessage());
+        }
+    }
+
+    public function eliminarAbono($id){
+        try {   
+                $consulta1="SELECT m.id FROM abono_movimiento as am, movimientos as m WHERE am.id_movimiento=m.id and am.id_abono=$id";
+                $consulta1= Conexion::conect()->prepare($consulta1);
+                $consulta1->setFetchMode(PDO::FETCH_ASSOC);
+                $consulta1->execute();
+                
+                $consulta="DELETE FROM abonos WHERE id=?";
+                $execute=Conexion::conect()->prepare($consulta)->execute(array($id));
+                
+                foreach ($consulta1 as $value) {
+                    var_dump($value['id']);
+                    $consulta='UPDATE movimientos SET estado_movimiento="A CREDITO" WHERE id=?;';
+                    Conexion::conect()->prepare($consulta)->execute(array($value['id']));
+                }
+        } catch (Exception $e) {
+
+            die($e->getMessage());
+        }
+    }
+
+    public function listarAbonos($id,$tipo){
+        try {
+            if($tipo == 1){
+                $sql= "SELECT a.concepto, a.valor, a.id, a.fecha FROM abonos as a,abono_movimiento as am, movimientos as m WHERE a.id=am.id_abono and am.id_movimiento=m.id and m.id_concepto_movimiento = 1 and m.id_persona=$id";
+            }else{
+                $sql= "SELECT a.concepto, a.valor, a.id, a.fecha FROM abonos as a,abono_movimiento as am, movimientos as m WHERE a.id=am.id_abono and am.id_movimiento=m.id and m.id_concepto_movimiento != 1 and m.id_persona=$id";
+            }
+
+            $consulta= Conexion::conect()->prepare($sql);
+            $consulta->setFetchMode(PDO::FETCH_ASSOC);
+            $consulta->execute();
+            return $consulta;
+
+        } catch (Exception $e) {
             die($e->getMessage());
         }
     }

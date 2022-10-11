@@ -4,7 +4,7 @@
           <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content modal-fullscreen w-100">
               <div class="modal-header text-center">
-                <h5 class="modal-title fs-5 display-6 fw-bold" id="exampleModalToggleLabel4">Agregar productos </h5>
+                <h5 class="modal-title fs-5 display-6 fw-bold" id="exampleModalToggleLabel4">Registrar productos </h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" name="close"></button>
               </div>
               <div class="modal-body">
@@ -63,7 +63,7 @@
           <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content modal-fullscreen w-100">
               <div class="modal-header text-center">
-                <h5 class="modal-title fs-5 display-6 fw-bold" id="editarProdLabel">Editar producto </h5>
+                <h5 class="modal-title fs-5 display-6 fw-bold" id="editarProdLabel">Modificar producto </h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" name="close"></button>
               </div>
               <div class="modal-body">
@@ -110,9 +110,12 @@
                     <div class="d-grid gap-2 d-md-block w-100 mt-5">
                       <button class="btn btn-success w-100" type="button" onclick="guardarProducto();">Guardar Cambios</button>
                     </div>
+                    
+                    <?php if(in_array("Eliminar Inventario", $_SESSION['permisos'])){ ?>
                     <div class="d-grid gap-2 d-md-block w-100 mt-2">
                       <button class="btn btn-danger w-100" type="button" onclick="eliminarProducto();">Eliminar Producto</button>
                     </div>
+                    <?php } ?>
                   </div>
                 </form>
               </div>

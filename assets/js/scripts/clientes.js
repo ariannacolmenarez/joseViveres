@@ -1,3 +1,25 @@
+var toastMixin = Swal.mixin({
+    toast: true,
+    icon: 'success',
+    title: 'General Title',
+    animation: false,
+    position: 'top-right',
+    showConfirmButton: false,
+    timer: 3000,
+    timerProgressBar: true,
+    didOpen: (toast) => {
+      toast.addEventListener('mouseenter', Swal.stopTimer)
+      toast.addEventListener('mouseleave', Swal.resumeTimer)
+    }
+});
+function validacion(tipo,titulo,texto){
+    Swal.fire({
+        icon: tipo,
+        title: titulo,
+        text: texto,
+      })
+}
+
 $("#busqueda").on("click",function(){
     console.log("boton");
 })
@@ -49,7 +71,7 @@ function consultarclientes (id) {
                 $("#nombrecliente").val(elem.nombre);
                 $("#telefonocliente").val(elem.telefono);
                 $("#nro_doccliente").val(elem.nro_doc);
-                $("#tipo_doccliente option[value='"+ elem.tipo_doc +"']").attr("selected",true);
+                $("#doc_cliente option[value='"+ elem.tipo_doc +"']").attr("selected",true);
                 $("#comentariocliente").val(elem.comentario);
             });
             $('#exampleModalToggle8').modal('show');
@@ -66,79 +88,113 @@ function guardarCliente(){
     var nombre = $("#nombrecliente").val();
     var telefono = $("#telefonocliente").val();
     var nro_doc = $("#nro_doccliente").val();
-    var tipo_doc= $("#tipo_doccliente").val();
+    var tipo_doc= $("#doc_cliente").val();
     var comentario = $("#comentariocliente").val();
 
-    var parametros = {
+    if (telefono != "" && nombre != "") {
+        var parametros = {
         "nombrecliente" : nombre,
         "telefonocliente" : telefono,
         "nro_doccliente" : nro_doc,
         "tipo_doccliente" : tipo_doc,
         "comentariocliente" : comentario,
         "idcliente" : id
-    };
-    $.ajax({
-        data:  parametros, //datos que se envian a traves de ajax
-        url:   'clientes/guardar', //archivo que recibe la peticion
-        type:  'POST', //método de envio
-        success:  function (response) {
-            $('#exampleModalToggle8').modal('hide');    
-            listarclientes();
-                
-        },
-        error: (response) => {
-            console.log(response);
-        }
-    });
+        };
+        $.ajax({
+            data:  parametros, //datos que se envian a traves de ajax
+            url:   'clientes/guardar', //archivo que recibe la peticion
+            type:  'POST', //método de envio
+            success:  function (response) {
+                $('#exampleModalToggle8').modal('hide');
+                toastMixin.fire({
+                    animation: true,
+                    title: 'Cliente Modificado'
+                });    
+                listarclientes();
+                    
+            },
+            error: (response) => {
+                console.log(response);
+            }
+        });
+    }else{
+        validacion("error","Error","Rellena los campos obligatorios");
+    }
+
+    
 }
 
 function registrarCliente(){
-    var nombre = $("#nombreC").val();
+    var nombre = $("#nombreCliente").val();
     var telefono = $("#telefonoC").val();
     var nro_doc = $("#nro_docC").val();
     var tipo_doc= $("#tipo_docC").val();
     var comentario = $("#comentarioC").val();
 
-    
-    var parametros = {
-        "nombrecliente" : nombre,
-        "telefonocliente" : telefono,
-        "nro_doccliente" : nro_doc,
-        "tipo_doccliente" : tipo_doc,
-        "comentariocliente" : comentario,
-    };
-    $.ajax({
-        data:  parametros, //datos que se envian a traves de ajax
-        url:   'clientes/registrar', //archivo que recibe la peticion
-        type:  'POST', //método de envio
-        success:  function (response) { //una vez que el archivo recibe el request lo procesa y lo devuelve
-            $('#exampleModalToggle9').modal('hide');
-            limpiar();    
-            listarclientes();
-                
-        },error: (response) => {
-            console.log(response);
-        }
-    });
+    if (telefono != "" && nombre != "") {
+        var parametros = {
+            "nombrecliente" : nombre,
+            "telefonocliente" : telefono,
+            "nro_doccliente" : nro_doc,
+            "tipo_doccliente" : tipo_doc,
+            "comentariocliente" : comentario,
+        };
+        console.log(parametros)
+        $.ajax({
+            data:  parametros, //datos que se envian a traves de ajax
+            url:   'clientes/registrar', //archivo que recibe la peticion
+            type:  'POST', //método de envio
+            success:  function (response) { //una vez que el archivo recibe el request lo procesa y lo devuelve
+                $('#exampleModalToggle9').modal('hide');
+                toastMixin.fire({
+                    animation: true,
+                    title: 'Cliente Registrado'
+                });
+                limpiar();    
+                listarclientes();
+                    
+            },error: (response) => {
+                console.log(response);
+            }
+        });
+    }else{
+        validacion("error","Error","Rellena los campos obligatorios");
+    }
 }
 
 function eliminarCliente(){
     var id = $("#idcliente").val();
-
-    var parametro = {"idcliente" : id};
-    $.ajax({
-        data:  parametro, //datos que se envian a traves de ajax
-        url:   'clientes/eliminar', //archivo que recibe la peticion
-        type:  'POST', //método de envio
-        success:  function (response) { //una vez que el archivo recibe el request lo procesa y lo devuelve
-            $('#exampleModalToggle8').modal('hide');    
-            listarclientes();
-                
-        },
-        error: (response) => {
-            console.log(response);
-        }
-    });
+    Swal.fire({
+        title: '¿Estas seguro que deseas Eliminar el registro?',
+        ico: "warning",
+        showDenyButton: true,
+        showCancelButton: true,
+        confirmButtonText: 'Eliminar',
+        denyButtonText: `No Eliminar`,
+    }).then((result) => {
+        if (result.isConfirmed) {
+            var parametro = {"idcliente" : id};
+            $.ajax({
+                data:  parametro, //datos que se envian a traves de ajax
+                url:   'clientes/eliminar', //archivo que recibe la peticion
+                type:  'POST', //método de envio
+                success:  function (response) { //una vez que el archivo recibe el request lo procesa y lo devuelve
+                    $('#exampleModalToggle8').modal('hide');   
+                    toastMixin.fire({
+                        animation: true,
+                        title: 'Cliente Eliminado'
+                    }); 
+                    listarclientes();
+                        
+                },
+                error: (response) => {
+                    console.log(response);
+                }
+            })
+        } else if (result.isDenied) {
+            Swal.fire('Los cambios no fueron guardados', '', 'info')
+          }
+    })
 }
 
 $("#buscadorcliente").on("keyup",function(e) {

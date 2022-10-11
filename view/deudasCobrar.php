@@ -5,19 +5,44 @@
                   <h5 class="modal-title fs-5 display-6 fw-bold" id="exampleModalToggleLabel13">Deuda Por Cobrar </h5>
                   <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
               </div>
-              <h5 class="m-auto p-2"id="nombreC"></h5>
-              <div class="card m-auto mt-1 p-3" style="width: 18rem;">
-                <p class="card-title text-md-center text-dark text-xl-left"><span class="badge bg-success rounded-pill" id="cantC"></span> Deudas</p>
-                <div class="d-flex flex-wrap justify-content-between justify-content-md-center justify-content-xl-between align-items-center">
-                  <h3 class="mb-0 mb-md-2 mb-xl-0 order-md-1 order-xl-0"id="montoC"></h3>
-                  <i class="ti-money icon-md text-success mb-0 mb-md-3 mb-xl-0"></i>
-                </div>
-              </div> 
               <div class="modal-body">
-                <div class="list-group list-group-flush mt-2" id="lista_cobrar">
-                 
+                <ul class="nav nav-tabs nav-justified" id="myTab" role="tablist">
+                  <li class="nav-item" role="presentation">
+                    <button class="nav-link active" id="deudas" data-bs-toggle="tab" data-bs-target="#deudas-pane" type="button" role="tab" aria-controls="deudas-pane" aria-selected="true">
+                      <p class="card-title text-md-center text-danger text-xl-left">Deudas</p> 
+                    </button>
+                  </li>
+                  <li class="nav-item" role="presentation">
+                    <button class="nav-link" id="abonos-tab" data-bs-toggle="tab" data-bs-target="#abonos-tab-pane" type="button" role="tab" aria-controls="abonos-tab-pane" aria-selected="false"> 
+                      <p class="card-title text-md-center text-success text-xl-left">Abonos</p>
+                    </button>
+                  </li>
+                </ul>
+                <div class="tab-content" id="myTabContent">
+                  <div class="tab-pane fade show active" id="deudas-pane" role="tabpanel" aria-labelledby="deudas" tabindex="0">
+                    <h5 class="m-auto p-2 text-center"id="nombreC"></h5>
+                    <div class="card m-auto mt-1 p-3" style="width: 18rem;">
+                      <p class="card-title text-md-center text-dark text-xl-left"><span class="badge bg-success rounded-pill" id="cantC"></span> Deudas</p>
+                      <div class="d-flex flex-wrap justify-content-between justify-content-md-center justify-content-xl-between align-items-center">
+                        <h3 class="mb-0 mb-md-2 mb-xl-0 order-md-1 order-xl-0"id="montoC"></h3>
+                        <i class="ti-money icon-md text-success mb-0 mb-md-3 mb-xl-0"></i>
+                      </div>
+                    </div> 
+                    <div class="list-group list-group-flush mt-2" id="lista_cobrar">
+                      
+                    </div>
+                  </div>
+                  <div class="tab-pane fade" id="abonos-tab-pane" role="tabpanel" aria-labelledby="abonos-tab" tabindex="0">
+                    <h4 class="m-auto p-2 text-center">Abonos</h4>
+                    <div class="list-group list-group-flush mt-2" id="lista_abonosc">
+                      
+                    </div>
+                  </div>
                 </div>
               </div>
+
+              
+              
             </div>
           </div>
         </div>
@@ -50,6 +75,8 @@
                 </div>
               </div> 
               <input type="hidden" id="id">
+              <input type="hidden" id="total">
+              <input type="hidden" id="id_p">
               <div class="modal-body">
                 <table class="table" id="table">
                   
@@ -58,21 +85,26 @@
               <div class="modal-footer">
                 <div class="d-grid gap-2 d-md-block w-100">
                   <div class="row text-center">
+                  
+                    <?php if(in_array("Eliminar Deudas", $_SESSION['permisos'])){ ?>
                     <div class="col">
                       <button onclick="eliminarDC();" class="btn btn-danger btn-rounded btn-icon">
                       <i class="ti-trash"></i> 
                       </button><br><small class="text-danger" >Eliminar</small>
                     </div>
+                    <?php } ?>
                     <div class="col">
                       <button class="btn btn-secondary btn-rounded btn-icon">
                       <i class="ti-receipt"></i>
                       </button><br><small class="text-secondary">Comprobante</small>
                     </div>
+                    <?php if(in_array("Modificar Deudas", $_SESSION['permisos'])){ ?>
                     <div class="col">
                       <button class="btn btn-success btn-rounded btn-icon" id="abonoC">
                       <i class="ti-money"></i>
                       </button><br><small class="text-success">Abonar</small>
                     </div>
+                    <?php } ?>
                   </div>
                 </div>
               </div>

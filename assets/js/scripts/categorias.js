@@ -1,3 +1,26 @@
+var toastMixin = Swal.mixin({
+    toast: true,
+    icon: 'success',
+    title: 'General Title',
+    animation: false,
+    position: 'top-right',
+    showConfirmButton: false,
+    timer: 3000,
+    timerProgressBar: true,
+    didOpen: (toast) => {
+      toast.addEventListener('mouseenter', Swal.stopTimer)
+      toast.addEventListener('mouseleave', Swal.resumeTimer)
+    }
+});
+
+function validacion(tipo,titulo,texto){
+    Swal.fire({
+        icon: tipo,
+        title: titulo,
+        text: texto,
+      })
+}
+
 
 $("#close").on("click", function() {
     limpiar();
@@ -26,14 +49,33 @@ function listarCatProd(){
     });
 }
 
-// function listarproveedores(){
+function registrarCategorias(){
+    var nombre = $("#nombreC").val();
     
-//     $.get("proveedores/listar", {}, function (data, status) {
-//         $("#proveedor").html(data);
-//         $('#exampleModalToggle3').modal('show');
-//     });
-// };
+    if (nombre != "") {
+        $.ajax({
+            data:  {'nombre':nombre}, //datos que se envian a traves de ajax
+            url:   'categorias/registrar', //archivo que recibe la peticion
+            type:  'POST', //método de envio
+            success:  function (response) { //una vez que el archivo recibe el request lo procesa y lo devuelve 
+                
+                $('#exampleModalToggle3').modal('hide');
+                toastMixin.fire({
+                    animation: true,
+                    title: 'Categoría Registrada'
+                });
+                limpiar(); 
+                listarCategoriasProd();
+            },error: (response) => {
+                console.log(response);
 
+            }
+        });
+    }else{
+        validacion("error","Error","Debes ingresar el nombre","");
+    }
+    
+}
 
 function editarCat (id) {
     $.ajax({
@@ -68,93 +110,122 @@ function listarProdCat(id){
     });
 }
 
-// function guardarProveedor(){
-//     var id = $("#id").val();
-//     var nombre = $("#nombre").val();
-//     var telefono = $("#telefono").val();
-//     var nro_doc = $("#nro_doc").val();
-//     var tipo_doc= $("#tipo_doc").val();
-//     var comentario = $("#comentario").val();
-
-//     var parametros = {
-//         "nombre" : nombre,
-//         "telefono" : telefono,
-//         "nro_doc" : nro_doc,
-//         "tipo_doc" : tipo_doc,
-//         "comentario" : comentario,
-//         "id" : id
-//     };
-//     $.ajax({
-//         data:  parametros, //datos que se envian a traves de ajax
-//         url:   'proveedores/guardar', //archivo que recibe la peticion
-//         type:  'POST', //método de envio
-//         success:  function (response) {
-//             $('#exampleModalToggle11').modal('hide');    
-//             listarproveedores();
-                
-//         },
-//         error: (response) => {
-//             console.log(response);
-//         }
-//     });
-// }
-
-function registrarCategorias(){
-    var nombre = $("#nombreC").val();
+function guardarCat(){
+    var id = $("#idcatE").val();
+    var nombre = $("#nombrecatE").val();
     
-    $.ajax({
-        data:  {'nombre':nombre}, //datos que se envian a traves de ajax
-        url:   'categorias/registrar', //archivo que recibe la peticion
-        type:  'POST', //método de envio
-        success:  function (response) { //una vez que el archivo recibe el request lo procesa y lo devuelve
-            $('#exampleModalToggle3').modal('hide');
-            limpiar(); 
-            location.reload();
-        },error: (response) => {
-            console.log(response);
-
-        }
-    });
+    var parametros = {
+        "nombre" : nombre,
+        "id" : id
+    };
+    if (nombre != "") {
+        $.ajax({
+            data:  parametros, //datos que se envian a traves de ajax
+            url:   'categorias/guardar', //archivo que recibe la peticion
+            type:  'POST', //método de envio
+            success:  function (response) {
+                $('#exampleModalToggle6').modal('hide'); 
+                toastMixin.fire({
+                    animation: true,
+                    title: 'Categoría Modificada'
+                });  
+                limpiar();
+                listarCatProd();
+            },
+            error: (response) => {
+                console.log(response);
+            }
+        });
+    }else{
+        validacion("error","Error","Debes ingresar el nombre");
+    }
 }
 
-function eliminarProd(id){
+function eliminarProd(id,id_cat){
+    Swal.fire({
+        title: '¿Estas seguro que deseas Eliminar el registro?',
+        ico: "warning",
+        showDenyButton: true,
+        showCancelButton: true,
+        confirmButtonText: 'Eliminar',
+        denyButtonText: `No Eliminar`,
+    }).then((result) => {
+        if (result.isConfirmed) {
+            $.ajax({
+                url:   'categorias/eliminarProd/'+id, //archivo que recibe la peticion
+                type:  'POST', //método de envio
+                success:  function (response) { 
+                    toastMixin.fire({
+                        animation: true,
+                        title: 'Producto Eliminado'
+                    });
+                    listarProdCat(id_cat);
 
-    $.ajax({
-        url:   'categorias/eliminarProd/'+id, //archivo que recibe la peticion
-        type:  'POST', //método de envio
-        success:  function (response) { //una vez que el archivo recibe el request lo procesa y lo devuelve
-            $('#exampleModalToggle6').modal('hide');    
-            //location.reload();
-        },
-        error: (response) => {
-            console.log(response);
-        }
-    });
+                },
+                error: (response) => {
+                    console.log(response);
+                }
+            })
+        } else if (result.isDenied) {
+            Swal.fire('Los cambios no fueron guardados', '', 'info')
+          }
+    })
 }
 
-$("#buscador").on("keyup",function(e) {
+function eliminarCat(){
+    Swal.fire({
+        title: '¿Estas seguro que deseas Eliminar el registro?',
+        ico: "warning",
+        showDenyButton: true,
+        showCancelButton: true,
+        confirmButtonText: 'Eliminar',
+        denyButtonText: `No Eliminar`,
+    }).then((result) => {
+        if (result.isConfirmed) {
+            var id = $('#idcatE').val();
+            $.ajax({
+                url:   'categorias/eliminarCat/'+id, //archivo que recibe la peticion
+                type:  'POST', //método de envio
+                success:  function (response) { //una vez que el archivo recibe el request lo procesa y lo devuelve
+                    $('#exampleModalToggle6').modal('hide');   
+                    toastMixin.fire({
+                        animation: true,
+                        title: 'Categoría Eliminada'
+                    });
+                    listarCatProd();
+                },
+                error: (response) => {
+                    console.log(response);
+                }
+            })
+        } else if (result.isDenied) {
+            Swal.fire('Los cambios no fueron guardados', '', 'info')
+          }
+    })
+}
+
+$("#searchCat").on("keyup",function(e) {
     e.preventDefault();
-    var busqueda = $("#buscador").val();
+    var busqueda = $("#searchCat").val();
     if (busqueda !== "") {
         var parametro = {"busqueda" : busqueda};
         $.ajax({
             data:  parametro, //datos que se envian a traves de ajax
-            url:   'proveedores/buscar', //archivo que recibe la peticion
+            url:   'categorias/buscarCat', //archivo que recibe la peticion
             type:  'POST', //método de envio
             success:  function (response) {
-                $("#proveedor").html(response);
-                $('#exampleModalToggle10').modal('show');
-
+                $("#list_cat").html(response);
+                $('#exampleModalToggle5').modal('show');
             },
             error: (response) => {
                 console.log(response);
             }
         });  
     }else{
-        listarproveedores();
+        listarCatProd();
     }
-
-    
 })
+
+
     
 

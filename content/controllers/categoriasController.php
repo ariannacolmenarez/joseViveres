@@ -70,7 +70,7 @@ class categoriasController extends Autoload {
               </div>
             </div>
               <div class="col-2 text-end">
-                <button class="btn btn-outline-danger btn-rounded btn-icon" onclick="eliminarProd('.$regist['id'].');">
+                <button class="btn btn-outline-danger btn-rounded btn-icon" onclick="eliminarProd('.$regist['id'].','.$id.');">
                   <i class="ti-trash"></i>
                 </button>
               </div>
@@ -83,16 +83,12 @@ class categoriasController extends Autoload {
     }
 
     public function guardar(){
-      if (!empty($_POST['id'] && $_POST['nombre'] && $_POST['telefono'] )) {
+      if (!empty($_POST['id'] && $_POST['nombre'] )) {
 
-				$p=new proveedoresModel();
+				$p=new categoriasModel();
 
 				$p->setid($_POST['id']);
-        $p->setnombre(strtoupper($_POST['nombre']));
-        $p->setnroDoc(strtoupper($_POST['nro_doc']));
-        $p->settipoDoc(strtoupper($_POST['tipo_doc']));
-        $p->setcomentario(strtoupper($_POST['comentario']));
-        $p->settelefono(strtoupper($_POST['telefono']));
+        $p->setnombre($_POST['nombre']);
 
 				$this->model->guardar($p);
 				
@@ -110,33 +106,33 @@ class categoriasController extends Autoload {
 		    }
     }
 
-    public function eliminarProd(){
-			$this->model->eliminarProd($_POST['id']);
+    public function eliminarProd($id){
+			$this->model->eliminarProd($id);
    	}
 
-    public function buscar(){
-      $data = '<div class="list-group list-group-flush mt-2" id="proveedor">';
-      $respuesta = $this->model->buscar($_POST["busqueda"]);
+     public function eliminarCat($id){
+			$this->model->eliminarCat($id);
+   	}
+
+    public function buscarCat(){
+      $data = '';
+      $respuesta = $this->model->buscarCat($_POST["busqueda"]);
       if ($respuesta->rowCount() > 0) {
         foreach ($respuesta as $regist) {
-            $data .= '<a onclick="consultarproveedores('.$regist["id"].');" type="button" class="list-group-item text-dark list-group-item-action py-3">
-                        <div class="row align-items-center">
-                          <div class="col-1 text-secondary"><i class="ti-user fa-2x"></i></div>
-                          <div class="col px-4">'.$regist['nombre'].' <small class="text-muted">'.$regist['telefono'].'</small></div>
-                          <div class="col text-end"><i class="ti-marker-alt "></i></div>
-                        </div> 
-                      </a>';
+          $data .= '<a type="button" onclick="editarCat('.$regist['id'].');" class="list-group-item text-dark list-group-item-action p-3">
+            <div class="row">
+              <div class="col">'.$regist['categoria'].'</div>
+              <div class="col text-end"><i class="ti-angle-right"></i></div>
+            </div> 
+          </a>';
         };
       }else {$data .= '<div class="row align-items-center">
                         <div class="col text-secondary text-center">No hay registros</div>
                       </div>';
       }
-      $data .= '</div>';
-
+      $data .= '';
       echo $data;
     }
-
-
 
 }
 

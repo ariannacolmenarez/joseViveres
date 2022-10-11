@@ -15,9 +15,11 @@
                     
 
                 </div>
+                <?php if(in_array("Crear Proveedores", $_SESSION['permisos'])){ ?>
                 <div class="d-grid gap-2 d-md-block w-100 mt-5">
                   <button class="btn btn-warning w-100" type="button" data-bs-target="#exampleModalToggle12" data-bs-toggle="modal">Crear Proveedor</button>
                 </div>
+                <?php } ?>
               </div>
             </div>
           </div>
@@ -28,7 +30,7 @@
           <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content modal-fullscreen w-100">
               <div class="modal-header text-center">
-                <h5 class="modal-title fs-5 display-6 fw-bold" id="exampleModalToggleLabel11"><a type="button" id="volver11"><i class="ti-arrow-left"></i> </a>  Editar Proveedor</i></h5>
+                <h5 class="modal-title fs-5 display-6 fw-bold" id="exampleModalToggleLabel11"><a type="button" id="volver11"><i class="ti-arrow-left"></i> </a>  Modificar Proveedor</i></h5>
               </div>
               <input type="hidden" id="id">
               <div class="modal-body">
@@ -59,9 +61,11 @@
                 <div class="d-grid gap-2 d-md-block w-100 mt-5">
                   <button onclick="guardarProveedor();" class="btn btn-success w-100" type="button">Guardar Cambios</button>
                 </div>
+                <?php if(in_array("Eliminar Proveedores", $_SESSION['permisos'])){ ?>
                 <div class="d-grid gap-2 d-md-block w-100 mt-3">
                   <button onclick="eliminarProveedor();"class="btn btn-danger w-100" type="button">Eliminar Cliente</button>
                 </div>
+                <?php } ?>
               </div>
             </div>
           </div>
@@ -71,7 +75,7 @@
           <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content modal-fullscreen w-100">
               <div class="modal-header text-center">
-                <h5 class="modal-title fs-5 display-6 fw-bold" id="exampleModalToggleLabel12"><a type="button" id="volver12" data-bs-target="#exampleModalToggle10" data-bs-toggle="modal"><i class="ti-arrow-left"></i> </a> Nuevo Proveedor</i></h5>
+                <h5 class="modal-title fs-5 display-6 fw-bold" id="exampleModalToggleLabel12"><a type="button" id="volver12" data-bs-target="#exampleModalToggle10" data-bs-toggle="modal"><i class="ti-arrow-left"></i> </a>Registrar Proveedor</i></h5>
               </div>
               <div class="modal-body">
                 <h5 class="mt-3">Nombre *</h5>

@@ -1,9 +1,12 @@
 <?php
 require_once ('content/config/settings/SysConfig.php');
 require_once ('content/controllers/frontController.php');
-require_once ("content/models/conexionBd.php");
-require_once ("content/models/autoload.php");
+require_once ("content/libraries/core/conexionBd.php");
+require_once ("content/libraries/core/autoload.php");
 
+if(!isset($_SESSION)) {
+    session_start();
+}
 $Config = new SysConfig();
 $Config->_init();
 

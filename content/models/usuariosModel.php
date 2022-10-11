@@ -4,6 +4,7 @@ class usuariosModel extends Conexion{
     private $id;
     private $nombre;
     private $correo;
+    private $rol_usuario;
     private $contraseña;
 
     public function __construct(){
@@ -42,6 +43,14 @@ class usuariosModel extends Conexion{
         $this->contraseña=$contraseña;
     }
 
+    public function getrol_usuario(){
+        return $this->rol_usuario;
+    }
+
+    public function setrol_usuario( $rol_usuario){
+        $this->rol_usuario=$rol_usuario;
+    }
+
     public static function listar(){
         try {
              
@@ -58,6 +67,17 @@ class usuariosModel extends Conexion{
         }
     }
 
+    public function listarRoles(){
+        try {
+            $consulta= Conexion::conect()->prepare("SELECT * FROM rol WHERE estado !=0");
+            $consulta->execute();
+            return $consulta->fetchALL(PDO::FETCH_OBJ);
+
+        } catch (Exception $e) {
+            die($e->getMessage());
+        }
+    }
+
     public function consultar($id){
         try {
             $consulta= Conexion::conect()->prepare("SELECT * FROM usuarios WHERE id=?;");
@@ -68,6 +88,7 @@ class usuariosModel extends Conexion{
             $p->setnombre($r->nombre);
             $p->setcorreo($r->correo);
             $p->setcontraseña($r->contraseña);
+            $p->setrol_usuario($r->id_rol);
             
             return $p;
 
@@ -93,7 +114,7 @@ class usuariosModel extends Conexion{
                 $p->getcorreo(),
                 $p->getcontraseña(),
                 "1",
-                "1",
+                $p->getrol_usuario(),
                 $p->getid(),
 
             ));
@@ -119,7 +140,7 @@ class usuariosModel extends Conexion{
                 $p->getcorreo(),
                 $p->getcontraseña(),
                 "1",
-                "1",
+                $p->getrol_usuario(),
             ));
 
         } catch (Exception $e) {
@@ -143,16 +164,29 @@ class usuariosModel extends Conexion{
     public function buscar($busqueda){
         try {
 
-            $consulta="SELECT * FROM persona WHERE estado =? AND id_tipo_persona=? AND nombre LIKE '%$busqueda%' 
-            OR telefono LIKE '%$busqueda%'";
+            $consulta="SELECT * FROM usuarios WHERE estado =? AND nombre LIKE '%$busqueda%' 
+            OR correo LIKE '%$busqueda%'";
 
             $consulta= Conexion::conect()->prepare($consulta);
             $consulta->setFetchMode(PDO::FETCH_ASSOC);
-            $consulta->execute(array("1","2"));
+            $consulta->execute(array("1"));
             return $consulta;
 
         } catch (Exception $e) {
 
+            die($e->getMessage());
+        }
+    }
+
+    public function verificarUsuario(){
+        try {
+            $nombre = $this->nombre;
+            $sql="SELECT * FROM usuarios WHERE nombre = ? OR correo = ? and estado = '1';";
+            $consulta = Conexion::conect()->prepare($sql);
+            $consulta->execute(array($nombre,$nombre));
+            $result = $consulta->fetch(PDO::FETCH_OBJ);
+            return $result;
+        } catch (Exception $e) {
             die($e->getMessage());
         }
     }

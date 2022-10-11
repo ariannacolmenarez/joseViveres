@@ -24,50 +24,6 @@ class SysConfig {
         }
     }
 
-    protected function directory(){
-        return _DIRECTORY_;
-    }
-
-    protected function controller(){
-        return _CONTROLLER_;
-    }
-
-    protected function index_file(){
-        return _INDEX_FILE_;
-    }
-
-    protected function theme(){
-        return _THEME_;
-    }
-
-    protected function model(){
-        return _MODEL_;
-    }
-
-    protected function db_server(){
-        return _DB_SERVER_;
-    }
-
-    protected function db_web(){
-        return _DB_WEB_;
-    }
-
-    protected function db_host(){
-        return _DB_HOST_;
-    }
-
-    protected function db_user(){
-        return _DB_USER_;
-    }
-
-    protected function db_password(){
-        return _DB_PASSWORD_;
-    }
-
-    protected function db_charset(){
-        return _DB_CHARSET_;
-    }
-
 
 }
 

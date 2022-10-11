@@ -61,28 +61,15 @@ class categoriasModel extends Conexion{
         return $consulta;
     }
 
-    public function guardar(proveedoresModel $p){
+    public function guardar(categoriasModel $p){
         try {
             
-            $consulta="UPDATE persona SET 
-                nombre=?,
-                nro_doc=?,
-                tipo_doc=?,
-                telefono=?,
-                comentario=?,
-                estado=?,
-                id_tipo_persona=?
+            $consulta="UPDATE cat_producto SET 
+                categoria=?
                 WHERE id=?;
-            
             ";
             Conexion::conect()->prepare($consulta)->execute(array(
                 $p->getnombre(),
-                $p->getnroDoc(),
-                $p->gettipoDoc(),
-                $p->gettelefono(),
-                $p->getcomentario(),
-                "1",
-                "1",
                 $p->getid(),
 
             ));
@@ -102,6 +89,7 @@ class categoriasModel extends Conexion{
                 $p->getnombre(),
                 "1"
             ));
+            
         } catch (Exception $e) {
 
             die($e->getMessage());
@@ -110,22 +98,47 @@ class categoriasModel extends Conexion{
 
     public function eliminarProd($id){
         try {
-            $consulta="UPDATE productos SET id_categoria='' WHERE id=?;";
+            $consulta="UPDATE productos SET id_categoria=NULL WHERE id=?;";
             Conexion::conect()->prepare($consulta)->execute(array($id));
         } catch (Exception $e) {
             die($e->getMessage());
         }
     }
 
-    public function buscar($busqueda){
+    public function eliminarCat($id){
+        try {
+            $consulta="UPDATE cat_producto SET estado=0 WHERE id=?;";
+            $consulta = Conexion::conect()->prepare($consulta);
+            $r = $consulta->execute(array($id));
+            if($r){
+                $consulta1="SELECT p.id FROM productos as p, cat_producto as c WHERE p.id_categoria = c.id and c.id=$id";
+                $consulta1= Conexion::conect()->prepare($consulta1);
+                $consulta1->setFetchMode(PDO::FETCH_ASSOC);
+                $consulta1->execute();
+                var_dump($consulta1->rowCount());
+                if ($consulta1->rowCount() > 0) {
+                    foreach ($consulta1 as $row) {
+                        var_dump($row['id']);
+                        $consulta="UPDATE productos SET id_categoria=NULL WHERE id=?;";
+                        Conexion::conect()->prepare($consulta)->execute(array($row['id']));
+                    } 
+                }else{
+                    return 0;
+                }
+            }
+        } catch (Exception $e) {
+            die($e->getMessage());
+        }
+    }
+
+    public function buscarCat($busqueda){
         try {
 
-            $consulta="SELECT * FROM persona WHERE estado =? AND id_tipo_persona=? AND nombre LIKE '%$busqueda%' 
-            OR telefono LIKE '%$busqueda%'";
+            $consulta="SELECT * FROM cat_producto WHERE estado =? AND categoria LIKE '%$busqueda%'";
 
             $consulta= Conexion::conect()->prepare($consulta);
             $consulta->setFetchMode(PDO::FETCH_ASSOC);
-            $consulta->execute(array("1","1"));
+            $consulta->execute(array("1"));
             return $consulta;
 
         } catch (Exception $e) {

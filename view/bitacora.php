@@ -1,6 +1,4 @@
-<?php
-     require_once "../content/component/header.php"
-     ?>
+
      <!-- partial -->
       <div class="main-panel">
         <div class="content-wrapper">
@@ -20,56 +18,11 @@
 
           <div class="row my-3">
             <div class="card">
-                <div class="card-body">
-                <table class="table" id="example">
-                      <thead class="my-3">
-                        <tr>
-                          <th>Fecha - Hora</th>
-                          <th>Usuario</th>
-                          <th>Acción</th>
-                          <th>Módulo</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        <tr class="my-3">
-                          <td>25/02/22 8:30pm</td>
-                          <td>1</td>
-                          <td>edicion de gasto</td>
-                          <td>gastos</td>
-                        </tr>
-                        <tr class="my-3">
-                          <td>25/02/22 8:30pm</td>
-                          <td>1</td>
-                          <td>edicion de gasto</td>
-                          <td>gastos</td>
-                        </tr>
-                        <tr class="my-3">
-                          <td>25/02/22 8:30pm</td>
-                          <td>1</td>
-                          <td>edicion de gasto</td>
-                          <td>gastos</td>
-                        </tr>
-                        <tr class="my-3">
-                          <td>25/02/22 8:30pm</td>
-                          <td>1</td>
-                          <td>edicion de gasto</td>
-                          <td>gastos</td>
-                        </tr>
-                      </tbody>
-                    </table>
+                <div class="card-body" id="tableb">
+                
                 </div>
             </div>
           </div>
         </div>
         <!-- content-wrapper ends -->       
- <?php
- require_once "../content/component/footer.php";
- require_once "./ventaLibre.php";
- require_once "./gastos.php";
- ?>
- <script>
-            $(document).ready(function () {
-    $('#example').DataTable();
-});
-        </script>
-
+        <script src="<?= _THEME_?>js/scripts/bitacora.js"></script>

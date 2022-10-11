@@ -1,3 +1,25 @@
+var toastMixin = Swal.mixin({
+    toast: true,
+    icon: 'success',
+    title: 'General Title',
+    animation: false,
+    position: 'top-right',
+    showConfirmButton: false,
+    timer: 3000,
+    timerProgressBar: true,
+    didOpen: (toast) => {
+      toast.addEventListener('mouseenter', Swal.stopTimer)
+      toast.addEventListener('mouseleave', Swal.resumeTimer)
+    }
+});
+function validacion(tipo,titulo,texto){
+    Swal.fire({
+        icon: tipo,
+        title: titulo,
+        text: texto,
+      })
+}
+
 function aggProd(){
     listarcatProd();
     $('#exampleModalToggle4').modal('show');
@@ -71,25 +93,37 @@ function registrarProducto(){
         formData.append('cantidad' , $("#cantidadp").val());
         formData.append('nombre' , $("#nombrep").val());
 
-        $.ajax({
+        if ($("#preciop").val()!="" && $("#costop").val()!="" 
+        && $("#cantidadp").val()!=""&& $("#nombrep").val()!="") {
+            $.ajax({
 
-            cache: false,
-            contentType: false,
-            data: formData,
-            enctype: 'multipart/form-data',
-            processData: false,
-            method: "POST",
-            url: "productos/registrar",
-            success: function (data) {
-                alert("registrado correctamente");
-                $('#exampleModalToggle4').modal('hide');
-                limpiar();
-            },
-            error: (response) => {
-                console.log(response);
-            }
+                cache: false,
+                contentType: false,
+                data: formData,
+                enctype: 'multipart/form-data',
+                processData: false,
+                method: "POST",
+                url: "productos/registrar",
+                success: function (data) {
+                    alert("registrado correctamente");
+                    listarInventario("");
+                    $("#preview-img").show().attr("src", "");
+                    $('#exampleModalToggle4').modal('hide');
+                    toastMixin.fire({
+                        animation: true,
+                        title: 'Producto Registrado'
+                    });
+                    limpiar();
+                },
+                error: (response) => {
+                    console.log(response);
+                }
 
-        })
+            })
+        }else{
+            validacion("error","Error","Rellena los campos obligatorios");
+        }
+        
 }
 
 function editarProducto(id){
@@ -141,24 +175,32 @@ function guardarProducto(){
         formData.append('nombre' , $("#nombreE").val());
         formData.append('id' , $("#idE").val());
         
+        if ($("#preciop").val()!="" && $("#costop").val()!="" 
+        && $("#cantidadp").val()!=""&& $("#nombrep").val()!="") {
+            $.ajax({
 
-        $.ajax({
+                cache: false,
+                contentType: false,
+                data: formData,
+                enctype: 'multipart/form-data',
+                processData: false,
+                method: "POST",
+                url: "productos/guardar",
+                success: function (data) {
+                    alert("guardado correctamente");
+                    $('#editarProd').modal('hide');
+                    toastMixin.fire({
+                        animation: true,
+                        title: 'Producto Modificado'
+                    });
+                    limpiar();
+                    window.location.reload();
+                }
 
-            cache: false,
-            contentType: false,
-            data: formData,
-            enctype: 'multipart/form-data',
-            processData: false,
-            method: "POST",
-            url: "productos/guardar",
-            success: function (data) {
-                alert("guardado correctamente");
-                $('#editarProd').modal('hide');
-                limpiar();
-                window.location.reload();
-            }
-
-        });
+            });
+        }else{
+            validacion("error","Error","Rellena los campos obligatorios");
+        }
 }
 
 $("#plusE").on("click",function() {
@@ -181,21 +223,38 @@ $("#minusE").on("click",function() {
 
 function eliminarProducto(){
     var id = $("#idE").val();
-
     var parametro = {"id" : id};
-    $.ajax({
-        data:  parametro, //datos que se envian a traves de ajax
-        url:   'productos/eliminar', //archivo que recibe la peticion
-        type:  'POST', //método de envio
-        success:  function (response) { //una vez que el archivo recibe el request lo procesa y lo devuelve
-            alert("eliminado correctamente");
-            $('#editarProd').modal('hide');
-            window.location.reload();
-        },
-        error: (response) => {
-            console.log(response);
+
+    Swal.fire({
+        title: '¿Estas seguro que deseas Eliminar el registro?',
+        ico: "warning",
+        showDenyButton: true,
+        showCancelButton: true,
+        confirmButtonText: 'Eliminar',
+        denyButtonText: `No Eliminar`,
+    }).then((result) => {
+        if (result.isConfirmed) {
+            $.ajax({
+                data:  parametro, //datos que se envian a traves de ajax
+                url:   'productos/eliminar', //archivo que recibe la peticion
+                type:  'POST', //método de envio
+                success:  function (response) { //una vez que el archivo recibe el request lo procesa y lo devuelve
+                    alert("eliminado correctamente");
+                    $('#editarProd').modal('hide');
+                    toastMixin.fire({
+                        animation: true,
+                        title: 'Producto Eliminado'
+                    });
+                    window.location.reload();
+                },
+                error: (response) => {
+                    console.log(response);
+                }
+            });
+        } else if (result.isDenied) {
+            Swal.fire('Los cambios no fueron guardados', '', 'info')
         }
-    });
+    })
 }
 
     

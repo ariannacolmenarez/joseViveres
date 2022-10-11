@@ -2,7 +2,7 @@
           <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content modal-fullscreen w-100">
               <div class="modal-header text-center">
-                <h5 class="modal-title fs-5 display-6 fw-bold" id="exampleModalToggleLabel15"><a type="button" data-bs-target="#exampleModalToggle14" data-bs-toggle="modal"><i class="ti-arrow-left"></i> </a>Abono</h5>
+                <h5 class="modal-title fs-5 display-6 fw-bold" id="exampleModalToggleLabel15">Abono</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
               </div>
               <div class="modal-body">
@@ -12,11 +12,11 @@
                 </div>
                 <h5 class="mt-1">Valor de la venta *</h5>
                 <div class="input-group ">
-                  <input type="text" class="form-control form-control-lg" aria-label="Dollar amount (with dot and two decimal places)" id="valorA">
+                  <input type="number" class="form-control form-control-lg" aria-label="Dollar amount (with dot and two decimal places)" id="valorA">
                   <span class="input-group-text"><b>Valor total</b> </span>
                 </div>
                 <div class="form-group mt-3">
-                  <h5>Concepto</h5>
+                  <h5>Concepto *</h5>
                   <input type="text" class="form-control form-control-lg" id="conceptoA" placeholder="Concepto">
                 </div>
                 <h5 class="mt-2">Método de pago*</h5>
@@ -36,7 +36,7 @@
               </div>
               <div class="modal-footer">
                 <div class="d-grid gap-2 d-md-block w-100">
-                  <button class="btn btn-warning w-100" type="button" id="guardar">Guardar Cambios</button>
+                  <button class="btn btn-warning w-100" type="button" id="guardar">Registrar Abono</button>
                 </div>
               </div>
             </div>

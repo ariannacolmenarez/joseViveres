@@ -1,12 +1,26 @@
-$("#busqueda").on("click",function(){
-    console.log("boton");
-})
-
-$("#volver16").on("click", function() {
-    $('#exampleModalToggle15').modal('hide');
+var toastMixin = Swal.mixin({
+    toast: true,
+    icon: 'success',
+    title: 'General Title',
+    animation: false,
+    position: 'top-right',
+    showConfirmButton: false,
+    timer: 3000,
+    timerProgressBar: true,
+    didOpen: (toast) => {
+      toast.addEventListener('mouseenter', Swal.stopTimer)
+      toast.addEventListener('mouseleave', Swal.resumeTimer)
+    }
 });
+function validacion(tipo,titulo,texto){
+    Swal.fire({
+        icon: tipo,
+        title: titulo,
+        text: texto,
+      })
+}
 
-$("#volver15").on("click", function() {
+$("#volver27").on("click", function() {
     limpiar();
 });
 
@@ -16,26 +30,45 @@ $("#close").on("click", function() {
 
 $("#usuarios").on("click", function() {
     listarusuarios();
+    
+    
 });
 
 function limpiar(){
     $('input').val("");
     $('select').val("");
     $('textarea').val("");
-};
-
-
-
+}
 
 function listarusuarios(){
     
     $.get("usuarios/listar", {}, function (data, status) {
-        console.log(data);
-        $("#usuarios2").html(data);
-        $('#exampleModalToggle14').modal('show');
+        $("#list_usuarios").html(data);
+        $('#exampleModalToggle26').modal('show');
     });
-};
+}
 
+function listarRol(direccion){
+
+    $.ajax({
+        type: "POST",
+        url: "usuarios/listarRoles",
+        dataType: "html",
+        success: function (response) {
+            $(direccion).html(response);
+        },
+        error: (response) => {
+            console.log(response);
+        }
+    });
+
+}
+
+function editarUsuarios(id){
+    listarRol('#rol_usuario');
+    consultarusuarios(id);
+    $('#exampleModalToggle16').modal('show');
+}
 
 function consultarusuarios (id) {
     $.ajax({
@@ -43,13 +76,12 @@ function consultarusuarios (id) {
         url: "usuarios/consultar/"+id,
         dataType: "json",
         success: function (response) {
-            
             response.map( function (elem) {
-                $("#id").val(elem.id);
+                $("#idusuarios").val(elem.id);
                 $("#nombre1").val(elem.nombre);
                 $("#correo").val(elem.correo);
-            });
-            $('#exampleModalToggle16').modal('show');
+                $("#rol_usuario option[value='"+ elem.rol_usuario +"']").attr("selected",true);
+            }); 
         },
         error: (response) => {
             console.log(response);
@@ -59,96 +91,139 @@ function consultarusuarios (id) {
 }
 
 function guardarUsuarios(){
-    var id = $("#id").val();
+    var id = $("#idusuarios").val();
     var nombre = $("#nombre1").val();
     var correo = $("#correo").val();
     var contraseña = $("#contraseña").val();
+    var rol=$("#rol_usuario").val();
 
     var parametros = {
         "nombre1" : nombre,
         "correo" : correo,
         "contraseña" : contraseña,
-        "id" : id
+        "id" : id,
+        "rol": rol
     };
-    $.ajax({
-        data:  parametros, //datos que se envian a traves de ajax
-        url:   'usuarios/guardar', //archivo que recibe la peticion
-        type:  'POST', //método de envio
-        success:  function (response) {
-            $('#exampleModalToggle16').modal('hide');    
-            listarusuarios();
-                
-        },
-        error: (response) => {
-            console.log(response);
-        }
-    });
+
+    if(nombre != "" && correo !="" && rol !=""){
+        $.ajax({
+            data:  parametros, //datos que se envian a traves de ajax
+            url:   'usuarios/guardar', //archivo que recibe la peticion
+            type:  'POST', //método de envio
+            success:  function (response) {
+                $('#exampleModalToggle16').modal('hide');  
+                toastMixin.fire({
+                    animation: true,
+                    title: 'Usuario Modificado'
+                });  
+                listarusuarios();
+                    
+            },
+            error: (response) => {
+                console.log(response);
+            }
+        });
+    }else{
+        validacion("error","Error","Rellena los campos obligatorios");
+    }
+    
+}
+
+function crearUsuario(){
+    listarRol('#rol_usuarioR');
+    $('#exampleModalToggle27').modal('show');
 }
 
 function registrarUsuarios(){
     var nombre = $("#nombre3").val();
     var correo = $("#correo2").val();
     var contraseña = $("#contraseña1").val();
+    var rol = $("#rol_usuarioR").val();
    
     var parametros = {
         "nombre" : nombre,
         "correo" : correo,
-        "contraseña" : contraseña
+        "contraseña" : contraseña,
+        "rol" : rol
     };
-    $.ajax({
-        data:  parametros, //datos que se envian a traves de ajax
-        url:   'usuarios/registrar', //archivo que recibe la peticion
-        type:  'POST', //método de envio
-        success:  function (response) { //una vez que el archivo recibe el request lo procesa y lo devuelve
-            $('#exampleModalToggle15').modal('hide');
-            limpiar();    
-            listarusuarios();
-                
-        },error: (response) => {
-            console.log(response);
-        }
-    });
+
+    if(nombre != "" && correo !="" && contraseña !="" && rol !=""){
+        $.ajax({
+            data:  parametros, //datos que se envian a traves de ajax
+            url:   'usuarios/registrar', //archivo que recibe la peticion
+            type:  'POST', //método de envio
+            success:  function (response) { //una vez que el archivo recibe el request lo procesa y lo devuelve
+                $('#exampleModalToggle27').modal('hide');
+                toastMixin.fire({
+                    animation: true,
+                    title: 'Usuario Registrado'
+                });
+                limpiar();    
+                listarusuarios();
+                    
+            },error: (response) => {
+                console.log(response);
+            }
+        });
+    }else{
+        validacion("error","Error","Rellena los campos obligatorios");
+    }
 }
 
-function eliminarusuarios(){
+function eliminarUsuarios(){
     var id = $("#idusuarios").val();
 
-    var parametro = {"idusuarios" : id};
-    $.ajax({
-        data:  parametro, //datos que se envian a traves de ajax
-        url:   'usuarios/eliminar', //archivo que recibe la peticion
-        type:  'POST', //método de envio
-        success:  function (response) { //una vez que el archivo recibe el request lo procesa y lo devuelve
-            $('#exampleModalToggle16').modal('hide');    
-            listarusuarios();
-                
-        },
-        error: (response) => {
-            console.log(response);
-        }
-    });
+    var parametro = {"id" : id};
+    Swal.fire({
+        title: '¿Estas seguro que deseas Eliminar el registro?',
+        ico: "warning",
+        showDenyButton: true,
+        showCancelButton: true,
+        confirmButtonText: 'Eliminar',
+        denyButtonText: `No Eliminar`,
+    }).then((result) => {
+        if (result.isConfirmed) {
+            $.ajax({
+                data:  parametro, //datos que se envian a traves de ajax
+                url:   'usuarios/eliminar', //archivo que recibe la peticion
+                type:  'POST', //método de envio
+                success:  function (response) { //una vez que el archivo recibe el request lo procesa y lo devuelve
+                    $('#exampleModalToggle16').modal('hide');    
+                    toastMixin.fire({
+                        animation: true,
+                        title: 'Usuario Eliminado'
+                    });
+                    listarusuarios();     
+                },
+                error: (response) => {
+                    console.log(response);
+                }
+            });
+        } else if (result.isDenied) {
+            Swal.fire('Los cambios no fueron guardados', '', 'info')
+          }
+    })
 }
 
-$("#buscadorcliente").on("keyup",function(e) {
+$("#buscadorU").on("keyup",function(e) {
     e.preventDefault();
-    var busqueda = $("#buscadorcliente").val();
+    var busqueda = $("#buscadorU").val();
     if (busqueda !== "") {
         var parametro = {"busqueda" : busqueda};
         $.ajax({
             data:  parametro, //datos que se envian a traves de ajax
-            url:   'clientes/buscar', //archivo que recibe la peticion
+            url:   'usuarios/buscar', //archivo que recibe la peticion
             type:  'POST', //método de envio
             success:  function (response) {
-                $("#cliente").html(response);
-                $('#exampleModalToggle7').modal('show');
-
+                $("#list_usuarios").html(response);
+                $('#exampleModalToggle26').modal('show');
             },
             error: (response) => {
                 console.log(response);
             }
         });  
     }else{
-        listarclientes();
+        listarusuarios();
     }
 
     

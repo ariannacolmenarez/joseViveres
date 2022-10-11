@@ -8,16 +8,19 @@
                 <div class="col-lg-8 col-sm-4 col-6 grid-margin mb-0">
                   <h2 class="font-weight-bold text-dark pt-2 m-0">Inventario</h2>
                 </div>
+                
+                <?php if(in_array("Crear Inventario", $_SESSION['permisos'])){ ?>
                 <div class="col-lg-2 col-sm-4 col-3 grid-margin mb-0">
                     <button type="button" class=" btn btn-outline-dark mt-2 " id="categorias">
-                        <b>Crear Categoría</b>
+                        <b>Registrar Categoría</b>
                     </button>
                 </div>
                 <div class="col-lg-2 col-sm-4 col-3 grid-margin mb-0">
                   <button type="button" class="text-white btn btn-warning  mt-2 btn-icon-text" onclick="aggProd();">
-                    <i class="ti-plus btn-icon-prepend text-dark"></i><b class="text text-dark">Agregar productos</b>
+                    <i class="ti-plus btn-icon-prepend text-dark"></i><b class="text text-dark">Registrar productos</b>
                   </button>
-              </div>
+                </div>
+                <?php } ?>
               <!-- </div>
             </div> -->
           </div>
@@ -54,18 +57,20 @@
                         </div>
                         <div class="col-8 text-end" >
                             <div class="row  text-end">
+                            
+                                <?php if(in_array("Modificar Inventario", $_SESSION['permisos'])){ ?>
                                 <div class="col p-1">
                                     <button type="button" class=" btn btn-outline-dark " id="editarCat">
-                                        <b>Editar Categorías</b>
+                                        <b>Modificar Categorías</b>
                                     </button>
                                 </div>
+                                <?php } ?>
                                 <div class="col-1 text-center text">
                                     <div style="height: 100%;" class=" text-dark vr"></div>
                                 </div>
                                 <div class="col p-1">
                                     <select class="form-select btn-outline-dark rounded-0" aria-label=".form-select" id="catProd">
                                         <option selected="selected" value="">Ver todas las categorías</option>
-                                        >
                                     </select>
                                 </div>
                             </div>                            
