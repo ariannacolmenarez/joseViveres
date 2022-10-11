@@ -18,7 +18,6 @@ class reporteinventarioController extends Autoload {
     public function getInventario(){
         $result = $this->model->getInventario();
         $result = json_decode(json_encode($result),true);
-<<<<<<< HEAD
         $tabla="<table class='w-100 table'>
         <thead><tr style='-webkit-print-color-adjust: exact;'>
         <th colspan='5'>Inventario</th>
@@ -31,19 +30,6 @@ class reporteinventarioController extends Autoload {
         <th>Precio de costo</th>
         <th>Precio de venta</th>
         </tr></thead><tbody>";
-=======
-        $tabla="<table class='table' class='w-100'>
-        <thead class='table-light'><tr -webkit-print-color-adjust: exact;'>
-        <th class='text-center' colspan='5'>Inventario</th>
-        </tr></thead>
-        <tr style='background:gray;color:white;height:30px;-webkit-print-color-adjust: exact;'>
-        <td>Código</td>
-        <td>Descripción</td>
-        <td>Cantidad</td>
-        <td>Precio de costo</td>
-        <td>Precio de venta</td>
-        </tr>";
->>>>>>> 8c8f1e958aaee641e4586b865eb1abf43f352604
         
         foreach($result as $r){
             $tabla.="
@@ -56,11 +42,7 @@ class reporteinventarioController extends Autoload {
             </tr>";
         }
 
-<<<<<<< HEAD
         $tabla.="</tbody></table>";
-=======
-        $tabla.="</table>";
->>>>>>> 8c8f1e958aaee641e4586b865eb1abf43f352604
 
         echo $tabla;
         

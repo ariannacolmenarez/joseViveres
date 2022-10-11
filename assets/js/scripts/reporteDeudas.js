@@ -54,7 +54,6 @@ $.ajax({
     if(resp!=0){
         switch(periodo['tipoPeriodo']){
             case 'semanal':
-<<<<<<< HEAD
                 divSemanal.innerHTML='<center><button type="button" class="btn btn-outline-success" onclick="generarReporte(1)">Imprimir</button></center><br>';
                 divSemanal.innerHTML+='<center><h4>Deudas de la semana</h4></center><br>'+resp;
             break;
@@ -64,17 +63,6 @@ $.ajax({
             break;
             default:
                 divAnual.innerHTML='<center><button type="button" class="btn btn-outline-success" onclick="generarReporte(3)">Imprimir</button></center><br>';
-=======
-                divSemanal.innerHTML='<center><button type="button" class="btn btn-info" onclick="generarReporte(1)">Imprimir</button></center><br>';
-                divSemanal.innerHTML+='<center><h4>Deudas de la semana</h4></center><br>'+resp;
-            break;
-            case 'mensual':
-                divMensual.innerHTML='<center><button type="button" class="btn btn-info" onclick="generarReporte(2)">Imprimir</button></center><br>';
-                divMensual.innerHTML+='<center><h4>Deudas del mes</h4></center><br>'+resp;
-            break;
-            default:
-                divAnual.innerHTML='<center><button type="button" class="btn btn-info" onclick="generarReporte(3)">Imprimir</button></center><br>';
->>>>>>> 8c8f1e958aaee641e4586b865eb1abf43f352604
                 divAnual.innerHTML+='<center><h4>Deudas del año</h4></center><br>'+resp;
             break;
         }

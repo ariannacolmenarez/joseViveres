@@ -48,8 +48,7 @@ require_once ('content/config/settings/SysConfig.php');
 						}
 						
 					}else{
-			            echo $params;
-					//	die("<script>document.location.href='error';</script>");
+						die("<script>document.location.href='error';</script>");
 					}
 					
 				}else{
