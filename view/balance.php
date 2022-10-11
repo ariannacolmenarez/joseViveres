@@ -33,9 +33,9 @@
             </div>
             <?php if(in_array("Consultar Reportes Balance", $_SESSION['permisos'])){ ?>
             <div class="col-md-4 grid-margin text-end">
-              <button type="button" class="text-white btn btn-warning btn-icon-text ">
+              <a href="<?= _DIRECTORY_ ?>reporteBalance" type="button" class="text-white btn btn-warning btn-icon-text ">
                 <i class="ti-download btn-icon-prepend"></i><b>Descargar reporte</b>
-              </button>
+              </a>
             </div>
             <?php } ?>
           </div>

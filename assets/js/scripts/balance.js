@@ -194,3 +194,51 @@ function utilidad(){
     
 }
 
+function reciboVenta(id){
+    $.ajax({
+        url:   'balance/reciboI', //archivo que recibe la peticion
+        type:  'POST', //método de envio
+        data: {'id': id},
+        success:  function (response) { //una vez que el archivo recibe el request lo procesa y lo devuelve   
+           
+           var mywindow = window.open('Recibo MP Market', 'PRINT', 'height=600,width=800');
+
+            mywindow.document.write(response);
+
+            mywindow.document.close(); 
+            mywindow.focus();
+
+            mywindow.print();
+            mywindow.close();
+        },
+        error: (response) => {
+            console.log(response);
+        }
+    });
+    
+}
+
+function reciboGasto(id){
+    $.ajax({
+        url:   'balance/reciboE', //archivo que recibe la peticion
+        type:  'POST', //método de envio
+        data: {'id': id},
+        success:  function (response) { //una vez que el archivo recibe el request lo procesa y lo devuelve   
+           
+           var mywindow = window.open('Recibo MP Market', 'PRINT', 'height=600,width=800');
+
+            mywindow.document.write(response);
+
+            mywindow.document.close(); 
+            mywindow.focus();
+
+            mywindow.print();
+            mywindow.close();
+        },
+        error: (response) => {
+            console.log(response);
+        }
+    });
+    
+}
+

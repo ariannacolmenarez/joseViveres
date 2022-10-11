@@ -286,6 +286,22 @@ class balanceModel extends Conexion {
         }
     }
 
+    public function reciboI($id){
+        $sql="SELECT m.id,m.total,m.fecha, m.hora,m.estado_movimiento, c.categoria,mp.nombre,GROUP_CONCAT(dm.cantidad ,' ',p.nombre,' ',dm.precio,' ',(dm.cantidad*dm.precio)) AS producto FROM movimientos as m, concepto_movimiento as c, metodo_pago as mp, detalles_movimientos as dm, productos as p WHERE m.id= '$id' and m.id_concepto_movimiento=c.id and m.id_metodo_pago=mp.id and m.id=dm.id_movimientos and dm.id_producto = p.id;";
+        $consulta= Conexion::conect()->prepare($sql);
+        $consulta->execute();
+        $r = $consulta->fetch(PDO::FETCH_ASSOC);
+        return $r;
+    }
+
+    public function reciboE($id){
+        $sql="SELECT m.id,m.total,m.fecha, m.hora,m.estado_movimiento, c.categoria,mp.nombre FROM movimientos as m, concepto_movimiento as c, metodo_pago as mp WHERE m.id= '$id' and m.id_concepto_movimiento=c.id and m.id_metodo_pago=mp.id GROUP BY m.id;";
+        $consulta= Conexion::conect()->prepare($sql);
+        $consulta->execute();
+        $r = $consulta->fetch(PDO::FETCH_ASSOC);
+        return $r;
+    }
+
     
 
 

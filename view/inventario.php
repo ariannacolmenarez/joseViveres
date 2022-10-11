@@ -34,9 +34,9 @@
                             </form>
                         </div>    
                         <div class="col grid-margin text-end">
-                            <button type="button" class="text-dark btn btn-warning btn-icon-text ">
+                            <a href="<?= _DIRECTORY_ ?>reporteInventario" type="button" class="text-dark btn btn-warning btn-icon-text ">
                                 <i class="ti-download btn-icon-prepend"></i><b>Descargar reporte</b>
-                            </button>
+                            </a>
                         </div>
                     </div>
                     <div class="row align-items-center py-1">

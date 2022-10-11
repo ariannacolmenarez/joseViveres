@@ -128,7 +128,7 @@
           </li> 
           <?php if(in_array("Consultar Estadisticas", $_SESSION['permisos'])){ ?>
           <li class="nav-item">
-            <a class="nav-link" href="#">
+            <a class="nav-link" href="<?= _DIRECTORY_ ?>estadistica">
               <i class="ti-bar-chart-alt menu-icon"></i>
               <span class="menu-title">Generar Estadísticas</span>
             </a>
@@ -143,13 +143,13 @@
             <div class="collapse" id="ui-basic">
               <ul class="nav flex-column sub-menu">
                 <?php if(in_array("Consultar Reportes Inventario", $_SESSION['permisos'])){ ?>
-                  <li class="nav-item"> <a class="nav-link" href="#">Reportes de Inventario</a></li>
+                  <li class="nav-item"> <a class="nav-link" href="<?= _DIRECTORY_ ?>reporteInventario">Reportes de Inventario</a></li>
                 <?php } ?>
                 <?php if(in_array("Consultar Reportes Balance", $_SESSION['permisos'])){ ?>
-                <li class="nav-item"> <a class="nav-link" href="#">Reportes de Balance</a></li>
+                <li class="nav-item"> <a class="nav-link" href="<?= _DIRECTORY_ ?>reporteBalance">Reportes de Balance</a></li>
                 <?php } ?>
                 <?php if(in_array("Consultar Reportes Deudas", $_SESSION['permisos'])){ ?>
-                <li class="nav-item"> <a class="nav-link" href="#">Reportes de Deudas</a></li>
+                <li class="nav-item"> <a class="nav-link" href="<?= _DIRECTORY_ ?>reporteDeudas">Reportes de Deudas</a></li>
                 <?php } ?>
                 <?php if(in_array("Consultar Reportes Bitacora", $_SESSION['permisos'])){ ?>
                 <li class="nav-item"> <a class="nav-link" href="<?= _DIRECTORY_ ?>bitacora">Reportes de Bítacora</a></li>

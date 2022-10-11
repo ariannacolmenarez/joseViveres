@@ -21,6 +21,7 @@ class balanceController extends Autoload {
         $data = '<table class="table" id="example">
               <thead>
                 <tr>
+                  <th>Código</th>
                   <th>Fecha - Hora</th>
                   <th>Concepto</th>
                   <th>Medio de pago</th>
@@ -35,6 +36,7 @@ class balanceController extends Autoload {
           foreach ($respuesta as $regist) {
             
             $data .= '<tr>
+              <td>'.$regist['id'].'</td>
               <td>'.$regist['fecha'].'-'.$regist['hora'].'</td>
               <td>';
             $productos=$this->model->listarproductos($regist['id']);
@@ -127,6 +129,184 @@ class balanceController extends Autoload {
         }else {
           echo $respuesta["SUM(total)"];
         }
+    }
+
+    public function reciboI(){
+      
+      $resp=$this->model->reciboI($_POST['id']);
+      $productos = explode(",", $resp['producto']);
+      $prod []= [];
+      foreach ($productos as $clave => $valor) {  
+        $exp=explode(" ", $valor);
+        array_push($prod, $exp);
+      }
+      $table="";
+      unset($prod[0]);
+      foreach ($prod as $valor){
+        $table.='<tr>
+                  <td>'.$valor[0].'</td>
+                  <td>'.$valor[1].'</td>
+                  <td>'.$valor[2].'</td>
+                  <td>'.$valor[3].'</td>
+                </tr>';
+      }
+      $table.="";
+      $data='<div class="card">
+              <div class="card-body">
+                <div style="text-align:center" class="row">
+                  <div class="col text-center">
+                    <h3 class="display-3 text-dark">Market MP</h3>
+                  </div>
+                </div>
+                <div style="text-align:center" class="row">
+                  <div class="text-center col display-5 text-secondary">
+                    <i class="ti-home btn-icon-prepend"></i> RIF: 12020332-7
+                  </div>
+                  <div class="text-center col display-5 text-secondary">
+                    <i class="ti-location-pin btn-icon-prepend"></i> RIF: calle 03, calle principal el Frío, Duaca, Lara
+                  </div>
+                </div>
+                <div style="text-align:center" class="row mt-2">
+                  <div class="text-center col display-5 text-secondary">
+                    <i class="ti-agenda btn-icon-prepend"></i> 04169594929
+                  </div>
+                  <div class="text-center col display-5 text-secondary">
+                    <i class="ti-email btn-icon-prepend"></i> marketmp@gmail.com
+                  </div>
+                </div>
+                <hr>
+                <div  class="row mt-2">
+                  <div style="text-align:left; display:inline;" class=" col display-5 text-secondary">
+                    Fecha de transacción:
+                  </div>
+                  <div style="text-align:right;" class="text-end col display-5 text-secondary">
+                    '.$resp['fecha'].' - '.$resp['hora'].'
+                  </div>
+                </div>
+                <div  class="row mt-2">
+                  <div "text-align:left; display:inline;" class=" col display-5 text-secondary">
+                    Método de pago:
+                  </div>
+                  <div style="text-align:right; " class="text-end col display-5 text-secondary">
+                  '.$resp['nombre'].'
+                  </div>
+                </div>
+                <div  class="row mt-2">
+                  <div "text-align:left; display=inline;" class=" col display-5 text-secondary">
+                    Estado del pago:
+                  </div>
+                  <div style="text-align:right; " class="text-end col display-5 text-secondary">
+                  '.$resp['estado_movimiento'].'
+                  </div>
+                </div>
+                <div  class="row mt-2">
+                  <div "text-align:left; display=inline;" class=" col display-5 text-secondary">
+                    Categoría:
+                  </div>
+                  <div style="text-align:right; " class="text-end col display-5 text-secondary">
+                  '.$resp['categoria'].'
+                  </div>
+                </div>
+                <div  class="row mt-2">
+                  <div "text-align:left; display=inline;" class=" col display-5 text-secondary">
+                    codigo de transacción:
+                  </div>
+                  <div style="text-align:right; " class="text-end col display-5 text-secondary">
+                  '.$resp['id'].'
+                  </div>
+                </div>
+                <hr>
+                <h4 style="text-align:center">Productos</h4>
+                <table style="margin: 0 auto;" FRAME="void" RULES="rows">
+                  <thead >
+                    <th>Cantidad</th>
+                    <th>Producto</th>
+                    <th>Precio</th>
+                    <th>Total</th>
+                  </thead>
+                  <tbody>
+                    '.$table.'
+                  </tbody>
+                  <thead>
+                    <th "text-align:left; display=inline;">Total</th>
+                    <th style="text-align:right; ">'.$resp['total'].'</th>
+                  </thead>
+                </table>
+              </div>
+            </div>';
+      echo $data; 
+    }
+
+    public function reciboE(){
+      
+      $resp=$this->model->reciboE($_POST['id']);
+      $data='<div class="card">
+              <div class="card-body">
+                <div style="text-align:center" class="row">
+                  <div class="col text-center">
+                    <h3 class="display-3 text-dark">Market MP</h3>
+                  </div>
+                </div>
+                <div style="text-align:center" class="row">
+                  <div class="text-center col display-5 text-secondary">
+                    <i class="ti-home btn-icon-prepend"></i> RIF: 12020332-7
+                  </div>
+                  <div class="text-center col display-5 text-secondary">
+                    <i class="ti-location-pin btn-icon-prepend"></i> RIF: calle 03, calle principal el Frío, Duaca, Lara
+                  </div>
+                </div>
+                <div style="text-align:center" class="row mt-2">
+                  <div class="text-center col display-5 text-secondary">
+                    <i class="ti-agenda btn-icon-prepend"></i> 04169594929
+                  </div>
+                  <div class="text-center col display-5 text-secondary">
+                    <i class="ti-email btn-icon-prepend"></i> marketmp@gmail.com
+                  </div>
+                </div>
+                <hr>
+                <div  class="row mt-2">
+                  <div style="text-align:left; display:inline;" class=" col display-5 text-secondary">
+                    Fecha de transacción:
+                  </div>
+                  <div style="text-align:right;" class="text-end col display-5 text-secondary">
+                    '.$resp['fecha'].' - '.$resp['hora'].'
+                  </div>
+                </div>
+                <div  class="row mt-2">
+                  <div "text-align:left; display:inline;" class=" col display-5 text-secondary">
+                    Método de pago:
+                  </div>
+                  <div style="text-align:right; " class="text-end col display-5 text-secondary">
+                  '.$resp['nombre'].'
+                  </div>
+                </div>
+                <div  class="row mt-2">
+                  <div "text-align:left; display=inline;" class=" col display-5 text-secondary">
+                    Estado del pago:
+                  </div>
+                  <div style="text-align:right; " class="text-end col display-5 text-secondary">
+                  '.$resp['estado_movimiento'].'
+                  </div>
+                </div>
+                <div  class="row mt-2">
+                  <div "text-align:left; display=inline;" class=" col display-5 text-secondary">
+                    Categoría:
+                  </div>
+                  <div style="text-align:right; " class="text-end col display-5 text-secondary">
+                  '.$resp['categoria'].'
+                  </div>
+                </div>
+                <div  class="row mt-2">
+                  <div "text-align:left; display=inline;" class=" col display-5 text-secondary">
+                    codigo de transacción:
+                  </div>
+                  <div style="text-align:right; " class="text-end col display-5 text-secondary">
+                  '.$resp['id'].'
+                  </div>
+                </div>
+              </div>
+            </div>';
+      echo $data; 
     }
 
 
