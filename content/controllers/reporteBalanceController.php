@@ -23,8 +23,12 @@ class reportebalanceController extends Autoload {
         else{
             $tabla = '<div style="margin-left:auto; margin-right:auto;width:100%">
             <table class="table" style="width:100%;">
+<<<<<<< HEAD
             <thead>
             <tr style=" -webkit-print-color-adjust: exact; height:30px">
+=======
+            <thead class="table-light"><tr -webkit-print-color-adjust: exact; height:30px">
+>>>>>>> 8c8f1e958aaee641e4586b865eb1abf43f352604
             <th class="w-50" style="text-align:center">Activos</th>
             <th class="w-50" style="text-align:center">Total</th>
             </tr></thead><tbody>';
@@ -43,9 +47,15 @@ class reportebalanceController extends Autoload {
                 </tr>';
                 $cont=$cont+floatval($ac['total_venta']);
                 }
+<<<<<<< HEAD
                 $tabla.='<thead><tr style=" -webkit-print-color-adjust: exact; height:30px">
                 <th class="w-50" style="text-align:center">Total activos en caja</th>
                 <th class="w-50" style="text-align:center">'.$cont.'</th>
+=======
+                $tabla.='<thead class="table-light"><tr -webkit-print-color-adjust: exact; height:30px">
+                <td class="w-50" style="text-align:center">Total activos en caja</td>
+                <td class="w-50" style="text-align:center">'.$cont.'</td>
+>>>>>>> 8c8f1e958aaee641e4586b865eb1abf43f352604
                 </tr></thead>';
             }
 
@@ -64,9 +74,15 @@ class reportebalanceController extends Autoload {
                 </tr>';
                 $cont=$cont+floatval($ac['total_venta']);
                 }
+<<<<<<< HEAD
                 $tabla.='<thead><tr style=" -webkit-print-color-adjust: exact; height:30px">
                 <th class="w-50" style="text-align:center">Total activos por cobrar</th>
                 <th class="w-50" style="text-align:center">'.$cont.'</th>
+=======
+                $tabla.='<thead class="table-light"><tr -webkit-print-color-adjust: exact; height:30px">
+                <td class="w-50" style="text-align:center">Total activos por cobrar</td>
+                <td class="w-50" style="text-align:center">'.$cont.'</td>
+>>>>>>> 8c8f1e958aaee641e4586b865eb1abf43f352604
                 </tr></thead>';
             }
 
@@ -85,9 +101,15 @@ class reportebalanceController extends Autoload {
                 </tr>';
                 $cont=$cont+floatval($ac['total_pagado']);
                 }
+<<<<<<< HEAD
                 $tabla.='<thead><tr style=" -webkit-print-color-adjust: exact; height:30px">
                 <th class="w-50" style="text-align:center">Total gastos pagos</th>
                 <th class="w-50" style="text-align:center">'.$cont.'</th>
+=======
+                $tabla.='<thead class="table-light"><tr -webkit-print-color-adjust: exact; height:30px">
+                <td class="w-50" style="text-align:center">Total gastos pagos</td>
+                <td class="w-50" style="text-align:center">'.$cont.'</td>
+>>>>>>> 8c8f1e958aaee641e4586b865eb1abf43f352604
                 </tr></thead>';
             }
 
@@ -96,10 +118,18 @@ class reportebalanceController extends Autoload {
             $tabla.='<tr style="height:30px">
             <td class="w-100" colspan="2" style="text-align:center"></td>
             </tr>
+<<<<<<< HEAD
             <thead><tr style="height:30px; -webkit-print-color-adjust: exact">
             <th class="w-50" style="text-align:center">Total de activos</th>
             <th class="w-50" style="text-align:center">'.$contTotal.'</th>
             </tr></thead></tbody></table></div>';
+=======
+            <thead class="table-light"><tr -webkit-print-color-adjust: exact">
+            <td class="w-50" style="text-align:center">Total de activos</td>
+            <td class="w-50" style="text-align:center">'.$contTotal.'</td>
+            </tr></thead></table>
+            </tbody></div>';
+>>>>>>> 8c8f1e958aaee641e4586b865eb1abf43f352604
             echo $tabla;
         }
     }
