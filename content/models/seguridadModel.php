@@ -110,9 +110,20 @@ class seguridadModel extends Conexion{
 
     public function eliminarRol($id){
         try {
-            $estado=0;
-            $consulta="UPDATE rol SET estado=? WHERE id=?;";
-            Conexion::conect()->prepare($consulta)->execute(array($estado,$id));
+            $consulta1="SELECT u.id FROM usuarios as u, rol as r WHERE u.id_rol = r.id and r.id=$id";
+                $consulta1= Conexion::conect()->prepare($consulta1);
+                $consulta1->setFetchMode(PDO::FETCH_ASSOC);
+                $consulta1->execute();
+                if ($consulta1->rowCount() <= 0) {
+                    $estado=0;
+                    $consulta="UPDATE rol SET estado=? WHERE id=?;";
+                    Conexion::conect()->prepare($consulta)->execute(array($estado,$id)); 
+                    echo 1;
+                }else{
+                    
+                    echo 0;
+                }
+            
         } catch (Exception $e) {
             die($e->getMessage());
         }

@@ -3,13 +3,12 @@
 class productosModel extends Conexion{
     private $id;
     private $nombre;
-    private $cantidad;
     private $descripcion;
-    private $precio_costo;
-    private $precio_venta;
     private $url_img;
     private $estado;
     private $id_categoria;
+    private $id_marca;
+    private $id_presentacion;
 
     public function __construct(){
         parent::conect();
@@ -31,12 +30,12 @@ class productosModel extends Conexion{
         $this->nombre=$nombre;
     }
 
-    public function getcantidad(){
-        return $this->cantidad;
+    public function getid_marca(){
+        return $this->id_marca;
     }
 
-    public function setcantidad( $cantidad){
-        $this->cantidad=$cantidad;
+    public function setid_marca( $id_marca){
+        $this->id_marca=$id_marca;
     }
 
     public function getdescripcion(){
@@ -47,12 +46,12 @@ class productosModel extends Conexion{
         $this->descripcion=$descripcion;
     }
 
-    public function getprecio_costo(){
-        return $this->precio_costo;
+    public function getid_presentacion(){
+        return $this->id_presentacion;
     }
 
-    public function setprecio_costo( $precio_costo){
-        $this->precio_costo=$precio_costo;
+    public function setid_presentacion( $id_presentacion){
+        $this->id_presentacion=$id_presentacion;
     }
 
     public function geturl_img(){
@@ -79,20 +78,52 @@ class productosModel extends Conexion{
         $this->id_categoria=$id_categoria;
     }
 
-    public function getprecio_venta(){
-        return $this->precio_venta;
-    }
-
-    public function setprecio_venta( $precio_venta){
-        $this->precio_venta=$precio_venta;
-    }
-
     public function listarCat(){
         try {
             
             $consulta= Conexion::conect()->prepare("SELECT * FROM cat_producto WHERE estado !=0");
             $consulta->execute();
             return $consulta->fetchALL(PDO::FETCH_OBJ);
+
+        } catch (Exception $e) {
+            die($e->getMessage());
+        }
+    }
+
+    public function listarMarca(){
+        try {
+            
+            $consulta= Conexion::conect()->prepare("SELECT * FROM marca_producto WHERE estado !=0");
+            $consulta->execute();
+            return $consulta->fetchALL(PDO::FETCH_OBJ);
+
+        } catch (Exception $e) {
+            die($e->getMessage());
+        }
+    }
+
+    public function listarPresentacion(){
+        try {
+            
+            $consulta= Conexion::conect()->prepare("SELECT * FROM presentacion_producto WHERE estado !=0");
+            $consulta->execute();
+            return $consulta->fetchALL(PDO::FETCH_OBJ);
+
+        } catch (Exception $e) {
+            die($e->getMessage());
+        }
+    }
+
+    public function listar(){
+        try {
+                $sql= "SELECT p.id,p.nombre,p.url_img, m.nombre as marca,pp.volumen,pp.unidad_medida,pp.unidades FROM productos as p, marca_producto as m, presentacion_producto as pp WHERE p.estado!=0 and p.id_marca=m.id and p.id_presentacion=pp.id GROUP BY p.id;";
+                
+                $consulta= Conexion::conect()->prepare($sql);
+                $consulta->setFetchMode(PDO::FETCH_ASSOC);
+                $consulta->execute();
+                return $consulta;
+                
+
 
         } catch (Exception $e) {
             die($e->getMessage());
@@ -108,23 +139,21 @@ class productosModel extends Conexion{
             else{
                 $consulta="INSERT INTO productos(
                     nombre , 
-                    cantidad,
                     descripcion,
-                    precio_costo,
-                    precio_venta,
                     url_img,
                     estado,
-                    id_categoria)
-                VALUES (?,?,?,?,?,?,?,?)";
+                    id_categoria,
+                    id_marca,
+                    id_presentacion)
+                VALUES (?,?,?,?,?,?,?)";
                 Conexion::conect()->prepare($consulta)->execute(array(
                     $p->getnombre(),
-                    $p->getcantidad(),
                     $p->getdescripcion(),
-                    $p->getprecio_costo(),
-                    $p->getprecio_venta(),
                     $p->geturl_img(),
                     "1",
                     $p->getid_categoria(),
+                    $p->getid_marca(),
+                    $p->getid_presentacion(),
                 ));
                 return true;
             }
@@ -142,9 +171,9 @@ class productosModel extends Conexion{
             $p= new productosModel();
             $p->seturl_img($r->url_img);
             $p->setnombre($r->nombre);
-            $p->setcantidad($r->cantidad);
-            $p->setprecio_costo($r->precio_costo);
-            $p->setprecio_venta($r->precio_venta);
+            $p->setdescripcion($r->descripcion);
+            $p->setid_marca($r->id_marca);
+            $p->setid_presentacion($r->id_presentacion);
             $p->setid_categoria($r->id_categoria);
             
             return $p;
@@ -159,47 +188,43 @@ class productosModel extends Conexion{
             
             if ($p->geturl_img() == NULL) {
                 $consulta="UPDATE productos SET 
-                nombre =? , 
-                cantidad =?,
+                nombre=? , 
                 descripcion=?,
-                precio_costo=?,
-                precio_venta=?,
                 estado=?,
-                id_categoria=?
+                id_categoria=?,
+                id_marca=?,
+                id_presentacion=?
                 WHERE id=?;
             ";
             Conexion::conect()->prepare($consulta)->execute(array(
                 $p->getnombre(),
-                $p->getcantidad(),
                 $p->getdescripcion(),
-                $p->getprecio_costo(),
-                $p->getprecio_venta(),
                 "1",
                 $p->getid_categoria(),
+                $p->getid_marca(),
+                $p->getid_presentacion(),
                 $p->getid(),
 
             ));
             } else {
                 $consulta="UPDATE productos SET 
-                nombre =? , 
-                cantidad =?,
+                nombre=? , 
                 descripcion=?,
-                precio_costo=?,
-                precio_venta=?,
                 url_img=?,
                 estado=?,
-                id_categoria=?
+                id_categoria=?,
+                id_marca=?,
+                id_presentacion=?
                 WHERE id=?;
             ";
             Conexion::conect()->prepare($consulta)->execute(array(
                 $p->getnombre(),
-                $p->getcantidad(),
                 $p->getdescripcion(),
-                $p->getprecio_costo(),
-                $p->getprecio_venta(),
                 $p->geturl_img(),
                 "1",
                 $p->getid_categoria(),
+                $p->getid_marca(),
+                $p->getid_presentacion(),
                 $p->getid(),
 
             ));
@@ -216,7 +241,60 @@ class productosModel extends Conexion{
         try {
             $estado=0;
             $consulta="UPDATE productos SET estado=? WHERE id=?;";
-            Conexion::conect()->prepare($consulta)->execute(array($estado,$id));
+            $consulta=Conexion::conect()->prepare($consulta);
+            $r = $consulta->execute(array($estado,$id));
+            if($r){
+                $consulta1="SELECT d.id FROM detalles_movimientos as d, productos as p WHERE d.id_producto = p.id and p.id=$id";
+                $consulta1= Conexion::conect()->prepare($consulta1);
+                $consulta1->setFetchMode(PDO::FETCH_ASSOC);
+                $consulta1->execute();
+                if ($consulta1->rowCount() > 0) {
+                    foreach ($consulta1 as $row) {
+                        $consulta="UPDATE detalles_movimientos SET id_producto=NULL WHERE id=?;";
+                        Conexion::conect()->prepare($consulta)->execute(array($row['id']));
+                    } 
+                }
+                $consulta2="SELECT i.id FROM ingreso_productos as i, productos as p WHERE i.id_producto = p.id and p.id=$id";
+                $consulta2= Conexion::conect()->prepare($consulta2);
+                $consulta2->setFetchMode(PDO::FETCH_ASSOC);
+                $consulta2->execute();
+                if ($consulta2->rowCount() > 0) {
+                    foreach ($consulta2 as $row) {
+                        $consulta="UPDATE ingreso_productos SET id_producto=NULL WHERE id=?;";
+                        Conexion::conect()->prepare($consulta)->execute(array($row['id']));
+                    } 
+                }
+
+            }
+
+        } catch (Exception $e) {
+
+            die($e->getMessage());
+        }
+    }
+
+    public function totalProd(){
+        try {
+            $sql = 'SELECT COUNT(p.id) as prod FROM productos as p WHERE p.estado = 1';
+            $consulta= Conexion::conect()->prepare($sql);
+            $consulta->execute();
+            $r = $consulta->fetch(PDO::FETCH_ASSOC);
+            return $r;
+
+        } catch (Exception $e) {
+            die($e->getMessage());
+        }
+    }
+
+    public function buscar($busqueda){
+        try {
+
+            $consulta="SELECT p.id,p.nombre,p.url_img, m.nombre as marca,pp.volumen,pp.unidad_medida,pp.unidades FROM productos as p, marca_producto as m, presentacion_producto as pp WHERE p.nombre LIKE '%$busqueda%' OR m.nombre LIKE '%$busqueda%' and p.estado =1 AND p.id_marca=m.id  GROUP BY p.id";
+
+            $consulta= Conexion::conect()->prepare($consulta);
+            $consulta->setFetchMode(PDO::FETCH_ASSOC);
+            $consulta->execute();
+            return $consulta;
 
         } catch (Exception $e) {
 

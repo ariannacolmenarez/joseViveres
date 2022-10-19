@@ -228,7 +228,6 @@ function eliminarCliente(){
         showDenyButton: true,
         showCancelButton: true,
         confirmButtonText: 'Eliminar',
-        denyButtonText: `No Eliminar`,
     }).then((result) => {
         if (result.isConfirmed) {
             var parametro = {"idcliente" : id};

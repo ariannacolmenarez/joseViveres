@@ -50,7 +50,7 @@
                   <button id="submit" class="btn btn-block btn-primary btn-lg font-weight-medium auth-form-btn">Login</button>
                 </div>
                 <div class="my-2 d-flex justify-content-between align-items-center">
-                  <a id="recuperar" class="auth-link text-black">¿Olvidaste la Contraseña?</a>
+                  <a id="recuperar" class="auth-link text-black">Recuperar acceso</a>
                 </div>
               </form>
             </div>

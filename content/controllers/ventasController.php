@@ -30,23 +30,23 @@ class ventasController extends Autoload {
               if ($regist['cantidad']>0) {
                 $data.= '<a onclick="agg('.$regist["id"].',1);" style="position: absolute;" class="btn btn-warning btn-xs">
                           <i class="ti-plus"></i>
-                        </a><img src="./assets/images/MP.png" class="p-3 card-img-top " alt="...">
+                        </a><img src="';
+                        if($regist['url_img'] != NULL){
+                            $data .= $regist['url_img'];
+                        } else{
+                            $data .= "assets/images/MP.png";
+                        }  
+                        $data .='" alt="...">
                       <div class="card-body text-center">
-                          <h6 class="card-title text-success">'.$regist["nombre"].'</h6>
-                          <p class="card-text">'.$regist["precio_venta"].'BS</p>
+                          <h6 class="card-title text-success">'.$regist["nombre"].' '.$regist["marca"].'</h6>
+                          <p class="card-text">'.$regist["volumen"].$regist["unidad_medida"].' * '.$regist["unidades"].' UND</p>
+                          <p class="card-text">'.$regist["precio_venta"].' BS</p>
                           <h6 class="text-muted">'.$regist["cantidad"].'<small> disponible</small></h6>                            
                       </div>
                   </div>
                 </div>';
               }else{
-                $data.='<img src="./assets/images/MP.png" class="p-3 card-img-top " alt="...">
-                <div class="card-body text-center">
-                    <h6 class="card-title text-success">'.$regist["nombre"].'</h6>
-                    <p class="card-text">'.$regist["precio_venta"].'BS</p>
-                    <h6 class="text-muted">'.$regist["cantidad"].'<small> disponible</small></h6>                            
-                </div>
-            </div>
-          </div>';
+                $data.='No hay productos';
               }
     	};
 
@@ -127,17 +127,28 @@ class ventasController extends Autoload {
         foreach ($respuesta as $regist) {
           $data .= '<div class="col p-1 ">
           <div class="card h-100">
-              <a onclick="agg('.$regist["id"].',1);" style="position: absolute;" class="btn btn-warning btn-xs">
-              <i class="ti-plus"></i>
-              </a>
-              <img src="./assets/images/MP.png" class="p-3 card-img-top " alt="...">
-              <div class="card-body text-center">
-                  <h6 class="card-title text-success">'.$regist["nombre"].'</h6>
-                  <p class="card-text">'.$regist["precio_venta"].'BS</p>
-                  <h6 class="text-muted">'.$regist["cantidad"].'<small> disponible</small></h6>                            
-              </div>
-          </div>
-        </div>';
+              ';
+              if ($regist['cantidad']>0) {
+                $data.= '<a onclick="agg('.$regist["id"].',1);" style="position: absolute;" class="btn btn-warning btn-xs">
+                          <i class="ti-plus"></i>
+                        </a><img src="';
+                        if($regist['url_img'] != NULL){
+                            $data .= $regist['url_img'];
+                        } else{
+                            $data .= "assets/images/MP.png";
+                        }  
+                        $data .='" alt="...">
+                      <div class="card-body text-center">
+                          <h6 class="card-title text-success">'.$regist["nombre"].' '.$regist["marca"].'</h6>
+                          <p class="card-text">'.$regist["volumen"].$regist["unidad_medida"].' * '.$regist["unidades"].' UND</p>
+                          <p class="card-text">'.$regist["precio_venta"].' BS</p>
+                          <h6 class="text-muted">'.$regist["cantidad"].'<small> disponible</small></h6>                            
+                      </div>
+                  </div>
+                </div>';
+              }else{
+                $data.='No hay productos';
+              }
         };
       }else {$data .= '<div class="row align-items-center">
                         <div class="col text-secondary text-center">No hay registros</div>

@@ -222,7 +222,6 @@ function eliminarProveedor(){
         showDenyButton: true,
         showCancelButton: true,
         confirmButtonText: 'Eliminar',
-        denyButtonText: `No Eliminar`,
     }).then((result) => {
         if (result.isConfirmed) {
             $.ajax({

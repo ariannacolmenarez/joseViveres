@@ -252,11 +252,11 @@ body{
   }
 }
 
-@media (min-width: 992px ) and (max-width: 1450px) {
+/* @media (min-width: 992px ) and (max-width: 1450px) {
   .text {
     display: none;
   }
-}
+} */
 @media (min-width: 575px ) and (max-width: 1450px) {
   .text-2 {
     display: none;

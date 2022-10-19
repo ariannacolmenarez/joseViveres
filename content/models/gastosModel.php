@@ -174,6 +174,17 @@ class gastosModel extends Conexion{
             $consulta="UPDATE movimientos SET estado=? WHERE id=?;";
             Conexion::conect()->prepare($consulta)->execute(array($estado,$id));
 
+            $consulta1="SELECT d.id FROM detalles_movimientos as d, movimientos as m WHERE d.id_movimientos = m.id and m.id=$id";
+            $consulta1= Conexion::conect()->prepare($consulta1);
+            $consulta1->setFetchMode(PDO::FETCH_ASSOC);
+            $consulta1->execute();
+            if ($consulta1->rowCount() > 0) {
+                foreach ($consulta1 as $row) {
+                    $consulta="UPDATE detalles_movimientos SET id_movimientos=NULL WHERE id=?;";
+                    Conexion::conect()->prepare($consulta)->execute(array($row['id']));
+                } 
+            }
+
         } catch (Exception $e) {
 
             die($e->getMessage());

@@ -251,7 +251,6 @@ function eliminarDC(){
         showDenyButton: true,
         showCancelButton: true,
         confirmButtonText: 'Eliminar',
-        denyButtonText: `No Eliminar`,
     }).then((result) => {
         if (result.isConfirmed) {
             $.ajax({
@@ -285,7 +284,6 @@ function eliminarDP(){
         showDenyButton: true,
         showCancelButton: true,
         confirmButtonText: 'Eliminar',
-        denyButtonText: `No Eliminar`,
     }).then((result) => {
         if (result.isConfirmed) {
             $.ajax({
@@ -318,7 +316,6 @@ function eliminarAbono(id){
         showDenyButton: true,
         showCancelButton: true,
         confirmButtonText: 'Eliminar',
-        denyButtonText: `No Eliminar`,
     }).then((result) => {
         if (result.isConfirmed) {
             $.ajax({

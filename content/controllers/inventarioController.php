@@ -34,35 +34,55 @@ class inventarioController extends Autoload {
 
     	foreach ($respuesta as $regist) {
                 if ($respuesta->rowCount() > 6) {
-                    $data.= '<div'; 
-                    if(in_array("Modificar Inventario", $_SESSION['permisos'])){ 
-                     $data .= ' onclick="editarProducto('.$regist['id'].')"'; 
-                    } 
-                     $data.=' class="col p-1 ">
-                    <div class="card h-100"><img src="';
-                    if($regist['url_img'] != NULL){
-                        $data .= $regist['url_img'];
-                    } else{
-                        $data .= "assets/images/MP.png";
-                    }  
-                    $data .='" class="p-3 card-img-top " alt="...">
-                        <div class="card-body text-center">
-                            <h6 class="card-title text-success">'.$regist["nombre"].'</h6>
-                            <p class="card-text">'.$regist["precio_venta"].'BS</p>
-                            <h6 class="text-muted">'.$regist["cantidad"].'<small> disponible</small></h6>                            
-                        </div>
-                    </div>
-                    </div>';
+                    
+                        if ($regist['cantidad']>0) {
+                          $data .= '<div class="col p-1 "
+                             ';
+                          if(in_array("Modificar Inventario", $_SESSION['permisos'])){ 
+                               $data .= ' onclick="editarProducto('.$regist['id'].')">'; 
+                          } $data.='<div class="card h-100"><img src="';
+                                  if($regist['url_img'] != NULL){
+                                      $data .= $regist['url_img'];
+                                  } else{
+                                      $data .= "assets/images/MP.png";
+                                  }  
+                                  $data .='" alt="...">
+                                <div class="card-body text-center">
+                                    <h6 class="card-title text-success">'.$regist["nombre"].' '.$regist["marca"].'</h6>
+                                    <p class="card-text">'.$regist["volumen"].$regist["unidad_medida"].' * '.$regist["unidades"].' UND</p>
+                                    <p class="card-text">'.$regist["precio_venta"].' BS</p>
+                                    <h6 class="text-muted">'.$regist["cantidad"].'<small> disponible</small></h6>                            
+                                </div>
+                            </div>
+                          </div>';
+                        }else{
+                          $data.='No hay productos';
+                        }
                 }elseif ($respuesta->rowCount() <= 6) {
-                    $data.= '<div class="col p-1 ">
-                    <div class="card h-50"><img src="./assets/images/MP.png" class="p-3 card-img-top " alt="...">
-                        <div class="card-body text-center">
-                            <h6 class="card-title text-success">'.$regist["nombre"].'</h6>
-                            <p class="card-text">'.$regist["precio_venta"].'BS</p>
-                            <h6 class="text-muted">'.$regist["cantidad"].'<small> disponible</small></h6>                            
+                    
+                    if ($regist['cantidad']>0) {
+                        $data .= '<div class="col p-1 "
+                         ';
+                        if(in_array("Modificar Inventario", $_SESSION['permisos'])){ 
+                            $data .= ' onclick="editarProducto('.$regist['id'].')">'; 
+                        } $data.='<div class="card h-50"><img src="';
+                                if($regist['url_img'] != NULL){
+                                    $data .= $regist['url_img'];
+                                } else{
+                                    $data .= "assets/images/MP.png";
+                                }  
+                                $data .='" alt="...">
+                            <div class="card-body text-center">
+                                <h6 class="card-title text-success">'.$regist["nombre"].' '.$regist["marca"].'</h6>
+                                <p class="card-text">'.$regist["volumen"].$regist["unidad_medida"].' * '.$regist["unidades"].' UND</p>
+                                <p class="card-text">'.$regist["precio_venta"].' BS</p>
+                                <h6 class="text-muted">'.$regist["cantidad"].'<small> disponible</small></h6>                            
+                            </div>
                         </div>
-                    </div>
-                    </div>';
+                        </div>';
+                    }else{
+                        $data.='No hay productos';
+                    }
                 }
     	};
 
@@ -86,34 +106,58 @@ class inventarioController extends Autoload {
         if ($respuesta->rowCount() > 0) {
             foreach ($respuesta as $regist) {
                 if ($respuesta->rowCount() > 6) {
-                    $data.= '<div onclick="editarProducto('.$regist['id'].')" class="col p-1 ">
-                                <div class="card h-100"><img src="';
-                    if($regist['url_img'] != NULL){
-                        $data .= $regist['url_img'];
-                    } else{
-                        $data .= "assets/images/MP.png";
-                    }  
-                    $data .='" class="p-3 card-img-top " alt="...">
-                                    <div class="card-body text-center">
-                                        <h6 class="card-title text-success">'.$regist["nombre"].'</h6>
-                                        <p class="card-text">'.$regist["precio_venta"].'BS</p>
-                                        <h6 class="text-muted">'.$regist["cantidad"].'<small> disponible</small></h6>                            
-                                    </div>
-                                </div>
-                                </div>';
-                }elseif ($respuesta->rowCount() <= 6) {
-                    $data.= '<div class="col p-1 ">
-                    <div class="card h-50"><img src="./assets/images/MP.png" class="p-3 card-img-top " alt="...">
-                        <div class="card-body text-center">
-                            <h6 class="card-title text-success">'.$regist["nombre"].'</h6>
-                            <p class="card-text">'.$regist["precio_venta"].'BS</p>
-                            <h6 class="text-muted">'.$regist["cantidad"].'<small> disponible</small></h6>                            
+                    
+                    if ($regist['cantidad']>0) {
+                      $data .= '<div class="col p-1 " ';
+                        if(in_array("Modificar Inventario", $_SESSION['permisos'])){ 
+                           $data .= ' onclick="editarProducto('.$regist['id'].')">'; 
+                      }
+                      
+                       $data.='<div class="card h-100" > <img src="';
+                              if($regist['url_img'] != NULL){
+                                  $data .= $regist['url_img'];
+                              } else{
+                                  $data .= "assets/images/MP.png";
+                              }  
+                              $data .='" alt="...">
+                            <div class="card-body text-center">
+                                <h6 class="card-title text-success">'.$regist["nombre"].' '.$regist["marca"].'</h6>
+                                <p class="card-text">'.$regist["volumen"].$regist["unidad_medida"].' * '.$regist["unidades"].' UND</p>
+                                <p class="card-text">'.$regist["precio_venta"].' BS</p>
+                                <h6 class="text-muted">'.$regist["cantidad"].'<small> disponible</small></h6>                            
+                            </div>
                         </div>
-                    </div>
-                    </div>';
+                      </div>';
+                    }else{
+                      $data.='No hay productos';
+                    }
+                }elseif ($respuesta->rowCount() <= 6) {
+                    
+                    if ($regist['cantidad']>0) {
+                        $data .= '<div class="col p-1 " ';
+                        if(in_array("Modificar Inventario", $_SESSION['permisos'])){ 
+                            $data .= ' onclick="editarProducto('.$regist['id'].')">'; 
+                        } $data.='<div class="card h-50"><img src="';
+                                if($regist['url_img'] != NULL){
+                                    $data .= $regist['url_img'];
+                                } else{
+                                    $data .= "assets/images/MP.png";
+                                }  
+                                $data .='" alt="...">
+                            <div class="card-body text-center">
+                                <h6 class="card-title text-success">'.$regist["nombre"].' '.$regist["marca"].'</h6>
+                                <p class="card-text">'.$regist["volumen"].$regist["unidad_medida"].' * '.$regist["unidades"].' UND</p>
+                                <p class="card-text">'.$regist["precio_venta"].' BS</p>
+                                <h6 class="text-muted">'.$regist["cantidad"].'<small> disponible</small></h6>                            
+                            </div>
+                        </div>
+                        </div>';
+                    }else{
+                        $data.='No hay productos';
+                    }
                 }
             }
-        }else {$data .= '<div class="row align-items-center">
+        }else {$data .= '<div class="row text-center">
                           <div class="col text-secondary text-center">No hay registros</div>
                         </div>';
         }

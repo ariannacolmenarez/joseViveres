@@ -190,16 +190,14 @@ class ventasModel extends Conexion{
     public function listar($opcion){
         try {
                 if ($opcion != "") {
-                    $sql= "SELECT * FROM productos WHERE estado !=0 AND id_categoria = $opcion";
+                    $sql= "SELECT p.id,p.nombre,p.url_img, m.nombre as marca,pp.volumen,pp.unidad_medida,pp.unidades, i.precio_venta, (SELECT SUM(cantidad) FROM ingreso_productos WHERE id_producto=p.id AND estado !=0 ) as cantidad FROM productos as p, marca_producto as m, presentacion_producto as pp,ingreso_productos as i WHERE p.estado !=0 and p.id=i.id_producto and id_categoria = $opcion AND i.fecha = ( SELECT MAX(fecha) FROM ingreso_productos ) GROUP BY p.id; ";
                 }else{
-                    $sql= "SELECT * FROM productos WHERE estado !=0";
+                    $sql= "SELECT p.id,p.nombre,p.url_img, m.nombre as marca,pp.volumen,pp.unidad_medida,pp.unidades,i.id as id2, i.precio_venta, (SELECT SUM(cantidad) FROM ingreso_productos WHERE id_producto=p.id AND estado !=0 ) as cantidad FROM productos as p, marca_producto as m, presentacion_producto as pp,ingreso_productos as i WHERE p.estado !=0 and p.id=i.id_producto AND i.fecha = ( SELECT MAX(fecha) FROM ingreso_productos ) GROUP BY p.id";
                 }
                 $consulta= Conexion::conect()->prepare($sql);
                 $consulta->setFetchMode(PDO::FETCH_ASSOC);
                 $consulta->execute();
                 return $consulta;
-                
-
 
         } catch (Exception $e) {
             die($e->getMessage());
@@ -232,7 +230,7 @@ class ventasModel extends Conexion{
 
     public function consultarprod($id){
         try {
-            $consulta= Conexion::conect()->prepare("SELECT * FROM productos WHERE id=?;");
+            $consulta= Conexion::conect()->prepare("SELECT p.id,p.nombre,p.url_img, m.nombre as marca,pp.volumen,pp.unidad_medida,pp.unidades, i.precio_venta, (SELECT SUM(cantidad) FROM ingreso_productos WHERE id_producto=p.id AND estado !=0 ) as cantidad FROM productos as p, marca_producto as m, presentacion_producto as pp,ingreso_productos as i WHERE p.estado !=0 and p.id=i.id_producto and p.id=? AND i.fecha = ( SELECT MAX(fecha) FROM ingreso_productos )");
             $consulta->execute(array($id));
             $r=$consulta->fetch(PDO::FETCH_OBJ);
             $p= new ventasModel();
@@ -250,9 +248,7 @@ class ventasModel extends Conexion{
     public function eliminar($id){
         try {
             $estado=0;
-            $consulta= Conexion::conect()->prepare("SELECT p.id, p.cantidad as stock, d.cantidad FROM 
-            detalles_movimientos as d, productos as p, movimientos as m WHERE m.id ='$id' AND
-             d.id_movimientos=m.id AND d.id_producto=p.id;");
+            $consulta= Conexion::conect()->prepare("SELECT i.id, i.cantidad as stock, d.cantidad FROM detalles_movimientos as d, productos as p, movimientos as m, ingreso_productos as i WHERE m.id ='$id' AND d.id_movimientos=m.id AND d.id_producto=p.id AND i.id_producto=p.id AND i.fecha = ( SELECT MAX(fecha) FROM ingreso_productos );");
             $consulta->execute();
             $r=$consulta->fetch(PDO::FETCH_OBJ);
             $producto = $r->id;
@@ -262,8 +258,19 @@ class ventasModel extends Conexion{
 
             $consulta="UPDATE movimientos SET estado=? WHERE id=?;";
             Conexion::conect()->prepare($consulta)->execute(array($estado,$id));
-            $consulta="UPDATE productos SET cantidad=? WHERE id=?;";
+            $consulta="UPDATE ingreso_productos SET cantidad=? WHERE id=?;";
             Conexion::conect()->prepare($consulta)->execute(array($cantidadTotal,$producto));
+
+            $consulta1="SELECT d.id FROM detalles_movimientos as d, movimientos as m WHERE d.id_movimientos = m.id and m.id=$id";
+            $consulta1= Conexion::conect()->prepare($consulta1);
+            $consulta1->setFetchMode(PDO::FETCH_ASSOC);
+            $consulta1->execute();
+            if ($consulta1->rowCount() > 0) {
+                foreach ($consulta1 as $row) {
+                    $consulta="UPDATE detalles_movimientos SET id_movimientos=NULL WHERE id=?;";
+                    Conexion::conect()->prepare($consulta)->execute(array($row['id']));
+                } 
+            }
 
         } catch (Exception $e) {
 
@@ -271,8 +278,21 @@ class ventasModel extends Conexion{
         }
     }
 
+    public function ingresoAnterior(){
+        try{
+            $sql="SELECT i.id,i.cantidad, MIN(i.fecha) FROM ingreso_productos as i WHERE i.estado=1 AND i.cantidad > 0;"; 
+            $sql = Conexion::conect()->prepare($sql);
+            $sql->execute();
+            $r=$sql->fetch(PDO::FETCH_OBJ);
+            return $r;
+        } catch (Exception $e) {
+            die($e->getMessage());
+        }
+    }
+
     public function registrar(ventasModel $p){
         try {
+            $ingreso=$this->ingresoAnterior();
             
             $pdo=Conexion::conect();
                 $consulta="INSERT INTO movimientos(
@@ -311,8 +331,8 @@ class ventasModel extends Conexion{
                     $id_mov = $lastInsertId;
                     $id_producto = $row['value']['id'];
                     $cantidadProd = $row['value']['cantidad'];
-                    $totalDesc = $cantidadProd - $cantidad;
-                
+                    
+                    
                     $stmt = Conexion::conect()->prepare('INSERT INTO detalles_movimientos(precio, cantidad, estado,id_movimientos, id_producto)
                                             VALUES(:precio, :cantidad, :estado, :id_movimiento, :id_producto);
                                         ');
@@ -323,14 +343,45 @@ class ventasModel extends Conexion{
                                     ':id_movimiento' => $id_mov,
                                     ':id_producto' => $id_producto
                                     ]);
-                    $consulta="UPDATE productos SET 
-                    cantidad=?
-                    WHERE id=?;";
 
-                    Conexion::conect()->prepare($consulta)->execute(array(
-                        $totalDesc,
-                        $id_producto
-                    ));
+                    if ($cantidad <= $ingreso->cantidad) {
+
+                        $totalDesc = $ingreso->cantidad - $cantidad;
+                        $consulta="UPDATE ingreso_productos SET 
+                        cantidad=?,
+                        estado=?
+                        WHERE id=?;";
+
+                        Conexion::conect()->prepare($consulta)->execute(array(
+                            $totalDesc,
+                            2,
+                            $ingreso->id
+                        ));
+
+                    }else {
+                        $totalDesc = $cantidad - $ingreso->cantidad;
+                        $consulta="UPDATE ingreso_productos SET 
+                        cantidad=?,
+                        estado=?
+                        WHERE id=?;";
+
+                        Conexion::conect()->prepare($consulta)->execute(array(
+                            0,
+                            2,
+                            $ingreso->id
+                        ));
+                        $ing=$this->ingresoAnterior();
+                        $consulta="UPDATE ingreso_productos SET 
+                        cantidad=?,
+                        estado=?
+                        WHERE id=?;";
+                        $total= $ing->cantidad - $totalDesc;
+                        Conexion::conect()->prepare($consulta)->execute(array(
+                            $total,
+                            2,
+                            $ing->id
+                        ));
+                    }
                 }
             
         } catch (Exception $e) {
@@ -341,12 +392,11 @@ class ventasModel extends Conexion{
     public function buscar($busqueda){
         try {
 
-            $consulta="SELECT * FROM productos WHERE estado =? AND nombre LIKE '%$busqueda%' 
-            OR precio_venta LIKE '%$busqueda%'";
+            $consulta="SELECT p.id,p.nombre,p.url_img, m.nombre as marca,pp.volumen,pp.unidad_medida,pp.unidades,(SELECT precio_venta FROM ingreso_productos WHERE id_producto=p.id AND estado !=0 and fecha = ( SELECT MAX(fecha) FROM ingreso_productos ) ) as precio_venta, (SELECT SUM(cantidad) FROM ingreso_productos WHERE id_producto=p.id AND estado !=0 ) as cantidad FROM productos as p, marca_producto as m, presentacion_producto as pp, ingreso_productos as i WHERE p.nombre LIKE '%$busqueda%' OR m.nombre LIKE '%$busqueda%' and p.estado =1 AND p.id_marca=m.id  GROUP BY p.id";
 
             $consulta= Conexion::conect()->prepare($consulta);
             $consulta->setFetchMode(PDO::FETCH_ASSOC);
-            $consulta->execute(array("1"));
+            $consulta->execute();
             return $consulta;
 
         } catch (Exception $e) {

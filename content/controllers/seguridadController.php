@@ -37,8 +37,8 @@ class seguridadController extends Autoload {
                             <td>
                             <div class="row">
                                 ';
-                                if(in_array("Eliminar Roles", $_SESSION['permisos'])){ 
-                                $data.='<div class="col">
+                                if(in_array("Eliminar Roles", $_SESSION['permisos']) && $regist['nombre'] != "superusuario" ){ 
+                                $data.='<div class="col-lg-2 col-md-4">
                                 <button onclick="eliminarRol('.$regist['id'].');" class="btn btn-outline-danger btn-rounded btn-icon">
                                     <i class="ti-trash"></i>
                                 </button>
@@ -46,7 +46,7 @@ class seguridadController extends Autoload {
                                 }
                                 if(in_array("Modificar Roles", $_SESSION['permisos'])){
                                 $data.='
-                                <div class="col">
+                                <div class="col-lg-2 col-md-4">
                                 <button onclick="consultarRoles('.$regist['id'].');" class="btn btn-outline-primary btn-rounded btn-icon" data-bs-target="#exampleModalToggle20" data-bs-toggle="modal">
                                     <i class="ti-marker-alt"></i>
                                 </button>
@@ -54,7 +54,7 @@ class seguridadController extends Autoload {
                                 }
                                 if(in_array("Crear Permisos", $_SESSION['permisos'])){ 
                                 $data.='
-                                <div class="col">
+                                <div class="col-lg-2 col-md-4">
                                 <button onclick="permisos('.$regist['id'].');" class="btn btn-outline-secondary btn-rounded btn-icon">
                                     <i class="ti-key"></i>
                                 </button>

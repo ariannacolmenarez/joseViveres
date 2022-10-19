@@ -90,7 +90,6 @@ function eliminarVenta(id){
         showDenyButton: true,
         showCancelButton: true,
         confirmButtonText: 'Eliminar',
-        denyButtonText: `No Eliminar`,
       }).then((result) => {
         if (result.isConfirmed) {
           var parametro = {"id" : id};
@@ -127,7 +126,6 @@ function eliminarGasto(id){
         showDenyButton: true,
         showCancelButton: true,
         confirmButtonText: 'Eliminar',
-        denyButtonText: `No Eliminar`,
       }).then((result) => {
         if (result.isConfirmed) {
             var parametro = {"id" : id};

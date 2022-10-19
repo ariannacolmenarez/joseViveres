@@ -60,19 +60,18 @@ class categoriasController extends Autoload {
             $data.='" alt="25%" class="img-fluid">
               </div>
             </div>
-            <div class="col-8">
+            <div class="col-7">
               <div class="row">
-                <div class="col">'.$regist['nombre'].'</div>
+                <div class="col">'.$regist['nombre'].' '.$regist['marca'].'</div>
               </div>
               <div class="row mt-2">
-                <div class="col-8"><h6>'.$regist['cantidad'].'<small>disponible</small></h6></div>
-                <div class="col-4 text-end"><h6>'.$regist['precio_venta'].'</h6> </div>
+                <div class="col-12"><h6>'.$regist["volumen"].$regist["unidad_medida"].' * '.$regist["unidades"].' UND</h6></div>
               </div>
             </div>
-              <div class="col-2 text-end">
-                <button class="btn btn-outline-danger btn-rounded btn-icon" onclick="eliminarProd('.$regist['id'].','.$id.');">
-                  <i class="ti-trash"></i>
-                </button>
+              <div class="col-3 text-end">
+                <div class="btn btn-outline-danger btn-rounded " onclick="eliminarProd('.$regist['id'].','.$id.')" >
+                  Eliminar
+                </div>
               </div>
               <hr>';
         };

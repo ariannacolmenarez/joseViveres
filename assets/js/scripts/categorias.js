@@ -67,6 +67,12 @@ $("#categorias").on("click", function() {
     $('#exampleModalToggle3').modal('show');
 });
 
+$("#registrar_cat").on("click", function() {
+    console.log("asd")
+    $('#exampleModalToggle5').modal('hide');
+    $('#exampleModalToggle3').modal('show');
+});
+
 $("#editarCat").on("click", function() {
     listarCatProd();
     
@@ -143,7 +149,6 @@ function listarProdCat(id){
         url: "categorias/listarProdCat/"+id,
         dataType: "json",
         success: function (response) {
-            console.log(response)
             $("#list_prod").html(response);
         },
         error: (response) => {
@@ -190,7 +195,6 @@ function eliminarProd(id,id_cat){
         showDenyButton: true,
         showCancelButton: true,
         confirmButtonText: 'Eliminar',
-        denyButtonText: `No Eliminar`,
     }).then((result) => {
         if (result.isConfirmed) {
             $.ajax({
@@ -221,7 +225,6 @@ function eliminarCat(){
         showDenyButton: true,
         showCancelButton: true,
         confirmButtonText: 'Eliminar',
-        denyButtonText: `No Eliminar`,
     }).then((result) => {
         if (result.isConfirmed) {
             var id = $('#idcatE').val();

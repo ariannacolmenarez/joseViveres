@@ -1,6 +1,6 @@
 <?php
 
-class categoriasModel extends Conexion{
+class marcaModel extends Conexion{
     private $id;
     private $nombre;
 
@@ -26,7 +26,7 @@ class categoriasModel extends Conexion{
 
     public static function listar(){
         try {
-            $sql= "SELECT * FROM cat_producto WHERE estado !=0";
+            $sql= "SELECT * FROM marca_producto WHERE estado !=0";
             $consulta= Conexion::conect()->prepare($sql);
             $consulta->setFetchMode(PDO::FETCH_ASSOC);
             $consulta->execute();
@@ -39,12 +39,12 @@ class categoriasModel extends Conexion{
 
     public function consultar($id){
         try {
-            $consulta= Conexion::conect()->prepare("SELECT * FROM cat_producto WHERE id=?;");
+            $consulta= Conexion::conect()->prepare("SELECT * FROM marca_producto WHERE id=?;");
             $consulta->execute(array($id));
             $r=$consulta->fetch(PDO::FETCH_OBJ);
-            $p= new categoriasModel();
+            $p= new marcaModel();
             $p->setid($r->id);
-            $p->setnombre($r->categoria);
+            $p->setnombre($r->nombre);
             
             return $p;
 
@@ -53,19 +53,11 @@ class categoriasModel extends Conexion{
         }
     }
 
-    public function listarProdCat($id){
-        $sql= "SELECT p.id,p.nombre,p.url_img, m.nombre as marca,pp.volumen,pp.unidad_medida,pp.unidades FROM productos as p, marca_producto as m, presentacion_producto as pp WHERE p.estado !=0 and p.id_categoria=$id GROUP BY p.id;";
-        $consulta= Conexion::conect()->prepare($sql);
-        $consulta->setFetchMode(PDO::FETCH_ASSOC);
-        $consulta->execute();
-        return $consulta;
-    }
-
-    public function guardar(categoriasModel $p){
+    public function guardar(marcaModel $p){
         try {
             
-            $consulta="UPDATE cat_producto SET 
-                categoria=?
+            $consulta="UPDATE marca_producto SET 
+                nombre=?
                 WHERE id=?;
             ";
             Conexion::conect()->prepare($consulta)->execute(array(
@@ -80,15 +72,15 @@ class categoriasModel extends Conexion{
         }
     }
 
-    public function registrar(categoriasModel $p){
+    public function registrar(marcaModel $p){
         try { 
-            $categoria=$p->getnombre();
-            if(builder::duplicados("categoria","cat_producto","$categoria") === false ){
-                return $categoria;
+            $marca=$p->getnombre();
+            if(builder::duplicados("nombre","marca_producto","$marca") === false ){
+                return $marca;
             }
             else{
-                $consulta="INSERT INTO cat_producto(
-                    categoria, estado)
+                $consulta="INSERT INTO marca_producto(
+                    nombre, estado)
                 VALUES (?,?)";
                 Conexion::conect()->prepare($consulta)->execute(array(
                     $p->getnombre(),
@@ -103,22 +95,13 @@ class categoriasModel extends Conexion{
         }
     }
 
-    public function eliminarProd($id){
+    public function eliminarMarca($id){
         try {
-            $consulta="UPDATE productos SET id_categoria=NULL WHERE id=?;";
-            Conexion::conect()->prepare($consulta)->execute(array($id));
-        } catch (Exception $e) {
-            die($e->getMessage());
-        }
-    }
-
-    public function eliminarCat($id){
-        try {
-            $consulta="UPDATE cat_producto SET estado=0 WHERE id=?;";
+            $consulta="UPDATE marca_producto SET estado=0 WHERE id=?;";
             $consulta = Conexion::conect()->prepare($consulta);
             $r = $consulta->execute(array($id));
             if($r){
-                $consulta1="SELECT p.id FROM productos as p, cat_producto as c WHERE p.id_categoria = c.id and c.id=$id";
+                $consulta1="SELECT p.id FROM productos as p, marca_producto as m WHERE p.id_marca = m.id and m.id=$id";
                 $consulta1= Conexion::conect()->prepare($consulta1);
                 $consulta1->setFetchMode(PDO::FETCH_ASSOC);
                 $consulta1->execute();
@@ -126,7 +109,7 @@ class categoriasModel extends Conexion{
                 if ($consulta1->rowCount() > 0) {
                     foreach ($consulta1 as $row) {
                         var_dump($row['id']);
-                        $consulta="UPDATE productos SET id_categoria=NULL WHERE id=?;";
+                        $consulta="UPDATE productos SET id_marca=NULL WHERE id=?;";
                         Conexion::conect()->prepare($consulta)->execute(array($row['id']));
                     } 
                 }else{
@@ -138,10 +121,10 @@ class categoriasModel extends Conexion{
         }
     }
 
-    public function buscarCat($busqueda){
+    public function buscarMarca($busqueda){
         try {
 
-            $consulta="SELECT * FROM cat_producto WHERE estado =? AND categoria LIKE '%$busqueda%'";
+            $consulta="SELECT * FROM marca_producto WHERE estado =? AND nombre LIKE '%$busqueda%'";
 
             $consulta= Conexion::conect()->prepare($consulta);
             $consulta->setFetchMode(PDO::FETCH_ASSOC);

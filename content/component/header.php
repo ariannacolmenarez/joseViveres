@@ -105,6 +105,12 @@
               <span class="menu-title">Gestionar Inventario</span>
             </a>
           </li>
+          <li class="nav-item">
+            <a class="nav-link" type="button" href="<?= _DIRECTORY_ ?>productos" >
+              <i class="ti-shopping-cart-full menu-icon"></i>
+              <span class="menu-title">Gestionar Productos</span>
+            </a>
+          </li>
           <?php } ?>
           <?php if(in_array("Consultar Deudas", $_SESSION['permisos'])){ ?>
           <li class="nav-item">

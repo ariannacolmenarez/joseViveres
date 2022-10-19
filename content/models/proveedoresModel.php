@@ -169,7 +169,30 @@ class proveedoresModel extends Conexion{
         try {
             $estado=0;
             $consulta="UPDATE persona SET estado=? WHERE id=?;";
-            Conexion::conect()->prepare($consulta)->execute(array($estado,$id));
+            $consulta=Conexion::conect()->prepare($consulta);
+            $r=$consulta->execute(array($estado,$id));
+            if($r){
+                $consulta1="SELECT m.id FROM movimientos as m, persona as p WHERE m.id_persona = p.id and p.id=$id";
+                $consulta1= Conexion::conect()->prepare($consulta1);
+                $consulta1->setFetchMode(PDO::FETCH_ASSOC);
+                $consulta1->execute();
+                if ($consulta1->rowCount() > 0) {
+                    foreach ($consulta1 as $row) {
+                        $consulta="UPDATE movimientos SET id_persona=NULL WHERE id=?;";
+                        Conexion::conect()->prepare($consulta)->execute(array($row['id']));
+                    } 
+                }
+                $consulta2="SELECT i.id FROM ingreso_productos as i, persona as p WHERE i.id_persona = p.id and p.id=$id";
+                $consulta2= Conexion::conect()->prepare($consulta2);
+                $consulta2->setFetchMode(PDO::FETCH_ASSOC);
+                $consulta2->execute();
+                if ($consulta2->rowCount() > 0) {
+                    foreach ($consulta2 as $row) {
+                        $consulta="UPDATE ingreso_productos SET id_persona=NULL WHERE id=?;";
+                        Conexion::conect()->prepare($consulta)->execute(array($row['id']));
+                    } 
+                }
+            }
 
         } catch (Exception $e) {
 

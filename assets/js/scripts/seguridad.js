@@ -103,7 +103,7 @@ function registrarRol(){
                         title: 'Rol Registrado'
                     });
                     limpiar();    
-                    //window.location.reload()
+                    window.location.reload()
                 }
             },error: (response) => {
                 console.log(response);
@@ -172,19 +172,23 @@ function eliminarRol(id){
         showDenyButton: true,
         showCancelButton: true,
         confirmButtonText: 'Eliminar',
-        denyButtonText: `No Eliminar`,
     }).then((result) => {
         if (result.isConfirmed) {
             $.ajax({
                 url:   'seguridad/eliminarRol/'+id, //archivo que recibe la peticion
                 type:  'POST', //método de envio
                 success:  function (response) { //una vez que el archivo recibe el request lo procesa y lo devuelve
-                    $('#exampleModalToggle20').modal('hide');  
-                    toastMixin.fire({
-                        animation: true,
-                        title: 'Rol Eliminado'
-                    });  
-                    window.location.reload();
+                    if(response != 0){
+                        $('#exampleModalToggle20').modal('hide');  
+                        toastMixin.fire({
+                            animation: true,
+                            title: 'Rol Eliminado'
+                        });  
+                        window.location.reload();
+                    }else{
+                        validacion("error","Error","No se puede eliminar el rol, ya posee un usuario asignado");
+                    }
+                    
                 },
                 error: (response) => {
                     console.log(response);
