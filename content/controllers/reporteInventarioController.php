@@ -35,7 +35,7 @@ class reporteinventarioController extends Autoload {
             $tabla.="
             <tr style='height:30px'>
             <td>".$r['id']."</td>
-            <td>".$r['nombre']."</td>
+            <td>".$r['nombre']." ".$r['marca']." ".$r['volumen']." ".$r['unidad_medida']."*".$r['unidades']."</td>
             <td>".$r['cantidad']."</td>
             <td>".$r['precio_costo']."</td>
             <td>".$r['precio_venta']."</td>

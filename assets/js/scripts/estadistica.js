@@ -235,7 +235,7 @@ function getInfo(datos) {
         }
       }
       else {
-        canv1.innerHTML=canv2.innerHTML=canv3.innerHTML='No results found';
+        canv1.innerHTML=canv2.innerHTML=canv3.innerHTML='No hay resultados';
       }
     })
 } 

@@ -10,14 +10,6 @@ $(document).ready(function() {
                 email: true
             }
         },
-        messages : {
-            fecha: {
-                required: "La fecha es requerida",
-            },
-            hora: {
-                required: "La hora es requerida",
-            },
-        },
         errorElement : 'span'
     });
       

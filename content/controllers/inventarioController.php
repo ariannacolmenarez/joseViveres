@@ -34,8 +34,6 @@ class inventarioController extends Autoload {
 
     	foreach ($respuesta as $regist) {
                 if ($respuesta->rowCount() > 6) {
-                    
-                        if ($regist['cantidad']>0) {
                           $data .= '<div class="col p-1 "
                              ';
                           if(in_array("Modificar Inventario", $_SESSION['permisos'])){ 
@@ -55,12 +53,7 @@ class inventarioController extends Autoload {
                                 </div>
                             </div>
                           </div>';
-                        }else{
-                          $data.='No hay productos';
-                        }
                 }elseif ($respuesta->rowCount() <= 6) {
-                    
-                    if ($regist['cantidad']>0) {
                         $data .= '<div class="col p-1 "
                          ';
                         if(in_array("Modificar Inventario", $_SESSION['permisos'])){ 
@@ -80,9 +73,6 @@ class inventarioController extends Autoload {
                             </div>
                         </div>
                         </div>';
-                    }else{
-                        $data.='No hay productos';
-                    }
                 }
     	};
 
@@ -106,13 +96,10 @@ class inventarioController extends Autoload {
         if ($respuesta->rowCount() > 0) {
             foreach ($respuesta as $regist) {
                 if ($respuesta->rowCount() > 6) {
-                    
-                    if ($regist['cantidad']>0) {
                       $data .= '<div class="col p-1 " ';
                         if(in_array("Modificar Inventario", $_SESSION['permisos'])){ 
                            $data .= ' onclick="editarProducto('.$regist['id'].')">'; 
                       }
-                      
                        $data.='<div class="card h-100" > <img src="';
                               if($regist['url_img'] != NULL){
                                   $data .= $regist['url_img'];
@@ -128,12 +115,7 @@ class inventarioController extends Autoload {
                             </div>
                         </div>
                       </div>';
-                    }else{
-                      $data.='No hay productos';
-                    }
                 }elseif ($respuesta->rowCount() <= 6) {
-                    
-                    if ($regist['cantidad']>0) {
                         $data .= '<div class="col p-1 " ';
                         if(in_array("Modificar Inventario", $_SESSION['permisos'])){ 
                             $data .= ' onclick="editarProducto('.$regist['id'].')">'; 
@@ -152,9 +134,6 @@ class inventarioController extends Autoload {
                             </div>
                         </div>
                         </div>';
-                    }else{
-                        $data.='No hay productos';
-                    }
                 }
             }
         }else {$data .= '<div class="row text-center">

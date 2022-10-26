@@ -40,9 +40,9 @@
                   <div class="input-group mt-1">
                     <input type="text" class="form-control d-block w-100" id="nombre" name="nombrep">
                   </div>
-                  <h5 class="mt-3">Teléfono *</h5>
+                  <h5 class="mt-3">Contacto *</h5>
                   <div class="input-group mt-1">
-                    <input type="text" class="form-control w-100 d-block" id="telefono" name="telefonop">
+                    <input type="text" class="form-control w-100 d-block" id="contacto" name="contactop">
                   </div>
                   <h5 class="mt-3">Documento <small>(opcional)</small></h5>
                   <div class="input-group ">
@@ -55,9 +55,9 @@
                       <input type="hidden" id="tipo">
                       <input type="text" id="nro_doc" class="form-control d-block w-75" name="nro_doc">
                   </div>
-                  <h5 class="mt-3">Comentario<small>(opcional)</small></h5>
+                  <h5 class="mt-3">Dirección<small>(opcional)</small></h5>
                   <div class="input-group mt-2">
-                    <textarea class="form-control d-block w-100" placeholder="Ingresa una descripción" id="comentario" name="comentariop" style="height: 100px"></textarea>
+                    <textarea class="form-control d-block w-100" placeholder="Ingresa una descripción" id="direccion" name="direccionp" style="height: 100px"></textarea>
                   </div>
                 </form>
                 <div class="d-grid gap-2 d-md-block w-100 mt-5">
@@ -85,9 +85,9 @@
                   <div class="input-group mt-1">
                     <input type="text" class="form-control d-block w-100" id="nombreR" name="nombrep">
                   </div>
-                  <h5 class="mt-3">Teléfono *</h5>
+                  <h5 class="mt-3">Contacto *</h5>
                   <div class="input-group mt-1">
-                    <input type="text" class="form-control w-100 d-block" id="telefonoR" name="telefonop">
+                    <input type="text" class="form-control w-100 d-block" id="contactoR" name="contactop">
                   </div>
                   <h5 class="mt-3">Documento <small>(opcional)</small></h5>
                   <div class="input-group w-100">
@@ -99,9 +99,9 @@
                       </select>
                       <input type="text" id="nro_docR" class="form-control d-block w-75" name="nro_doc">
                   </div>
-                  <h5 class="mt-3">Comentario<small>(opcional)</small></h5>
+                  <h5 class="mt-3">Dirección<small>(opcional)</small></h5>
                   <div class="input-group mt-2">
-                    <textarea id="comentarioR" class="form-control d-block w-100" placeholder="Ingresa una descripción" name="comentariop"  style="height: 100px"></textarea>
+                    <textarea id="direccionR" class="form-control d-block w-100" placeholder="Ingresa una descripción" name="direccionp"  style="height: 100px"></textarea>
                   </div>
                 </form>
                 <div class="d-grid gap-2 d-md-block w-100 mt-5">

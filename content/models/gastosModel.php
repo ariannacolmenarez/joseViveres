@@ -127,7 +127,7 @@ class gastosModel extends Conexion{
 
     public function listarProveedores(){
         try {
-            $consulta= Conexion::conect()->prepare("SELECT * FROM persona WHERE estado !=0 AND id_tipo_persona = 1");
+            $consulta= Conexion::conect()->prepare("SELECT * FROM proveedores WHERE estado !=0 ");
             $consulta->execute();
             return $consulta->fetchALL(PDO::FETCH_OBJ);
 
@@ -148,7 +148,7 @@ class gastosModel extends Conexion{
                 estado,
                 id_concepto_movimiento,
                 id_metodo_pago,
-                id_persona)
+                id_proveedor)
             VALUES (?,?,?,?,?,?,?,?,?)";
             Conexion::conect()->prepare($consulta)->execute(array(
                 $p->getnombre(),

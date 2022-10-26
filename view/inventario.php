@@ -9,9 +9,9 @@
                   <h2 class="font-weight-bold text-dark pt-2 m-0">Inventario</h2>
                 </div>
                 <div class="col-lg-2 col-sm-4 col-3 grid-margin mb-0 text-end">
-                  <button type="button" class="text-white btn btn-warning  mt-2 btn-icon-text" onclick="aggProd();">
+                  <a type="button" class="text-white btn btn-warning  mt-2 btn-icon-text" href="<?= _DIRECTORY_ ?>ingreso">
                     <i class="ti-plus btn-icon-prepend text-dark"></i><b class="text text-dark">Ingresar producto</b>
-                  </button>
+                  </a>
                 </div>
           </div>
           <hr>

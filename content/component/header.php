@@ -106,6 +106,12 @@
             </a>
           </li>
           <li class="nav-item">
+            <a class="nav-link" type="button" href="<?= _DIRECTORY_ ?>ingreso" >
+              <i class="ti-shopping-cart-full menu-icon"></i>
+              <span class="menu-title">Gestionar Ingreso</span>
+            </a>
+          </li>
+          <li class="nav-item">
             <a class="nav-link" type="button" href="<?= _DIRECTORY_ ?>productos" >
               <i class="ti-shopping-cart-full menu-icon"></i>
               <span class="menu-title">Gestionar Productos</span>
@@ -116,7 +122,7 @@
           <li class="nav-item">
             <a class="nav-link" href="<?= _DIRECTORY_ ?>deudas">
               <i class="ti-agenda menu-icon"></i>
-              <span class="menu-title">Gestionar Deudas</span>
+              <span class="menu-title">Gestionar Cuentas</span>
             </a>
           </li>
           <?php } ?>

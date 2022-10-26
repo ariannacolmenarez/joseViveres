@@ -54,7 +54,7 @@ class deudasModel extends Conexion{
 
     public function listarDeudasPagar(){
         try {
-            $sql= "SELECT p.nombre, SUM(m.total)as monto, COUNT(m.id) as cant ,p.id, SUM( CASE WHEN (SELECT SUM(monto) FROM abono_movimiento WHERE id_movimiento=m.id) IS NULL THEN (SELECT total FROM movimientos WHERE id=m.id) ELSE ((SELECT total FROM movimientos WHERE id=m.id)-(SELECT SUM(monto) FROM abono_movimiento WHERE id_movimiento=m.id)) END) as suma FROM movimientos as m, concepto_movimiento as c, persona as p WHERE m.id_concepto_movimiento=c.id AND c.id != 1 AND m.estado_movimiento = 'A CREDITO' AND m.id_persona=p.id AND m.estado =1 group by nombre";
+            $sql= "SELECT p.nombre, SUM(m.total)as monto, COUNT(m.id) as cant ,p.id, SUM( CASE WHEN (SELECT SUM(monto) FROM abono_movimiento WHERE id_movimiento=m.id) IS NULL THEN (SELECT total FROM movimientos WHERE id=m.id) ELSE ((SELECT total FROM movimientos WHERE id=m.id)-(SELECT SUM(monto) FROM abono_movimiento WHERE id_movimiento=m.id)) END) as suma FROM movimientos as m, concepto_movimiento as c, proveedores as p WHERE m.id_concepto_movimiento=c.id AND c.id != 1 AND m.estado_movimiento = 'A CREDITO' AND m.id_proveedor=p.id AND m.estado =1 group by nombre";
 
             $consulta= Conexion::conect()->prepare($sql);
             $consulta->setFetchMode(PDO::FETCH_ASSOC);
@@ -70,7 +70,7 @@ class deudasModel extends Conexion{
 
     public function listarDeudasCobrar(){
         try {
-            $sql= "SELECT p.nombre, SUM(m.total)as monto, COUNT(m.id) as cant ,p.id, SUM( CASE WHEN (SELECT SUM(monto) FROM abono_movimiento WHERE id_movimiento=m.id) IS NULL THEN (SELECT total FROM movimientos WHERE id=m.id) ELSE ((SELECT total FROM movimientos WHERE id=m.id)-(SELECT SUM(monto) FROM abono_movimiento WHERE id_movimiento=m.id)) END) as suma FROM movimientos as m, concepto_movimiento as c, persona as p WHERE m.id_concepto_movimiento=c.id AND c.id = 1 AND m.estado_movimiento = 'A CREDITO' AND m.id_persona=p.id AND m.estado =1 group by nombre";
+            $sql= "SELECT p.nombre, SUM(m.total)as monto, COUNT(m.id) as cant ,p.id, SUM( CASE WHEN (SELECT SUM(monto) FROM abono_movimiento WHERE id_movimiento=m.id) IS NULL THEN (SELECT total FROM movimientos WHERE id=m.id) ELSE ((SELECT total FROM movimientos WHERE id=m.id)-(SELECT SUM(monto) FROM abono_movimiento WHERE id_movimiento=m.id)) END) as suma FROM movimientos as m, concepto_movimiento as c, clientes as p WHERE m.id_concepto_movimiento=c.id AND c.id = 1 AND m.estado_movimiento = 'A CREDITO' AND m.id_cliente=p.id AND m.estado =1 group by nombre";
 
             $consulta= Conexion::conect()->prepare($sql);
             $consulta->setFetchMode(PDO::FETCH_ASSOC);
@@ -89,8 +89,8 @@ class deudasModel extends Conexion{
             id_movimiento=m.id) IS NULL THEN (SELECT total FROM movimientos WHERE id=m.id) 
             ELSE ((SELECT total FROM movimientos WHERE id=m.id)-(SELECT SUM(monto) FROM 
             abono_movimiento WHERE id_movimiento=m.id)) END) as suma FROM movimientos as m, 
-            concepto_movimiento as c, persona as p WHERE m.id_concepto_movimiento = c.id 
-            AND c.id = 1 AND m.estado_movimiento = 'A CREDITO' AND m.id_persona=p.id AND m.estado =1";
+            concepto_movimiento as c, clientes as p WHERE m.id_concepto_movimiento = c.id 
+            AND c.id = 1 AND m.estado_movimiento = 'A CREDITO' AND m.id_cliente=p.id AND m.estado =1";
             
             $consulta= Conexion::conect()->prepare($sql);
             $consulta->execute();
@@ -109,8 +109,8 @@ class deudasModel extends Conexion{
              id_movimiento=m.id) IS NULL THEN (SELECT total FROM movimientos WHERE id=m.id) 
              ELSE ((SELECT total FROM movimientos WHERE id=m.id)-(SELECT SUM(monto) FROM 
              abono_movimiento WHERE id_movimiento=m.id)) END) as suma FROM movimientos as m, 
-             concepto_movimiento as c, persona as p WHERE m.id_concepto_movimiento=c.id 
-             AND c.id != 1 AND m.estado_movimiento = 'A CREDITO' AND m.id_persona=p.id AND m.estado =1";
+             concepto_movimiento as c, proveedores as p WHERE m.id_concepto_movimiento=c.id 
+             AND c.id != 1 AND m.estado_movimiento = 'A CREDITO' AND m.id_proveedor=p.id AND m.estado =1";
             
             $consulta= Conexion::conect()->prepare($sql);
             $consulta->execute();
@@ -128,9 +128,9 @@ class deudasModel extends Conexion{
         IS NULL THEN (SELECT total FROM movimientos WHERE id=m.id) ELSE 
         ((SELECT total FROM movimientos WHERE id=m.id)-(SELECT SUM(monto) 
         FROM abono_movimiento WHERE id_movimiento=m.id)) END AS resto FROM 
-        movimientos as m, concepto_movimiento as c, persona as p WHERE 
+        movimientos as m, concepto_movimiento as c, proveedores as p WHERE 
         m.id_concepto_movimiento=c.id AND c.id != 1 AND m.estado_movimiento = 'A CREDITO' 
-        AND m.id_persona=p.id AND p.id=$id AND m.estado =1 GROUP BY m.id";
+        AND m.id_proveedor=p.id AND p.id=$id AND m.estado =1 GROUP BY m.id";
 
         $consulta= Conexion::conect()->prepare($sql);
         $consulta->setFetchMode(PDO::FETCH_ASSOC);
@@ -143,10 +143,10 @@ class deudasModel extends Conexion{
         as productos, CASE WHEN (SELECT SUM(monto) FROM abono_movimiento WHERE id_movimiento=m.id) 
         IS NULL THEN (SELECT total FROM movimientos WHERE id=m.id) ELSE 
         ((SELECT total FROM movimientos WHERE id=m.id)-(SELECT SUM(monto) FROM abono_movimiento 
-        WHERE id_movimiento=m.id)) END AS resto FROM movimientos as m, persona 
+        WHERE id_movimiento=m.id)) END AS resto FROM movimientos as m, clientes
         as p, detalles_movimientos as d, productos as pr WHERE m.id_concepto_movimiento = 1 
         AND d.id_movimientos=m.id and d.id_producto=pr.id AND m.estado_movimiento = 'A CREDITO' 
-        AND m.id_persona=p.id AND p.id=$id AND m.estado =1 GROUP BY pr.nombre,m.id";
+        AND m.id_cliente=p.id AND p.id=$id AND m.estado =1 GROUP BY pr.nombre,m.id";
 
         $consulta= Conexion::conect()->prepare($sql);
         $consulta->setFetchMode(PDO::FETCH_ASSOC);
@@ -172,7 +172,7 @@ class deudasModel extends Conexion{
     public function detallesCobrar($id){
         try {
             $consulta= Conexion::conect()->prepare("SELECT m.fecha, m.total ,p.nombre FROM
-             movimientos as m, persona as p WHERE m.id=$id and m.id_persona=p.id");
+             movimientos as m, clientes as p WHERE m.id=$id and m.id_cliente=p.id");
             $consulta->execute();
             $r=$consulta->fetch(PDO::FETCH_OBJ);
             return $r;
@@ -278,9 +278,9 @@ class deudasModel extends Conexion{
     public function movAnterior($tipo,$id_p,$id_mov){
         try{
             if ($tipo == 1) {
-                $sql="SELECT m.id, MIN(m.fecha) FROM movimientos as m WHERE m.estado=1 AND m.estado_movimiento='A CREDITO' AND m.id_concepto_movimiento = 1 AND m.id_persona=$id_p and m.id != $id_mov";
+                $sql="SELECT m.id, MIN(m.fecha) FROM movimientos as m WHERE m.estado=1 AND m.estado_movimiento='A CREDITO' AND m.id_concepto_movimiento = 1 AND m.id_cliente=$id_p and m.id != $id_mov";
             }else{
-               $sql="SELECT m.id, MIN(m.fecha) FROM movimientos as m WHERE m.estado=1 AND m.estado_movimiento='A CREDITO' AND m.id_concepto_movimiento != 1 AND m.id_persona=$id_p and m.id != $id_mov"; 
+               $sql="SELECT m.id, MIN(m.fecha) FROM movimientos as m WHERE m.estado=1 AND m.estado_movimiento='A CREDITO' AND m.id_concepto_movimiento != 1 AND m.id_proveedor=$id_p and m.id != $id_mov"; 
             }
             $sql = Conexion::conect()->prepare($sql);
             $sql->execute();
@@ -410,9 +410,9 @@ class deudasModel extends Conexion{
     public function listarAbonos($id,$tipo){
         try {
             if($tipo == 1){
-                $sql= "SELECT a.concepto, a.valor, a.id, a.fecha FROM abonos as a,abono_movimiento as am, movimientos as m WHERE a.id=am.id_abono and am.id_movimiento=m.id and m.id_concepto_movimiento = 1 and m.id_persona=$id";
+                $sql= "SELECT a.concepto, a.valor, a.id, a.fecha FROM abonos as a,abono_movimiento as am, movimientos as m WHERE a.id=am.id_abono and am.id_movimiento=m.id and m.id_concepto_movimiento = 1 and m.id_cliente=$id";
             }else{
-                $sql= "SELECT a.concepto, a.valor, a.id, a.fecha FROM abonos as a,abono_movimiento as am, movimientos as m WHERE a.id=am.id_abono and am.id_movimiento=m.id and m.id_concepto_movimiento != 1 and m.id_persona=$id";
+                $sql= "SELECT a.concepto, a.valor, a.id, a.fecha FROM abonos as a,abono_movimiento as am, movimientos as m WHERE a.id=am.id_abono and am.id_movimiento=m.id and m.id_concepto_movimiento != 1 and m.id_proveedor=$id";
             }
 
             $consulta= Conexion::conect()->prepare($sql);

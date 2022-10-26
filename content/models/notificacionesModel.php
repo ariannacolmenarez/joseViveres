@@ -33,16 +33,22 @@
 			try {
 				
 				
-				$consulta='SELECT * FROM ( SELECT m.id, m.fecha,m.total,p.nombre,c.categoria, DATEDIFF(NOW(), fecha) diferencia FROM movimientos as m,persona as p, concepto_movimiento as c WHERE c.id=m.id_concepto_movimiento and m.id_persona = p.id and m.estado = 1 and m.estado_movimiento = "A CREDITO" ) T WHERE T.diferencia >= 30 ORDER by T.id';
+				$consulta='SELECT * FROM ( SELECT m.id, m.fecha,m.total,m.id_proveedor,m.id_cliente, ( CASE WHEN m.id_proveedor>0 THEN p.nombre WHEN m.id_cliente >0 THEN cl.nombre END) AS nombre, m.estado_movimiento,c.categoria, DATEDIFF(NOW(), fecha) diferencia FROM movimientos as m,proveedores as p,clientes as cl, concepto_movimiento as c WHERE c.id=m.id_concepto_movimiento and m.id_proveedor = p.id or m.id_cliente=cl.id and m.estado = 1 and m.estado_movimiento = "A CREDITO" ) T WHERE T.diferencia >= 0 AND T.estado_movimiento="A CREDITO" GROUP by T.id';
 				$consulta= parent::conect()->prepare($consulta);
 				$consulta->execute();
 				$p = $consulta->fetchALL(PDO::FETCH_OBJ);
 					
 					foreach ($p as $row) {
-						var_dump($row);
-						$titulo = $row->nombre." tiene una dueda atrasada";
-						$mensaje = "la deuda es del ".$row->fecha." por ".$row->total." bs";
-						$estado = 1;
+						if ($row->id_proveedor!= NULL) {
+							$titulo = " Tienes una dueda atrasada con ".$row->nombre;
+							$mensaje = "la deuda es del ".$row->fecha." por ".$row->total." bs";
+							$estado = 1;
+						}else {
+							$titulo = $row->nombre." tiene una dueda atrasada";
+							$mensaje = "la deuda es del ".$row->fecha." por ".$row->total." bs";
+							$estado = 1;
+						}
+						
 					
 						$stmt = Conexion::conect()->prepare('INSERT INTO notificaciones(titulo,mensaje,estado)
 												VALUES(:titulo, :mensaje, :estado);

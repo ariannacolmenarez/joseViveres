@@ -55,10 +55,6 @@
                         <input type="hidden" id="tipo">
                         <input type="text" id="nro_doccliente" class="form-control d-block w-75" name="nro_doc">
                     </div>
-                    <h5 class="mt-3">Comentario<small>(opcional)</small></h5>
-                    <div class="input-group mt-2">
-                      <textarea class="form-control w-100 d-block" placeholder="Ingresa una descripción" id="comentariocliente" name="comentarioc" style="height: 100px"></textarea>
-                    </div>
                   </form>
                 <div class="d-grid gap-2 d-md-block w-100 mt-5">
                   <button onclick="guardarCliente();" class="btn btn-success w-100" type="button">Guardar Cambios</button>
@@ -98,10 +94,6 @@
                             <option value="Otro">Otro</option>
                       </select>
                       <input type="text" id="nro_docC" class="form-control d-block w-75" name="nro_doc">
-                  </div>
-                  <h5 class="mt-3">Comentario<small>(opcional)</small></h5>
-                  <div class="input-group mt-2">
-                    <textarea id="comentarioC" class="form-control w-100 d-block" name="comentarioc" placeholder="Ingresa una descripción"  style="height: 100px"></textarea>
                   </div>
                 </form>
                 <div class="d-grid gap-2 d-md-block w-100 mt-5">

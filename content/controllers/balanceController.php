@@ -26,6 +26,7 @@ class balanceController extends Autoload {
                   <th>Concepto</th>
                   <th>Medio de pago</th>
                   <th>Valor</th>
+                  <th>Vendedor</th>
                   <th>Acciones</th>
                 </tr>
               </thead>
@@ -52,6 +53,7 @@ class balanceController extends Autoload {
             
               $data.='</td><td>'.$regist['nombre'].'</td>
               <td>'.$regist['total'].'</td>
+              <td>'.$regist['vendedor'].'</td>
               <td>
                 <div class="row">';
                 if(in_array("Eliminar Balance", $_SESSION['permisos'])){ $data.='
@@ -86,6 +88,7 @@ class balanceController extends Autoload {
                   <th>Concepto</th>
                   <th>Medio de pago</th>
                   <th>Valor</th>
+                  <th>Vendedor</th>
                   <th>Acciones</th>
                 </tr>
               </thead>
@@ -99,6 +102,7 @@ class balanceController extends Autoload {
               <td>'.$regist['categoria'].'</td>
               <td>'.$regist['nombre'].'</td>
               <td>'.$regist['total'].'</td>
+              <td>'.$regist['vendedor'].'</td>
               <td>
                 <div class="row">
                   <div class="col">
@@ -215,6 +219,14 @@ class balanceController extends Autoload {
                   '.$resp['id'].'
                   </div>
                 </div>
+                <div  class="row mt-2">
+                  <div "text-align:left; display=inline;" class=" col display-5 text-secondary">
+                    Vendedor:
+                  </div>
+                  <div style="text-align:right; " class="text-end col display-5 text-secondary">
+                  '.$resp['vendedor'].'
+                  </div>
+                </div>
                 <hr>
                 <h4 style="text-align:center">Productos</h4>
                 <table style="margin: 0 auto;" FRAME="void" RULES="rows">
@@ -302,6 +314,14 @@ class balanceController extends Autoload {
                   </div>
                   <div style="text-align:right; " class="text-end col display-5 text-secondary">
                   '.$resp['id'].'
+                  </div>
+                </div>
+                <div  class="row mt-2">
+                  <div "text-align:left; display=inline;" class=" col display-5 text-secondary">
+                    Vendedor:
+                  </div>
+                  <div style="text-align:right; " class="text-end col display-5 text-secondary">
+                  '.$resp['vendedor'].'
                   </div>
                 </div>
               </div>

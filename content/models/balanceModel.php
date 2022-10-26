@@ -13,9 +13,9 @@ class balanceModel extends Conexion {
                 ini_set('date.timezone','America/Caracas');
                 $date = date("Y-m-d"); 
 
-                $sql= "SELECT m.id, m.fecha, m.hora,m.total,mp.nombre FROM movimientos as m, metodo_pago as 
-                mp, detalles_movimientos as d, productos as p WHERE m.estado !=0 AND m.estado_movimiento ='PAGADA' 
-                AND m.id_concepto_movimiento = 1 AND m.id_metodo_pago=mp.id AND m.id=d.id_movimientos 
+                $sql= "SELECT m.id, m.fecha, m.hora,m.total,mp.nombre,u.nombre as vendedor FROM movimientos as m, metodo_pago as 
+                mp, detalles_movimientos as d, productos as p, usuarios as u WHERE m.estado !=0 AND m.estado_movimiento ='PAGADA' 
+                AND m.id_concepto_movimiento = 1 AND m.id_metodo_pago=mp.id AND m.id=d.id_movimientos and m.id_usuario=u.id
                 AND d.id_producto=p.id AND m.fecha = '$date' GROUP BY m.id";
 
             }elseif ($fecha == "s") {
@@ -25,9 +25,9 @@ class balanceModel extends Conexion {
                 $start_week = date("Y/m/d",$start_week);
                 $end_week = date("Y/m/d",$end_week);
 
-                $sql= "SELECT m.id, m.fecha, m.hora,m.total,mp.nombre FROM movimientos as m, metodo_pago 
-                as mp, detalles_movimientos as d, productos as p WHERE m.estado !=0 AND m.estado_movimiento ='PAGADA' 
-                AND m.id_concepto_movimiento = 1 AND m.id_metodo_pago=mp.id AND m.id=d.id_movimientos 
+                $sql= "SELECT m.id, m.fecha, m.hora,m.total,mp.nombre,u.nombre as vendedor FROM movimientos as m, metodo_pago 
+                as mp, detalles_movimientos as d, productos as p, usuarios as u WHERE m.estado !=0 AND m.estado_movimiento ='PAGADA' 
+                AND m.id_concepto_movimiento = 1 AND m.id_metodo_pago=mp.id AND m.id=d.id_movimientos and m.id_usuario=u.id
                 AND d.id_producto=p.id AND m.fecha BETWEEN '$start_week' AND '$end_week' GROUP BY m.id";
 
             }elseif ($fecha == 'm') {
@@ -35,9 +35,9 @@ class balanceModel extends Conexion {
                 $inicio = date("Y-m-01");
                 $fin = date("Y-m-t");
 
-                $sql= "SELECT m.id, m.fecha, m.hora,m.total,mp.nombre FROM movimientos as m, metodo_pago 
-                as mp, detalles_movimientos as d, productos as p WHERE m.estado !=0 AND m.estado_movimiento ='PAGADA' 
-                AND m.id_concepto_movimiento = 1 AND m.id_metodo_pago=mp.id AND m.id=d.id_movimientos 
+                $sql= "SELECT m.id, m.fecha, m.hora,m.total,mp.nombre, u.nombre as vendedor FROM movimientos as m, metodo_pago 
+                as mp, detalles_movimientos as d, productos as p, usuarios as u WHERE m.estado !=0 AND m.estado_movimiento ='PAGADA' 
+                AND m.id_concepto_movimiento = 1 AND m.id_metodo_pago=mp.id AND m.id=d.id_movimientos and m.id_usuario=u.id
                 AND d.id_producto=p.id AND m.fecha BETWEEN '$inicio' AND '$fin' GROUP BY m.id";
 
             }elseif($fecha == 'a'){
@@ -48,16 +48,16 @@ class balanceModel extends Conexion {
                 $year_end = strtotime('last day of December', time());
                 $year_end = date('Y-m-d', $year_end);
 
-                $sql= "SELECT m.id, m.fecha, m.hora,m.total,mp.nombre FROM movimientos as m, metodo_pago 
-                as mp, detalles_movimientos as d, productos as p WHERE m.estado !=0 AND m.estado_movimiento ='PAGADA' 
-                AND m.id_concepto_movimiento = 1 AND m.id_metodo_pago=mp.id AND m.id=d.id_movimientos 
+                $sql= "SELECT m.id, m.fecha, m.hora,m.total,mp.nombre,u.nombre as vendedor FROM movimientos as m, metodo_pago 
+                as mp, detalles_movimientos as d, productos as p, usuarios as u WHERE m.estado !=0 AND m.estado_movimiento ='PAGADA' 
+                AND m.id_concepto_movimiento = 1 AND m.id_metodo_pago=mp.id AND m.id=d.id_movimientos and m.id_usuario=u.id
                 AND d.id_producto=p.id AND m.fecha BETWEEN '$year_start' AND '$year_end' GROUP BY m.id";
 
             }else{
             
-                $sql= "SELECT m.id, m.fecha, m.hora,m.total,mp.nombre FROM movimientos as m, metodo_pago 
-                as mp, detalles_movimientos as d, productos as p WHERE m.estado !=0 AND m.estado_movimiento ='PAGADA' 
-                AND m.id_concepto_movimiento = 1 AND m.id_metodo_pago=mp.id AND m.id=d.id_movimientos 
+                $sql= "SELECT m.id, m.fecha, m.hora,m.total,mp.nombre, u.nombre as vendedor FROM movimientos as m, metodo_pago 
+                as mp, detalles_movimientos as d, productos as p, usuarios as u WHERE m.estado !=0 AND m.estado_movimiento ='PAGADA' 
+                AND m.id_concepto_movimiento = 1 AND m.id_metodo_pago=mp.id AND m.id=d.id_movimientos and m.id_usuario=u.id
                 AND d.id_producto=p.id AND m.fecha= '$fecha' GROUP BY m.id";
 
             }
@@ -80,8 +80,8 @@ class balanceModel extends Conexion {
                 ini_set('date.timezone','America/Caracas');
                 $date = date("Y-m-d"); 
 
-                $sql= "SELECT m.id, m.fecha, m.hora,m.total,mp.nombre, c.categoria FROM movimientos as
-                m, metodo_pago as mp, concepto_movimiento as c WHERE m.estado !=0 AND m.estado_movimiento ='PAGADA'
+                $sql= "SELECT m.id, m.fecha, m.hora,m.total,mp.nombre, c.categoria, u.nombre as vendedor FROM movimientos as
+                m, metodo_pago as mp, concepto_movimiento as c, usuarios as u WHERE m.estado !=0 AND m.estado_movimiento ='PAGADA' and m.id_usuario=u.id
                 AND m.id_concepto_movimiento != 1 AND m.id_metodo_pago=mp.id AND m.id_concepto_movimiento = c.id AND m.fecha = '$date'";
 
             }elseif ($fecha == "s") {
@@ -91,8 +91,8 @@ class balanceModel extends Conexion {
                 $start_week = date("Y/m/d",$start_week);
                 $end_week = date("Y/m/d",$end_week);
 
-                $sql= "SELECT m.id, m.fecha, m.hora,m.total,mp.nombre, c.categoria FROM movimientos as
-                m, metodo_pago as mp, concepto_movimiento as c WHERE m.estado !=0 AND m.estado_movimiento ='PAGADA'
+                $sql= "SELECT m.id, m.fecha, m.hora,m.total,mp.nombre, c.categoria, u.nombre as vendedor FROM movimientos as
+                m, metodo_pago as mp, concepto_movimiento as c, usuarios as u WHERE m.estado !=0 AND m.estado_movimiento ='PAGADA' and m.id_usuario=u.id
                 AND m.id_concepto_movimiento != 1 AND m.id_metodo_pago=mp.id AND m.id_concepto_movimiento = c.id AND m.fecha BETWEEN '$start_week' AND '$end_week'";
 
             }elseif ($fecha == 'm') {
@@ -100,8 +100,8 @@ class balanceModel extends Conexion {
                 $inicio = date("Y-m-01");
                 $fin = date("Y-m-t");
 
-                $sql= "SELECT m.id, m.fecha, m.hora,m.total,mp.nombre, c.categoria FROM movimientos as
-                m, metodo_pago as mp, concepto_movimiento as c WHERE m.estado !=0 AND m.estado_movimiento ='PAGADA'
+                $sql= "SELECT m.id, m.fecha, m.hora,m.total,mp.nombre, c.categoria, u.nombre as vendedor FROM movimientos as
+                m, metodo_pago as mp, concepto_movimiento as c, usuarios as u WHERE m.estado !=0 AND m.estado_movimiento ='PAGADA' and m.id_usuario=u.id
                 AND m.id_concepto_movimiento != 1 AND m.id_metodo_pago=mp.id AND m.id_concepto_movimiento = c.id  AND m.fecha BETWEEN '$inicio' AND '$fin'";
 
             }elseif($fecha == 'a'){
@@ -112,14 +112,14 @@ class balanceModel extends Conexion {
                 $year_end = strtotime('last day of December', time());
                 $year_end = date('Y-m-d', $year_end);
 
-                $sql= "SELECT m.id, m.fecha, m.hora,m.total,mp.nombre, c.categoria FROM movimientos as
-                m, metodo_pago as mp, concepto_movimiento as c WHERE m.estado !=0 AND m.estado_movimiento ='PAGADA'
+                $sql= "SELECT m.id, m.fecha, m.hora,m.total,mp.nombre, c.categoria, u.nombre as vendedor FROM movimientos as
+                m, metodo_pago as mp, concepto_movimiento as c, usuarios as u WHERE m.estado !=0 AND m.estado_movimiento ='PAGADA' and m.id_usuario=u.id
                 AND m.id_concepto_movimiento != 1 AND m.id_metodo_pago=mp.id AND m.id_concepto_movimiento = c.id AND m.fecha BETWEEN '$year_start' AND '$year_end' ";
 
             }else{
 
-                $sql= "SELECT m.id, m.fecha, m.hora,m.total,mp.nombre, c.categoria FROM movimientos as
-                m, metodo_pago as mp, concepto_movimiento as c WHERE m.estado !=0 AND m.estado_movimiento ='PAGADA'
+                $sql= "SELECT m.id, m.fecha, m.hora,m.total,mp.nombre, c.categoria, u.nombre as vendedor FROM movimientos as
+                m, metodo_pago as mp, concepto_movimiento as c, usuarios as u WHERE m.estado !=0 AND m.estado_movimiento ='PAGADA' and m.id_usuario=u.id
                 AND m.id_concepto_movimiento != 1 AND m.id_metodo_pago=mp.id AND m.id_concepto_movimiento = c.id AND m.fecha = '$fecha'";
 
             }
@@ -146,8 +146,8 @@ class balanceModel extends Conexion {
                 ini_set('date.timezone','America/Caracas');
                 $date = date("Y-m-d"); 
 
-                $sql= "SELECT m.id, m.fecha, m.hora,m.total,mp.nombre, c.categoria FROM movimientos as
-                m, metodo_pago as mp, concepto_movimiento as c WHERE m.estado !=0 AND m.estado_movimiento ='PAGADA'
+                $sql= "SELECT m.id, m.fecha, m.hora,m.total,mp.nombre, c.categoria, u.nombre as vendedor FROM movimientos as
+                m, metodo_pago as mp, concepto_movimiento as c, usuarios as u WHERE m.estado !=0 AND m.estado_movimiento ='PAGADA' and m.id_usuario=u.id
                 AND m.id_concepto_movimiento != 1 AND m.id_metodo_pago=mp.id AND m.id_concepto_movimiento = c.id AND m.fecha = '$date'";
 
             }elseif ($fecha == "s") {
@@ -157,8 +157,8 @@ class balanceModel extends Conexion {
                 $start_week = date("Y/m/d",$start_week);
                 $end_week = date("Y/m/d",$end_week);
 
-                $sql= "SELECT m.id, m.fecha, m.hora,m.total,mp.nombre, c.categoria FROM movimientos as
-                m, metodo_pago as mp, concepto_movimiento as c WHERE m.estado !=0 AND m.estado_movimiento ='PAGADA'
+                $sql= "SELECT m.id, m.fecha, m.hora,m.total,mp.nombre, c.categoria, u.nombre as vendedor FROM movimientos as
+                m, metodo_pago as mp, concepto_movimiento as c, usuarios as u WHERE m.estado !=0 AND m.estado_movimiento ='PAGADA' and m.id_usuario=u.id
                 AND m.id_concepto_movimiento != 1 AND m.id_metodo_pago=mp.id AND m.id_concepto_movimiento = c.id AND m.fecha BETWEEN '$start_week' AND '$end_week'";
 
             }elseif ($fecha == 'm') {
@@ -166,8 +166,8 @@ class balanceModel extends Conexion {
                 $inicio = date("Y-m-01");
                 $fin = date("Y-m-t");
 
-                $sql= "SELECT m.id, m.fecha, m.hora,m.total,mp.nombre, c.categoria FROM movimientos as
-                m, metodo_pago as mp, concepto_movimiento as c WHERE m.estado !=0 AND m.estado_movimiento ='PAGADA'
+                $sql= "SELECT m.id, m.fecha, m.hora,m.total,mp.nombre, c.categoria, u.nombre as vendedor FROM movimientos as
+                m, metodo_pago as mp, concepto_movimiento as c usuarios as u WHERE m.estado !=0 AND m.estado_movimiento ='PAGADA' and m.id_usuario=u.id
                 AND m.id_concepto_movimiento != 1 AND m.id_metodo_pago=mp.id AND m.id_concepto_movimiento = c.id  AND m.fecha BETWEEN '$inicio' AND '$fin'";
 
             }elseif($fecha == 'a'){
@@ -178,14 +178,14 @@ class balanceModel extends Conexion {
                 $year_end = strtotime('last day of December', time());
                 $year_end = date('Y-m-d', $year_end);
 
-                $sql= "SELECT m.id, m.fecha, m.hora,m.total,mp.nombre, c.categoria FROM movimientos as
-                m, metodo_pago as mp, concepto_movimiento as c WHERE m.estado !=0 AND m.estado_movimiento ='PAGADA'
+                $sql= "SELECT m.id, m.fecha, m.hora,m.total,mp.nombre, c.categoria , u.nombre as vendedor FROM movimientos as
+                m, metodo_pago as mp, concepto_movimiento as c usuarios as u WHERE m.estado !=0 AND m.estado_movimiento ='PAGADA' and m.id_usuario=u.id
                 AND m.id_concepto_movimiento != 1 AND m.id_metodo_pago=mp.id AND m.id_concepto_movimiento = c.id AND m.fecha BETWEEN '$year_start' AND '$year_end' ";
 
             }else{
 
-                $sql= "SELECT m.id, m.fecha, m.hora,m.total,mp.nombre, c.categoria FROM movimientos as
-                m, metodo_pago as mp, concepto_movimiento as c WHERE m.estado !=0 AND m.estado_movimiento ='PAGADA'
+                $sql= "SELECT m.id, m.fecha, m.hora,m.total,mp.nombre, c.categoria, u.nombre as vendedor FROM movimientos as
+                m, metodo_pago as mp, concepto_movimiento as c, usuarios as u WHERE m.estado !=0 AND m.estado_movimiento ='PAGADA' and m.id_usuario=u.id
                 AND m.id_concepto_movimiento != 1 AND m.id_metodo_pago=mp.id AND m.id_concepto_movimiento = c.id AND m.fecha = '$fecha'";
 
             }
@@ -287,7 +287,7 @@ class balanceModel extends Conexion {
     }
 
     public function reciboI($id){
-        $sql="SELECT m.id,m.total,m.fecha, m.hora,m.estado_movimiento, c.categoria,mp.nombre,GROUP_CONCAT(dm.cantidad ,' ',p.nombre,' ',dm.precio,' ',(dm.cantidad*dm.precio)) AS producto FROM movimientos as m, concepto_movimiento as c, metodo_pago as mp, detalles_movimientos as dm, productos as p WHERE m.id= '$id' and m.id_concepto_movimiento=c.id and m.id_metodo_pago=mp.id and m.id=dm.id_movimientos and dm.id_producto = p.id;";
+        $sql="SELECT m.id,m.total,m.fecha, u.nombre as vendedor, m.hora,m.estado_movimiento, c.categoria,mp.nombre,GROUP_CONCAT(dm.cantidad ,' ',p.nombre,' ',dm.precio,' ',(dm.cantidad*dm.precio)) AS producto FROM movimientos as m, concepto_movimiento as c, metodo_pago as mp, detalles_movimientos as dm, productos as p, usuarios as u WHERE m.id= '$id' and m.id_concepto_movimiento=c.id and m.id_metodo_pago=mp.id and m.id=dm.id_movimientos and dm.id_producto = p.id and m.id_usuario=u.id;";
         $consulta= Conexion::conect()->prepare($sql);
         $consulta->execute();
         $r = $consulta->fetch(PDO::FETCH_ASSOC);
@@ -295,7 +295,7 @@ class balanceModel extends Conexion {
     }
 
     public function reciboE($id){
-        $sql="SELECT m.id,m.total,m.fecha, m.hora,m.estado_movimiento, c.categoria,mp.nombre FROM movimientos as m, concepto_movimiento as c, metodo_pago as mp WHERE m.id= '$id' and m.id_concepto_movimiento=c.id and m.id_metodo_pago=mp.id GROUP BY m.id;";
+        $sql="SELECT m.id,m.total,m.fecha, u.nombre as vendedor, m.hora,m.estado_movimiento, c.categoria,mp.nombre FROM movimientos as m, concepto_movimiento as c, metodo_pago as mp, usuarios as u WHERE m.id= '$id' and m.id_concepto_movimiento=c.id and m.id_metodo_pago=mp.id and m.id_usuario=u.id GROUP BY m.id;";
         $consulta= Conexion::conect()->prepare($sql);
         $consulta->execute();
         $r = $consulta->fetch(PDO::FETCH_ASSOC);

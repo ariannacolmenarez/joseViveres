@@ -63,7 +63,7 @@ class clientesModel extends Conexion{
     public static function listar(){
         try {
              
-                $sql= "SELECT * FROM persona WHERE estado !=0 AND id_tipo_persona= 2";
+                $sql= "SELECT * FROM clientes WHERE estado !=0 ";
                 $consulta= Conexion::conect()->prepare($sql);
                 $consulta->setFetchMode(PDO::FETCH_ASSOC);
                 $consulta->execute();
@@ -78,7 +78,7 @@ class clientesModel extends Conexion{
 
     public function consultar($id){
         try {
-            $consulta= Conexion::conect()->prepare("SELECT * FROM persona WHERE id=?;");
+            $consulta= Conexion::conect()->prepare("SELECT * FROM clientes WHERE id=?;");
             $consulta->execute(array($id));
             $r=$consulta->fetch(PDO::FETCH_OBJ);
             $p= new clientesModel();
@@ -87,7 +87,6 @@ class clientesModel extends Conexion{
             $p->settelefono($r->telefono);
             $p->settipoDoc($r->tipo_doc);
             $p->setnroDoc($r->nro_doc);
-            $p->setcomentario($r->comentario);
             
             return $p;
 
@@ -99,27 +98,21 @@ class clientesModel extends Conexion{
     public function guardar(clientesModel $p){
         try {
             
-            $consulta="UPDATE persona SET 
+            $consulta="UPDATE clientes SET 
                 nombre=?,
                 nro_doc=?,
                 tipo_doc=?,
                 telefono=?,
-                comentario=?,
-                estado=?,
-                id_tipo_persona=?
+                estado=?
                 WHERE id=?;
-            
             ";
             Conexion::conect()->prepare($consulta)->execute(array(
                 $p->getnombre(),
                 $p->getnroDoc(),
                 $p->gettipoDoc(),
                 $p->gettelefono(),
-                $p->getcomentario(),
                 "1",
-                "2",
                 $p->getid(),
-
             ));
 
         } catch (Exception $e) {
@@ -131,27 +124,23 @@ class clientesModel extends Conexion{
     public function registrar(clientesModel $p){
         try {
             $documento=$p->getnroDoc();
-            if( builder::duplicado_persona("$documento",2) === false ){
+            if( builder::duplicados("nro_doc","clientes","$documento") === false ){
                 return $documento;
             }
             else{
-                $consulta="INSERT INTO persona(
+                $consulta="INSERT INTO clientes(
                     nombre , 
                     nro_doc,
                     tipo_doc,
                     telefono,
-                    comentario,
-                    estado,
-                    id_tipo_persona)
-                VALUES (?,?,?,?,?,?,?)";
+                    estado)
+                VALUES (?,?,?,?,?)";
                 Conexion::conect()->prepare($consulta)->execute(array(
                     $p->getnombre(),
                     $p->getnroDoc(),
                     $p->gettipoDoc(),
                     $p->gettelefono(),
-                    $p->getcomentario(),
                     "1",
-                    "2 ",
                 ));
                 return true;
             }
@@ -165,27 +154,17 @@ class clientesModel extends Conexion{
     public function eliminar($id){
         try {
             $estado=0;
-            $consulta="UPDATE persona SET estado=? WHERE id=?;";
+            $consulta="UPDATE clientes SET estado=? WHERE id=?;";
             $consulta=Conexion::conect()->prepare($consulta);
             $r=$consulta->execute(array($estado,$id));
             if($r){
-                $consulta1="SELECT m.id FROM movimientos as m, persona as p WHERE m.id_persona = p.id and p.id=$id";
+                $consulta1="SELECT m.id FROM movimientos as m, clientes as c WHERE m.id_cliente = c.id and c.id=$id";
                 $consulta1= Conexion::conect()->prepare($consulta1);
                 $consulta1->setFetchMode(PDO::FETCH_ASSOC);
                 $consulta1->execute();
                 if ($consulta1->rowCount() > 0) {
                     foreach ($consulta1 as $row) {
-                        $consulta="UPDATE movimientos SET id_persona=NULL WHERE id=?;";
-                        Conexion::conect()->prepare($consulta)->execute(array($row['id']));
-                    } 
-                }
-                $consulta2="SELECT i.id FROM ingreso_productos as i, persona as p WHERE i.id_persona = p.id and p.id=$id";
-                $consulta2= Conexion::conect()->prepare($consulta2);
-                $consulta2->setFetchMode(PDO::FETCH_ASSOC);
-                $consulta2->execute();
-                if ($consulta2->rowCount() > 0) {
-                    foreach ($consulta2 as $row) {
-                        $consulta="UPDATE ingreso_productos SET id_persona=NULL WHERE id=?;";
+                        $consulta="UPDATE movimientos SET id_cliente=NULL WHERE id=?;";
                         Conexion::conect()->prepare($consulta)->execute(array($row['id']));
                     } 
                 }
@@ -200,12 +179,12 @@ class clientesModel extends Conexion{
     public function buscar($busqueda){
         try {
 
-            $consulta="SELECT * FROM persona WHERE estado =? AND id_tipo_persona=? AND nombre LIKE '%$busqueda%' 
+            $consulta="SELECT * FROM clientes WHERE estado =? AND nombre LIKE '%$busqueda%' 
             OR telefono LIKE '%$busqueda%'";
 
             $consulta= Conexion::conect()->prepare($consulta);
             $consulta->setFetchMode(PDO::FETCH_ASSOC);
-            $consulta->execute(array("1","2"));
+            $consulta->execute(array("1"));
             return $consulta;
 
         } catch (Exception $e) {

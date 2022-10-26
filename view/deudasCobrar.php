@@ -2,14 +2,14 @@
           <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content modal-fullscreen w-100">
               <div class="modal-header text-center">
-                  <h5 class="modal-title fs-5 display-6 fw-bold" id="exampleModalToggleLabel13">Deuda Por Cobrar </h5>
+                  <h5 class="modal-title fs-5 display-6 fw-bold" id="exampleModalToggleLabel13">Cuenta Por Cobrar </h5>
                   <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
               </div>
               <div class="modal-body">
                 <ul class="nav nav-tabs nav-justified" id="myTab" role="tablist">
                   <li class="nav-item" role="presentation">
                     <button class="nav-link active" id="deudas" data-bs-toggle="tab" data-bs-target="#deudas-pane" type="button" role="tab" aria-controls="deudas-pane" aria-selected="true">
-                      <p class="card-title text-md-center text-danger text-xl-left">Deudas</p> 
+                      <p class="card-title text-md-center text-danger text-xl-left">Cuentas</p> 
                     </button>
                   </li>
                   <li class="nav-item" role="presentation">
@@ -22,7 +22,7 @@
                   <div class="tab-pane fade show active" id="deudas-pane" role="tabpanel" aria-labelledby="deudas" tabindex="0">
                     <h5 class="m-auto p-2 text-center"id="nombreC"></h5>
                     <div class="card m-auto mt-1 p-3" style="width: 18rem;">
-                      <p class="card-title text-md-center text-dark text-xl-left"><span class="badge bg-success rounded-pill" id="cantC"></span> Deudas</p>
+                      <p class="card-title text-md-center text-dark text-xl-left"><span class="badge bg-success rounded-pill" id="cantC"></span> Cuentas</p>
                       <div class="d-flex flex-wrap justify-content-between justify-content-md-center justify-content-xl-between align-items-center">
                         <h3 class="mb-0 mb-md-2 mb-xl-0 order-md-1 order-xl-0"id="montoC"></h3>
                         <i class="ti-money icon-md text-success mb-0 mb-md-3 mb-xl-0"></i>

@@ -12,13 +12,13 @@ $(document).ready(function() {
                 minlength: 6,
                 maxlength:9
             },
-            telefonop: {
+            contactop: {
                 required: true,
                 number: true,
                 min:11,
                 maxlength:11
                 },
-            comentariop : {
+            direccionp : {
                 minlength: 5,
                 maxlength: 150
             }
@@ -38,13 +38,13 @@ $(document).ready(function() {
                 minlength: 6,
                 maxlength:9
             },
-            telefonop: {
+            contactop: {
                 required: true,
                 number: true,
                 min:11,
                 maxlength:11
                 },
-            comentariop : {
+            direccionp : {
                 minlength: 5,
                 maxlength: 150
             }
@@ -117,10 +117,10 @@ function consultarproveedores (id) {
             response.map( function (elem) {
                 $("#id").val(elem.id);
                 $("#nombre").val(elem.nombre);
-                $("#telefono").val(elem.telefono);
+                $("#contacto").val(elem.contacto);
                 $("#nro_doc").val(elem.nro_doc);
                 $("#tipo_doc option[value='"+ elem.tipo_doc +"']").attr("selected",true);
-                $("#comentario").val(elem.comentario);
+                $("#direccion").val(elem.direccion);
             });
             $('#exampleModalToggle11').modal('show');
         },
@@ -134,16 +134,16 @@ function consultarproveedores (id) {
 function guardarProveedor(){
     var id = $("#id").val();
     var nombre = $("#nombre").val();
-    var telefono = $("#telefono").val();
+    var contacto = $("#contacto").val();
     var nro_doc = $("#nro_doc").val();
     var tipo_doc= $("#tipo_doc").val();
-    var comentario = $("#comentario").val();
+    var direccion = $("#direccion").val();
     var parametros = {
         "nombre" : nombre,
-        "telefono" : telefono,
+        "contacto" : contacto,
         "nro_doc" : nro_doc,
         "tipo_doc" : tipo_doc,
-        "comentario" : comentario,
+        "direccion" : direccion,
         "id" : id
     };
     if ($('#form_provM').valid()) {
@@ -171,17 +171,17 @@ function guardarProveedor(){
 
 function registrarProveedor(){
     var nombre = $("#nombreR").val();
-    var telefono = $("#telefonoR").val();
+    var contacto = $("#contactoR").val();
     var nro_doc = $("#nro_docR").val();
     var tipo_doc= $("#tipo_docR").val();
-    var comentario = $("#comentarioR").val();
+    var direccion = $("#direccionR").val();
     
     var parametros = {
         "nombre" : nombre,
-        "telefono" : telefono,
+        "contacto" : contacto,
         "nro_doc" : nro_doc,
         "tipo_doc" : tipo_doc,
-        "comentario" : comentario,
+        "direccion" : direccion,
     };
 
     if ($('#form_prov').valid()) {

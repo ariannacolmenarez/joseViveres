@@ -20,7 +20,18 @@ $(document).ready(function() {
                 number: true
             },
             proveedorv: {
-                required: true,
+                required: {
+                    depends: function(elem) {
+                        return $('input[name=estado]:checked', '#estadov').val() == "A CREDITO"
+                    }
+                    },
+            },
+            metodo: {
+                required: {
+                    depends: function(elem) {
+                        return $('input[name=estado]:checked', '#estadov').val() == "PAGADA"
+                    }
+                    },
             }
         },
         errorElement : 'span'

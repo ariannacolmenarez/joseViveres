@@ -44,7 +44,6 @@ class clientesController extends Autoload {
             "tipo_doc"=>$resp->gettipoDoc(),
             "nro_doc"=>$resp->getnroDoc(),
             "telefono"=>$resp->gettelefono(),
-            "comentario"=>$resp->getcomentario(),
             "id"=>$resp->getid(),
         ];
         echo json_encode($resultados);
@@ -60,7 +59,6 @@ class clientesController extends Autoload {
             $p->setnombre($_POST['nombrecliente']);
             $p->setnroDoc($_POST['nro_doccliente']);
             $p->settipoDoc($_POST['tipo_doccliente']);
-            $p->setcomentario($_POST['comentariocliente']);
             $p->settelefono($_POST['telefonocliente']);
 
 			$this->model->guardar($p);
@@ -76,7 +74,6 @@ class clientesController extends Autoload {
             $p->setnombre($_POST['nombrecliente']);
             $p->setnroDoc($_POST['nro_doccliente']);
             $p->settipoDoc($_POST['tipo_doccliente']);
-            $p->setcomentario($_POST['comentariocliente']);
             $p->settelefono($_POST['telefonocliente']);
 
 			$resp=$this->model->registrar($p);

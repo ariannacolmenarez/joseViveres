@@ -15,11 +15,8 @@ $(document).ready(function() {
             telefonoc: {
                 required: true,
                 number: true,
+                minlength: 11,
                 maxlength:11
-                },
-            comentarioc : {
-                minlength: 5,
-                maxlength: 150
             }
         },
         errorElement : 'span'
@@ -40,11 +37,8 @@ $(document).ready(function() {
             telefonoc: {
                 required: true,
                 number: true,
+                minlength: 11,
                 maxlength:11
-                },
-            comentarioc : {
-                minlength: 5,
-                maxlength: 150
             }
         },
         errorElement : 'span'
@@ -125,7 +119,6 @@ function consultarclientes (id) {
                 $("#telefonocliente").val(elem.telefono);
                 $("#nro_doccliente").val(elem.nro_doc);
                 $("#doc_cliente option[value='"+ elem.tipo_doc +"']").attr("selected",true);
-                $("#comentariocliente").val(elem.comentario);
             });
             $('#exampleModalToggle8').modal('show');
         },
@@ -142,7 +135,6 @@ function guardarCliente(){
     var telefono = $("#telefonocliente").val();
     var nro_doc = $("#nro_doccliente").val();
     var tipo_doc= $("#doc_cliente").val();
-    var comentario = $("#comentariocliente").val();
 
     if ($('#form_clienM').valid()) {
         var parametros = {
@@ -150,7 +142,6 @@ function guardarCliente(){
         "telefonocliente" : telefono,
         "nro_doccliente" : nro_doc,
         "tipo_doccliente" : tipo_doc,
-        "comentariocliente" : comentario,
         "idcliente" : id
         };
         $.ajax({
@@ -182,15 +173,13 @@ function registrarCliente(){
     var telefono = $("#telefonoC").val();
     var nro_doc = $("#nro_docC").val();
     var tipo_doc= $("#tipo_docC").val();
-    var comentario = $("#comentarioC").val();
 
     if ($('#form_clien').valid()) {
         var parametros = {
             "nombrecliente" : nombre,
             "telefonocliente" : telefono,
             "nro_doccliente" : nro_doc,
-            "tipo_doccliente" : tipo_doc,
-            "comentariocliente" : comentario,
+            "tipo_doccliente" : tipo_doc
         };
         console.log(parametros)
         $.ajax({

@@ -23,7 +23,7 @@ class proveedoresController extends Autoload {
            $data .=' type="button" class="list-group-item text-dark list-group-item-action py-3">
           <div class="row align-items-center">
             <div class="col-1 text-secondary"><i class="ti-user fa-2x"></i></div>
-            <div class="col px-4">'.$regist['nombre'].' <small class="text-muted">'.$regist['telefono'].'</small></div>
+            <div class="col px-4">'.$regist['nombre'].' <small class="text-muted">'.$regist['contacto'].'</small></div>
             <div class="col text-end"><i class="ti-marker-alt "></i></div>
           </div> 
         </a>';
@@ -44,8 +44,8 @@ class proveedoresController extends Autoload {
         "nombre"=>$resp->getnombre(),
         "tipo_doc"=>$resp->gettipoDoc(),
         "nro_doc"=>$resp->getnroDoc(),
-        "telefono"=>$resp->gettelefono(),
-        "comentario"=>$resp->getcomentario(),
+        "contacto"=>$resp->getcontacto(),
+        "direccion"=>$resp->getdireccion(),
         "id"=>$resp->getid(),
       ];
       echo json_encode($resultados);
@@ -53,7 +53,7 @@ class proveedoresController extends Autoload {
     }
 
     public function guardar(){
-      if (!empty($_POST['id'] && $_POST['nombre'] && $_POST['telefono'] )) {
+      if (!empty($_POST['id'] && $_POST['nombre'] && $_POST['contacto'] )) {
 
 				$p=new proveedoresModel();
 
@@ -61,8 +61,8 @@ class proveedoresController extends Autoload {
         $p->setnombre(strtoupper($_POST['nombre']));
         $p->setnroDoc(strtoupper($_POST['nro_doc']));
         $p->settipoDoc(strtoupper($_POST['tipo_doc']));
-        $p->setcomentario(strtoupper($_POST['comentario']));
-        $p->settelefono(strtoupper($_POST['telefono']));
+        $p->setdireccion(strtoupper($_POST['direccion']));
+        $p->setcontacto(strtoupper($_POST['contacto']));
 
 				$this->model->guardar($p);
 				
@@ -70,15 +70,15 @@ class proveedoresController extends Autoload {
     }
 
     public function registrar(){
-      if (!empty( $_POST['nombre'] && $_POST['telefono'])) {
+      if (!empty( $_POST['nombre'] && $_POST['contacto'])) {
 
 				$p=new proveedoresModel();
 
         $p->setnombre($_POST['nombre']);
         $p->setnroDoc($_POST['nro_doc']);
         $p->settipoDoc($_POST['tipo_doc']);
-        $p->setcomentario($_POST['comentario']);
-        $p->settelefono($_POST['telefono']);
+        $p->setdireccion($_POST['direccion']);
+        $p->setcontacto($_POST['contacto']);
 
 				$resp=$this->model->registrar($p);
 				echo json_encode($resp);
@@ -97,7 +97,7 @@ class proveedoresController extends Autoload {
             $data .= '<a onclick="consultarproveedores('.$regist["id"].');" type="button" class="list-group-item text-dark list-group-item-action py-3">
                         <div class="row align-items-center">
                           <div class="col-1 text-secondary"><i class="ti-user fa-2x"></i></div>
-                          <div class="col px-4">'.$regist['nombre'].' <small class="text-muted">'.$regist['telefono'].'</small></div>
+                          <div class="col px-4">'.$regist['nombre'].' <small class="text-muted">'.$regist['contacto'].'</small></div>
                           <div class="col text-end"><i class="ti-marker-alt "></i></div>
                         </div> 
                       </a>';
